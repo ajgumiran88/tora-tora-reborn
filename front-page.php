@@ -43,6 +43,7 @@ $gallery_images = [];
 for ($gallery_index = 1; $gallery_index <= 5; $gallery_index++) {
     $gallery_images[] = tora_tora_image_setting('tora_gallery_' . $gallery_index, 'gallery-' . $gallery_index . '.jpg');
 }
+$gallery_image_total = count($gallery_images);
 $address = (string) get_theme_mod('tora_address', 'Al Wasl Road, Umm Suqeim 1, Dubai, UAE');
 $phone = (string) get_theme_mod('tora_phone', '+9-500-025-200');
 $email = (string) get_theme_mod('tora_email', 'support@toratora.ae');
@@ -233,13 +234,24 @@ get_header();
             <?php get_template_part('template-parts/panel', 'back'); ?>
             <div class="gallery-layout">
                 <div class="gallery-copy panel-copy">
+                    <span class="panel-eyebrow gallery-kicker"><?php esc_html_e('The Tora Tora Edit', 'tora-tora'); ?></span>
                     <h2 id="gallery-title"><?php echo esc_html($gallery['title']); ?></h2>
                     <div class="entry-content"><?php echo wp_kses_post($gallery['content']); ?></div>
+                    <div class="gallery-meta">
+                        <p class="gallery-count" aria-label="<?php echo esc_attr(sprintf(_n('%d gallery image', '%d gallery images', $gallery_image_total, 'tora-tora'), $gallery_image_total)); ?>">
+                            <span aria-hidden="true">01</span>
+                            <span aria-hidden="true">/</span>
+                            <span aria-hidden="true"><?php echo esc_html(str_pad((string) $gallery_image_total, 2, '0', STR_PAD_LEFT)); ?></span>
+                        </p>
+                        <p class="gallery-instruction"><?php esc_html_e('Explore the space — select an image to enlarge.', 'tora-tora'); ?></p>
+                    </div>
                 </div>
                 <div class="gallery-mosaic">
                     <?php foreach ($gallery_images as $index => $gallery_image) : ?>
-                        <button class="gallery-link<?php echo 0 === $index ? ' gallery-feature' : ''; ?>" type="button" data-image="<?php echo esc_url($gallery_image); ?>">
+                        <button class="gallery-link<?php echo 0 === $index ? ' gallery-feature' : ''; ?>" type="button" data-image="<?php echo esc_url($gallery_image); ?>" aria-controls="gallery-modal" aria-haspopup="dialog" aria-label="<?php echo esc_attr(sprintf(__('Open gallery image %1$d of %2$d', 'tora-tora'), $index + 1, $gallery_image_total)); ?>">
                             <img src="<?php echo esc_url($gallery_image); ?>" alt="<?php echo esc_attr(sprintf(__('Tora Tora gallery image %d', 'tora-tora'), $index + 1)); ?>" width="736" height="736" loading="lazy">
+                            <span class="gallery-image-index" aria-hidden="true"><?php echo esc_html(str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT)); ?></span>
+                            <span class="gallery-image-view" aria-hidden="true"><?php esc_html_e('View', 'tora-tora'); ?></span>
                         </button>
                     <?php endforeach; ?>
                 </div>

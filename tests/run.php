@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 $root = dirname(__DIR__);
-$theme = $root . '/wp-content/themes/tora-tora';
+$theme = $root;
 $failures = [];
 
 function expect_true(bool $condition, string $message): void

@@ -45,13 +45,13 @@ Supporting cream surfaces used for light panels (`#F4ECE7`, `#E8D9D1`) sit along
 
 | Concern | Path |
 | --- | --- |
-| Design tokens (CSS) | `wp-content/themes/tora-tora/assets/css/main.css` (`:root`) |
-| Editor / block palette | `wp-content/themes/tora-tora/theme.json` |
-| Panel markup | `wp-content/themes/tora-tora/front-page.php` |
-| Hash / overlay / lightbox | `wp-content/themes/tora-tora/assets/js/site.js` |
-| Staging / noindex | `wp-content/themes/tora-tora/inc/staging.php` |
-| Delivery + contact Customizer | `wp-content/themes/tora-tora/inc/customizer.php` |
-| Starter menu categories | `wp-content/themes/tora-tora/inc/default-content.php` |
+| Design tokens (CSS) | `assets/css/main.css` (`:root`) |
+| Editor / block palette | `theme.json` |
+| Panel markup | `front-page.php` |
+| Hash / overlay / lightbox | `assets/js/site.js` |
+| Staging / noindex | `inc/staging.php` |
+| Delivery + contact Customizer | `inc/customizer.php` |
+| Starter menu categories | `inc/default-content.php` |
 
 ---
 

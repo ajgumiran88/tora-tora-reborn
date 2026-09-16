@@ -716,28 +716,97 @@ h1, h2, h3, h4 {
 
 .gallery-layout {
   display: grid;
-  grid-template-columns: minmax(14rem, .7fr) minmax(0, 1.3fr);
-  align-items: start;
-  gap: clamp(1rem, 3vw, 3rem);
+  grid-template-columns: minmax(16rem, .55fr) minmax(0, 1.45fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 4.75rem);
 }
 
-.gallery-copy h2 { color: var(--tora-white); }
-.gallery-copy .entry-content { margin-top: 1.25rem; }
+.gallery-copy { max-width: 29rem; }
+.gallery-copy h2 {
+  max-width: 9ch;
+  color: var(--tora-white);
+  font-size: clamp(2.7rem, 4.7vw, 5.15rem);
+  line-height: .94;
+}
+.gallery-copy .entry-content { max-width: 25rem; margin-top: 1.4rem; }
+.gallery-kicker { margin-bottom: 1.25rem; }
+.gallery-meta {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  max-width: 28rem;
+  margin-top: clamp(1.8rem, 4vw, 3.5rem);
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, .42);
+}
+.gallery-count {
+  display: flex;
+  gap: .38rem;
+  margin: 0;
+  font-size: .8rem;
+  font-weight: 800;
+  letter-spacing: .13em;
+  white-space: nowrap;
+}
+.gallery-count span:nth-child(2) { opacity: .52; }
+.gallery-instruction { margin: 0; font-size: .78rem; line-height: 1.45; }
 .gallery-mosaic {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .75rem;
+  grid-template-columns: minmax(0, 1.45fr) repeat(2, minmax(0, .78fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: clamp(.55rem, 1.1vw, 1rem);
+  aspect-ratio: 16 / 9;
 }
 .gallery-link {
+  position: relative;
   padding: 0;
+  color: var(--tora-white);
   background: rgba(255, 255, 255, .12);
   border: 1px solid rgba(255, 255, 255, .22);
   overflow: hidden;
-  aspect-ratio: 1;
+  cursor: zoom-in;
+  isolation: isolate;
 }
-.gallery-feature { grid-column: span 2; grid-row: span 2; }
-.gallery-link img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s var(--ease); }
-.gallery-link:hover img { transform: scale(1.045); }
+.gallery-link::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  content: '';
+  background: linear-gradient(180deg, rgba(5, 0, 245, .06) 24%, rgba(5, 0, 245, .18) 62%, rgba(0, 0, 0, .58) 100%);
+  transition: background .35s var(--ease);
+  pointer-events: none;
+}
+.gallery-feature { grid-column: 1; grid-row: 1 / span 2; }
+.gallery-link:nth-child(2) { grid-column: 2; grid-row: 1; }
+.gallery-link:nth-child(3) { grid-column: 3; grid-row: 1; }
+.gallery-link:nth-child(4) { grid-column: 2; grid-row: 2; }
+.gallery-link:nth-child(5) { grid-column: 3; grid-row: 2; }
+.gallery-link img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .55s var(--ease);
+}
+.gallery-image-index,
+.gallery-image-view {
+  position: absolute;
+  z-index: 2;
+  font-size: .66rem;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  transition: transform .35s var(--ease), opacity .35s var(--ease);
+}
+.gallery-image-index { top: .9rem; left: .95rem; }
+.gallery-image-view { right: .95rem; bottom: .85rem; opacity: 0; transform: translateY(.4rem); }
+.gallery-link:hover::after,
+.gallery-link:focus-visible::after { background: linear-gradient(180deg, rgba(5, 0, 245, .12) 18%, rgba(5, 0, 245, .28) 62%, rgba(0, 0, 0, .68) 100%); }
+.gallery-link:hover img,
+.gallery-link:focus-visible img { transform: scale(1.045); }
+.gallery-link:hover .gallery-image-view,
+.gallery-link:focus-visible .gallery-image-view { opacity: 1; transform: translateY(0); }
+.gallery-link:focus-visible { outline: 2px solid var(--tora-white); outline-offset: 4px; }
 
 .contact-intro { margin-top: 1.25rem; }
 .contact-list { margin: 1.8rem 0; border-top: 1px solid rgba(255, 255, 255, .35); }
@@ -845,8 +914,10 @@ h1, h2, h3, h4 {
   .menu-panel { grid-template-columns: 1.1rem minmax(0, 1fr) 1.1rem; }
   .menu-item { grid-template-columns: auto minmax(0, 1fr); }
   .menu-item-price { grid-column: 2; }
-  .gallery-mosaic { grid-template-columns: 1fr 1fr; }
-  .gallery-feature { grid-column: span 2; grid-row: auto; }
+  .gallery-mosaic { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; aspect-ratio: auto; }
+  .gallery-link { aspect-ratio: 1; }
+  .gallery-link:nth-child(n) { grid-column: auto; grid-row: auto; }
+  .gallery-link.gallery-feature { grid-column: 1 / -1; grid-row: auto; aspect-ratio: 16 / 10; }
   .contact-card { order: -1; aspect-ratio: 16 / 10; }
   .footer-strip { display: none; }
 }

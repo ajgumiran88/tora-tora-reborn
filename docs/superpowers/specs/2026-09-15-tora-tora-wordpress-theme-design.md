@@ -38,5 +38,6 @@ Create a ZIP-installable WordPress theme for the Tora Tora restaurant website. T
 
 ## Delivery
 
-- Deliver `dist/tora-tora.zip` with `tora-tora/` as the ZIP root.
+- Keep theme files at the repository root so WP Pusher installs as `tora-tora-reborn` with an empty subdirectory field.
+- Deliver `dist/tora-tora-reborn.zip` with `tora-tora-reborn/` as the ZIP root.
 - Document brand and Figma sources in the repository README and `docs/design-guides.md`.

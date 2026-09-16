@@ -2,9 +2,36 @@
 
 ZIP-installable, staging-safe WordPress theme for the **Tora Tora** Dubai restaurant site. Content website only — no booking, ordering checkout, payments, or e-commerce. Delivery CTAs are outbound links to partner platforms.
 
-**Installable package:** [`dist/tora-tora.zip`](dist/tora-tora.zip)  
-**Theme source:** [`wp-content/themes/tora-tora/`](wp-content/themes/tora-tora/)  
+**Theme files live at the repository root** (`style.css`, `functions.php`, …) so **WP Pusher** can install them as `tora-tora-reborn`.  
+**Installable package:** [`dist/tora-tora-reborn.zip`](dist/tora-tora-reborn.zip)  
 **Theme version:** 1.1.0
+
+---
+
+## WP Pusher (staging3.toratora.ae)
+
+Use these exact settings on **WP Pusher → Install Theme**:
+
+| Field | Value |
+| --- | --- |
+| Repository host | GitHub |
+| Theme repository | `ajgumiran88/tora-tora-reborn` |
+| Repository branch | `main` |
+| Repository subdirectory | **leave blank** |
+| Repository is private | only if the GitHub repo is private (needs WP Pusher license) |
+| Push-to-Deploy | optional (on for auto-update) |
+| Link installed theme | **off** on first install |
+
+Then click **Install theme** and activate **Tora Tora**.
+
+### Why the previous install failed
+
+WP Pusher always places the theme in `wp-content/themes/{repository-name}/` → `tora-tora-reborn`.  
+“Link installed theme” requires that folder to already exist with the **same name as the repository**. The theme used to live under `wp-content/themes/tora-tora`, so activation of `tora-tora-reborn` failed with “The requested theme does not exist.”
+
+The theme is now at the **repo root**. Leave subdirectory empty and do not use “Link installed theme” unless a folder named `tora-tora-reborn` is already present.
+
+If a broken install remains on the server, delete `wp-content/themes/tora-tora-reborn` (and any empty `tora-tora` leftover) via SFTP/File Manager, then install again with the settings above.
 
 ---
 
@@ -25,7 +52,7 @@ Brand extraction summary: [`docs/design-guides.md`](docs/design-guides.md)
 | Primary blue | `#0500F5` | `theme.json`, CSS `--tora-blue` |
 | White | `#FFFFFF` | `theme.json`, CSS `--tora-white` |
 | Supporting cream | `#F4ECE7` / `#E8D9D1` | Light panels (About, Contact, etc.) |
-| Typeface | **Raleway** (Google Fonts), weights used for UI + display | `style.css` / `main.css` |
+| Typeface | **Raleway** (Google Fonts), weights used for UI + display | `style.css` / `assets/css/main.css` |
 | Speckle / tiger pattern | Official pattern asset (WebP + PNG fallbacks, cover sizing) | `assets/images/tora-tora-pattern.*` |
 | Logo | Packaged logo + transparent tiger mark | `assets/images/tora-tora-logo.png`, `tiger-mark.png` |
 
@@ -38,7 +65,7 @@ Single immersive shell with full-viewport panels, hash URLs, and browser back/fo
 | Panel | Hash | Notes |
 | --- | --- | --- |
 | Home | `#home` | Brand-first hero, pattern field, View Menu CTA |
-| About Tora Tora | `#story` | Editable page copy + featured image |
+| About Tora Tora | `#story` / `#about` | Editable page copy + featured image |
 | Menu | `#menu` / `#menu-{slug}` | Tabbed categories (Breakfast, Appetizers, Draft Food Menu, Desserts, Beverage) |
 | Delivery | `#delivery` | Talabat / Noon / Deliveroo cards + zones/hours (Customizer) |
 | Gallery | `#gallery` | Lightbox gallery; images Customizer-editable |
@@ -67,10 +94,10 @@ Overlay navigation matches Figma labels: Home · About Tora Tora · Menu · Deli
 
 ---
 
-## Install
+## Manual ZIP install
 
 1. WordPress Admin → **Appearance → Themes → Add New → Upload Theme**.
-2. Upload `dist/tora-tora.zip`, install, activate **Tora Tora**.
+2. Upload `dist/tora-tora-reborn.zip`, install, activate **Tora Tora**.
 3. Edit Pages for copy; set Featured Images on Home / About / Contact panels as needed.
 4. Manage dishes under **Food Menu**; categories follow Figma tabs.
 5. Configure **Appearance → Customize → Tora Tora details**.
@@ -82,10 +109,13 @@ Requires WordPress 6.4+, PHP 8.0+.
 ## Repo layout
 
 ```
-dist/tora-tora.zip              # Installable theme ZIP (root folder: tora-tora/)
-docs/                           # Design spec, plan, brand guide notes
-tests/run.php                   # Static acceptance checks
-wp-content/themes/tora-tora/    # Theme source
+style.css, functions.php, …   # Theme root (WP Pusher–ready)
+assets/, inc/, template-parts/
+dist/tora-tora-reborn.zip     # Manual install ZIP (root folder: tora-tora-reborn/)
+docs/                         # Design spec, plan, brand guide notes
+tests/run.php                 # Static acceptance checks
+README.md                     # This file (repo)
+README.txt                    # WordPress theme readme
 ```
 
 Local smoke WordPress core, QA renders, and Figma dumps live under `work/` and are **gitignored** (not pushed).
@@ -98,12 +128,4 @@ Local smoke WordPress core, QA renders, and Figma dumps live under `work/` and a
 php tests/run.php
 ```
 
-Smoke locally by installing the ZIP into any WP 6.4+ instance (or syncing `wp-content/themes/tora-tora` into a local install). Keep staging mode on for review.
-
----
-
-## Constraints & placeholders
-
-- First-version deadline and review-before-launch constraints from client brief.
-- Food / interior photography may remain tasteful branded placeholders until final assets are supplied.
-- Delivery is **outbound links only** (Talabat, Noon, Deliveroo) — not in-theme checkout.
+Keep staging mode on for review.
