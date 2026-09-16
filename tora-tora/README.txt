@@ -2,7 +2,7 @@
 Contributors: reborn-consultancy
 Requires at least: 6.4
 Requires PHP: 8.0
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv2 or later
 
 An immersive native WordPress theme for Tora Tora Dubai.

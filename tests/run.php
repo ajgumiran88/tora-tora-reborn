@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 $root = dirname(__DIR__);
-$theme = $root;
+$theme = $root . '/tora-tora';
 $failures = [];
 
 function expect_true(bool $condition, string $message): void
