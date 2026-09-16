@@ -10,7 +10,7 @@ This document records the **external design sources** used to build the WordPres
 
 | Screen / system | Theme mapping |
 | --- | --- |
-| Full-bleed home with logo + pattern | `#home` panel, `.home-pattern`, packaged logo |
+| Home split: white headline column + speckle column (no ramen hero) | `#home` panel, `.home-split`, `.home-pattern`, packaged logo |
 | Overlay nav with X close | `.site-nav` / `.nav-overlay` |
 | About / story | `#story` |
 | Menu with category tabs | `#menu` + `#menu-{slug}`; CPT + taxonomy |
@@ -32,12 +32,12 @@ Client-supplied brand kit (referenced during planning as the design-guide / “d
 
 | Folder | Extracted guidance | Theme application |
 | --- | --- | --- |
-| **Colour Palette** | Primary **Tora Blue** `#0500F5`, **White** `#FFFFFF` | `theme.json` palette; CSS `--tora-blue` / `--tora-white`; blue and light (cream) panels |
-| **Typography** | **Raleway** as brand sans; strong display weights for headlines | Google Fonts Raleway; `font-weight: 800` headings; uppercase display treatment |
+| **Colour Palette** | Brand Book lists exactly two: **Tora Blue** `#0500F5` (R5 G0 B245 / C98 M100 Y0 K4) and **White** `#FFFFFF` (C0 M0 Y0 K0) | `theme.json` palette; CSS `--tora-blue` / `--tora-white`; light panels use **white** (`#FFFFFF`), not cream |
+| **Typography** | Brand Book names two faces: **Typeface 01 — ITC Avant Garde Gothic** (geometric display) and **Typeface 02 — Raleway** (versatile multi-weight sans) | Typeface 01 is self-hosted at `assets/fonts/avantgarde-{400,500,600,700}.woff2` and drives `h1`–`h4` via `--font-display`; Bold 700 is the heaviest cut supplied, so headings cap at 700. Typeface 02 loads from Google Fonts (Raleway `200;400;500;600;700;800`) and carries body copy, labels and the overlay nav. Client supplied the Avant Garde files; confirm the Monotype licence covers web embedding before launch. |
 | **Pattern** | Official tiger / speckle pattern | `assets/images/tora-tora-pattern.webp` (+ PNG/JPG fallbacks); CSS `image-set` + cover sizing for retina |
 | **Interior** | Atmosphere / photography direction | Gallery + panel imagery may stay placeholder until final shoots |
 
-Supporting cream surfaces used for light panels (`#F4ECE7`, `#E8D9D1`) sit alongside the official blue/white pair so Figma light screens remain readable without inventing a second brand blue.
+Cream (`#F4ECE7`) is retained only for the staging chrome strip. Figma light screens (About, Menu, Delivery, Careers) use solid white. Background tiger watermarks are **not** used on panel surfaces; the About page keeps only the intentional circular tiger graphic in the layout.
 
 ---
 

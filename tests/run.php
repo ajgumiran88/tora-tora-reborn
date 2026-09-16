@@ -35,6 +35,8 @@ $required = [
     'assets/images/tora-tora-logo.png', 'assets/images/tora-tora-pattern.jpg', 'assets/images/tiger-mark.png',
     'assets/images/tora-tora-pattern.png', 'assets/images/tora-tora-pattern.webp',
     'assets/images/delivery-talabat.svg', 'assets/images/delivery-noon.png', 'assets/images/delivery-deliveroo.svg',
+    'assets/fonts/avantgarde-400.woff2', 'assets/fonts/avantgarde-500.woff2',
+    'assets/fonts/avantgarde-600.woff2', 'assets/fonts/avantgarde-700.woff2',
     'inc/setup.php', 'inc/customizer.php', 'inc/menu-items.php', 'inc/jobs.php', 'inc/staging.php', 'inc/compatibility.php', 'inc/default-content.php',
     'single-job_listing.php',
 ];
@@ -70,10 +72,19 @@ file_contains($theme . '/assets/css/main.css', ':focus-visible', 'Visible keyboa
 file_contains($theme . '/assets/css/main.css', '@media (prefers-reduced-motion: reduce)', 'Reduced-motion CSS is missing.');
 file_contains($theme . '/front-page.php', 'tora_get_menu_groups', 'Dynamic menu rendering is missing.');
 file_contains($theme . '/assets/css/main.css', 'z-index: 250', 'Overlay navigation is not stacked above page panels.');
-file_contains($theme . '/front-page.php', 'menu-item-placeholder', 'Menu image placeholders are missing.');
+file_does_not_contain($theme . '/front-page.php', 'menu-item-placeholder', 'Menu still renders circular dish placeholders.');
+file_contains($theme . '/front-page.php', 'hero-bowl', 'Home is missing the Figma ramen bowl.');
+file_contains($theme . '/front-page.php', 'hero-ramen.png', 'Home is missing the packaged ramen asset.');
+file_contains($theme . '/front-page.php', 'delivery-partners', 'Delivery partner logos are not grouped on the first screen.');
+file_contains($theme . '/assets/css/main.css', '.delivery-primary', 'Delivery first-screen partner block is missing.');
+file_contains($theme . '/assets/css/main.css', 'justify-content: space-between', 'Delivery single-viewport spacing is missing.');
+file_does_not_contain($theme . '/assets/css/main.css', 'min-height: calc(100svh - var(--header) - var(--staging) - 1.15rem)', 'Delivery still forces a second full-screen block.');
 
 file_contains($theme . '/assets/css/main.css', '.light-panel:not(.nav-open) .brand-link img', 'Light-panel logo invert is missing.');
 file_contains($theme . '/assets/css/main.css', '.pattern-panel:not(.nav-open) .nav-toggle', 'Pattern-panel hamburger contrast chip is missing.');
+file_contains($theme . '/assets/css/main.css', '--font-display', 'Brand Book Typeface 01 token is missing.');
+file_contains($theme . '/assets/css/main.css', 'font-family: "ITC Avant Garde Gothic"', 'ITC Avant Garde Gothic @font-face is missing.');
+file_contains($theme . '/assets/css/main.css', 'font-family: var(--font-display)', 'Headings do not use the Brand Book display typeface.');
 file_contains($theme . '/assets/css/main.css', '#0500F5', 'Brand blue #0500F5 is missing from CSS tokens.');
 file_contains($theme . '/theme.json', '#0500F5', 'Brand blue #0500F5 is missing from theme.json.');
 file_contains($theme . '/assets/css/main.css', '#FFFFFF', 'Brand white #FFFFFF is missing from CSS tokens.');
@@ -123,17 +134,30 @@ file_contains($theme . '/inc/menu-items.php', 'draft-food-menu', 'Menu group ord
 
 file_contains($theme . '/front-page.php', 'id="about"', 'About panel is missing.');
 file_does_not_contain($theme . '/front-page.php', 'story-figure-gold', 'Gold medallion should not appear on primary About surfaces.');
-file_contains($theme . '/front-page.php', 'gallery-kicker', 'Gallery editorial kicker is missing.');
-file_contains($theme . '/front-page.php', 'gallery-count', 'Gallery image count is missing.');
-file_contains($theme . '/front-page.php', 'gallery-image-index', 'Gallery image index labels are missing.');
-file_contains($theme . '/assets/css/main.css', '.gallery-link::after', 'Gallery tiles are missing a premium interaction overlay.');
-file_contains($theme . '/assets/css/main.css', '.gallery-count', 'Gallery image count styling is missing.');
+file_does_not_contain($theme . '/front-page.php', 'gallery-kicker', 'Gallery still renders the extra editorial kicker.');
+file_does_not_contain($theme . '/front-page.php', 'gallery-count', 'Gallery still renders the image count chrome.');
+file_does_not_contain($theme . '/front-page.php', 'gallery-image-index', 'Gallery still renders image index labels.');
 file_contains($theme . '/assets/css/main.css', '.gallery-link:focus-visible', 'Gallery tiles are missing a dedicated keyboard focus treatment.');
-
-file_contains($theme . '/assets/css/main.css', '--tiger-mark:', 'The shared tiger watermark asset token is missing.');
-file_contains($theme . '/assets/css/main.css', '.panel::before', 'Panels do not render the shared tiger watermark layer.');
-file_contains($theme . '/assets/css/main.css', 'background-image: var(--tiger-mark)', 'The tiger watermark layer does not use the packaged tiger artwork.');
-file_contains($theme . '/assets/css/main.css', '--tora-cream:', 'The premium warm surface token is missing.');
+file_contains($theme . '/assets/css/main.css', 'background: var(--tora-white)', 'Light panels do not use the Figma white surface.');
+file_does_not_contain($theme . '/assets/css/main.css', '.panel::before', 'Panels still render the tiger watermark layer.');
+file_does_not_contain($theme . '/assets/css/main.css', '.standard-page::before', 'Standard pages still render the tiger watermark layer.');
+file_contains($theme . '/assets/css/main.css', '--tora-cream:', 'The staging cream token is missing.');
+file_contains($theme . '/inc/setup.php', 'wght@200;400;500;600;700;800', 'Raleway ExtraLight and mid weights are not enqueued.');
+file_contains($theme . '/inc/compatibility.php', 'wght@200;400;500;600;700;800', 'Safe-head Raleway weights are incomplete.');
+file_contains($theme . '/front-page.php', 'story-scroll-inner', 'About is missing the two-screen scroll wrapper.');
+file_contains($theme . '/front-page.php', 'story-pattern-disc', 'About is missing the Figma speckle disc.');
+file_contains($theme . '/front-page.php', 'story-tiger-disc', 'About is missing the overlapping tiger badge.');
+file_contains($theme . '/front-page.php', 'story-band', 'About is missing the Figma pattern foot band.');
+file_contains($theme . '/assets/css/main.css', 'height: 200%', 'About scroll inner is not locked to two viewports.');
+file_contains($theme . '/assets/js/site.js', 'about-panel', 'About panel body class toggle is missing.');
+file_contains($theme . '/inc/default-content.php', 'courage, strength and indomitable spirit', 'Figma About copy is missing from defaults.');
+file_contains($theme . '/front-page.php', 'home-split', 'Home is missing the Figma split layout wrapper.');
+file_contains($theme . '/assets/css/main.css', ".home-panel {\n  padding: 0;", 'Home panel still has inset padding instead of a full-bleed Figma split.');
+file_contains($theme . '/assets/css/main.css', 'grid-template-columns: minmax(0, 58%) minmax(0, 42%)', 'Home split columns do not match the Figma 58/42 proportion.');
+file_does_not_contain($theme . '/assets/css/main.css', 'outline: 3px solid var(--tora-tiger)', 'Home hamburger still uses the off-Figma yellow ring.');
+file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_home_intro_1_2_1', 'Home intro restoration upgrade is missing.');
+file_contains($theme . '/front-page.php', 'careers-openings', 'Careers openings are not separated into scroll space.');
+file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_to_1_2_0', 'Figma content upgrade hook is missing.');
 file_contains($theme . '/assets/css/main.css', '.delivery-card:hover', 'Delivery cards are missing a clear hover treatment.');
 file_does_not_contain($theme . '/assets/css/main.css', 'filter: contrast(1.1)', 'The pattern still amplifies JPEG compression artifacts.');
 file_does_not_contain($theme . '/assets/css/main.css', '.pattern-panel:not(.nav-open) .brand-link {', 'The white logo chip is still present on the patterned panel.');
@@ -142,7 +166,7 @@ file_contains($theme . '/assets/css/main.css', 'tora-tora-pattern.webp', 'The pa
 file_contains($theme . '/assets/css/main.css', 'tora-tora-pattern.png', 'The pattern token is missing its PNG fallback.');
 file_contains($theme . '/assets/css/main.css', '.delivery-logo', 'Delivery logo sizing styles are missing.');
 file_contains($theme . '/inc/setup.php', "'standard-page-context'", 'Standard WordPress pages are missing their dedicated light-surface body class.');
-file_contains($theme . '/inc/setup.php', "\$classes[] = 'light-panel';", 'Standard WordPress pages do not switch fixed chrome to the accessible blue-on-cream treatment.');
+file_contains($theme . '/inc/setup.php', "\$classes[] = 'light-panel';", 'Standard WordPress pages do not switch fixed chrome to the accessible blue-on-white treatment.');
 
 $pattern_dimensions = is_file($theme . '/assets/images/tora-tora-pattern.png')
     ? getimagesize($theme . '/assets/images/tora-tora-pattern.png')

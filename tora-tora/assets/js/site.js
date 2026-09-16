@@ -82,6 +82,7 @@
     document.body.classList.toggle("blue-panel", theme === "blue");
     document.body.classList.toggle("dark-panel", theme === "pattern" || theme === "blue");
     document.body.classList.toggle("pattern-panel", theme === "pattern");
+    document.body.classList.toggle("about-panel", panel.id === "about");
   }
 
   function showPanel(id, menuSlug, updateHistory, moveFocus) {

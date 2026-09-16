@@ -15,8 +15,8 @@ $home = tora_tora_panel_page(
 );
 $about = tora_tora_panel_page(
     'story',
-    __('The Spirit of the Tiger', 'tora-tora'),
-    __('Tora Tora takes its name from the Japanese word for tiger — a powerful creature rooted in mythology and symbolism. The tiger reflects the strength, courage and bold character of our food.', 'tora-tora'),
+    __('About Tora Tora', 'tora-tora'),
+    '<p>' . esc_html__('Tora Tora, derived from the Japanese word for \'tiger\', captures the essence of the powerful and majestic animal revered in Japanese mythology.', 'tora-tora') . '</p><p>' . wp_kses(__('A symbol of <strong>courage, strength and indomitable spirit</strong>, the tiger has a storied presence in folklore, often representing protection and good fortune. This name reflects our brand\'s commitment to bold flavours and vibrant dining experiences.', 'tora-tora'), ['strong' => []]) . '</p><p>' . esc_html__('Tora Tora brings a slice of Japanese culture to Dubai, offering a dining experience that\'s as dynamic and powerful as the tiger itself, perfectly blending tradition with contemporary flair.', 'tora-tora') . '</p>',
     'tiger-mark.png'
 );
 $delivery = tora_tora_panel_page(
@@ -85,36 +85,51 @@ $platforms = [
 ?>
 <main id="main-content" tabindex="-1">
     <section class="panel home-panel is-active" id="home" data-theme="pattern" aria-labelledby="home-title">
-        <div class="home-pattern" aria-hidden="true"></div>
-        <div class="hero-art media-reveal">
-            <figure class="hero-bowl">
-                <img src="<?php echo esc_url($home['image']); ?>" alt="<?php esc_attr_e('Tora Tora ramen bowl', 'tora-tora'); ?>" width="1280" height="1280">
-            </figure>
-        </div>
-        <div class="home-content panel-copy">
-            <h1 id="home-title"><?php echo esc_html($home['title']); ?></h1>
-            <div class="entry-content"><?php echo wp_kses_post($home['content']); ?></div>
-            <div class="button-row">
-                <a class="button nav-link" href="#menu" data-target="menu"><?php esc_html_e('View Menu', 'tora-tora'); ?></a>
-                <a class="button button-outline nav-link" href="#about" data-target="about"><?php esc_html_e('About Tora Tora', 'tora-tora'); ?></a>
+        <div class="home-split">
+            <div class="home-content panel-copy">
+                <h1 id="home-title"><?php echo esc_html($home['title']); ?></h1>
+                <?php if (trim((string) $home['content']) !== '') : ?>
+                    <div class="entry-content"><?php echo wp_kses_post($home['content']); ?></div>
+                <?php endif; ?>
             </div>
+            <div class="home-pattern" aria-hidden="true"></div>
+        </div>
+        <div class="hero-art">
+            <figure class="hero-bowl">
+                <img
+                    src="<?php echo esc_url($home['image']); ?>"
+                    alt="<?php esc_attr_e('Tora Tora ramen bowl', 'tora-tora'); ?>"
+                    width="1280"
+                    height="1280"
+                    decoding="async"
+                >
+            </figure>
         </div>
     </section>
 
     <section class="panel story-panel" id="about" data-theme="light" aria-labelledby="about-title" aria-hidden="true">
         <div class="panel-scroll">
-            <?php get_template_part('template-parts/panel', 'back'); ?>
-            <div class="story-grid">
-                <div class="story-copy panel-copy">
-                    <span class="panel-eyebrow"><?php esc_html_e('About Tora Tora', 'tora-tora'); ?></span>
-                    <h2 id="about-title"><?php echo esc_html($about['title']); ?></h2>
-                    <div class="entry-content"><?php echo wp_kses_post($about['content']); ?></div>
+            <div class="story-scroll-inner">
+                <div class="story-screen story-screen-primary">
+                    <?php get_template_part('template-parts/panel', 'back'); ?>
+                    <div class="story-layout">
+                        <div class="story-copy panel-copy">
+                            <h2 id="about-title"><?php echo esc_html($about['title']); ?></h2>
+                            <div class="entry-content"><?php echo wp_kses_post($about['content']); ?></div>
+                        </div>
+                        <div class="story-art" aria-hidden="true">
+                            <span class="story-pattern-disc"></span>
+                            <figure class="story-tiger-disc">
+                                <img src="<?php echo esc_url($about['image']); ?>" alt="" width="512" height="512" loading="lazy" decoding="async">
+                            </figure>
+                            <span class="story-rule"></span>
+                        </div>
+                    </div>
+                    <div class="story-band" aria-hidden="true"></div>
                 </div>
-                <figure class="story-figure">
-                    <span class="story-figure-disc">
-                        <img src="<?php echo esc_url($about['image']); ?>" alt="<?php esc_attr_e('Tora Tora tiger mark', 'tora-tora'); ?>" width="512" height="512" loading="lazy">
-                    </span>
-                </figure>
+                <div class="story-screen story-screen-secondary" aria-hidden="true">
+                    <div class="story-band story-band-tail"></div>
+                </div>
             </div>
         </div>
     </section>
@@ -153,13 +168,6 @@ $platforms = [
                             <h3><?php echo esc_html($group['term']->name); ?></h3>
                             <?php foreach ($group['items'] as $item) : ?>
                                 <article class="menu-item">
-                                    <div class="menu-item-image">
-                                        <?php if (has_post_thumbnail($item)) : ?>
-                                            <?php echo get_the_post_thumbnail($item, 'medium', ['loading' => 'lazy']); ?>
-                                        <?php else : ?>
-                                            <span class="menu-item-placeholder" aria-hidden="true"></span>
-                                        <?php endif; ?>
-                                    </div>
                                     <div class="menu-item-copy">
                                         <h4><?php echo esc_html(get_the_title($item)); ?></h4>
                                         <?php if (trim($item->post_content)) : ?><div><?php echo wp_kses_post(apply_filters('the_content', $item->post_content)); ?></div><?php endif; ?>
@@ -180,11 +188,13 @@ $platforms = [
     <section class="panel delivery-panel" id="delivery" data-theme="light" aria-labelledby="delivery-title" aria-hidden="true">
         <div class="delivery-band" aria-hidden="true"></div>
         <div class="panel-scroll delivery-layout">
+            <div class="delivery-primary">
             <?php get_template_part('template-parts/panel', 'back'); ?>
             <div class="delivery-copy panel-copy">
                 <h2 id="delivery-title"><?php echo esc_html($delivery['title']); ?></h2>
                 <div class="entry-content"><?php echo wp_kses_post($delivery['content']); ?></div>
             </div>
+            <div class="delivery-partners">
             <p class="delivery-label"><?php esc_html_e('Order on', 'tora-tora'); ?></p>
             <div class="delivery-platforms">
                 <?php foreach ($platforms as $platform) : ?>
@@ -201,7 +211,6 @@ $platforms = [
                             alt="<?php echo esc_attr($platform['name']); ?>"
                             width="<?php echo esc_attr((string) $platform['width']); ?>"
                             height="<?php echo esc_attr((string) $platform['height']); ?>"
-                            loading="lazy"
                             decoding="async"
                         >
                         <p><?php echo esc_html($platform['copy']); ?></p>
@@ -212,6 +221,9 @@ $platforms = [
                     </a>
                 <?php endforeach; ?>
             </div>
+            </div>
+            </div>
+            <div class="delivery-secondary">
             <div class="delivery-meta">
                 <div>
                     <p class="delivery-label"><?php esc_html_e('Delivery zones', 'tora-tora'); ?></p>
@@ -230,6 +242,7 @@ $platforms = [
                     </dl>
                 </div>
             </div>
+            </div>
         </div>
         <div class="delivery-footer" aria-hidden="true"></div>
     </section>
@@ -239,24 +252,13 @@ $platforms = [
             <?php get_template_part('template-parts/panel', 'back'); ?>
             <div class="gallery-layout">
                 <div class="gallery-copy panel-copy">
-                    <span class="panel-eyebrow gallery-kicker"><?php esc_html_e('The Tora Tora Edit', 'tora-tora'); ?></span>
                     <h2 id="gallery-title"><?php echo esc_html($gallery['title']); ?></h2>
                     <div class="entry-content"><?php echo wp_kses_post($gallery['content']); ?></div>
-                    <div class="gallery-meta">
-                        <p class="gallery-count" aria-label="<?php echo esc_attr(sprintf(_n('%d gallery image', '%d gallery images', $gallery_image_total, 'tora-tora'), $gallery_image_total)); ?>">
-                            <span aria-hidden="true">01</span>
-                            <span aria-hidden="true">/</span>
-                            <span aria-hidden="true"><?php echo esc_html(str_pad((string) $gallery_image_total, 2, '0', STR_PAD_LEFT)); ?></span>
-                        </p>
-                        <p class="gallery-instruction"><?php esc_html_e('Explore the space — select an image to enlarge.', 'tora-tora'); ?></p>
-                    </div>
                 </div>
                 <div class="gallery-mosaic">
                     <?php foreach ($gallery_images as $index => $gallery_image) : ?>
                         <button class="gallery-link<?php echo 0 === $index ? ' gallery-feature' : ''; ?>" type="button" data-image="<?php echo esc_url($gallery_image); ?>" aria-controls="gallery-modal" aria-haspopup="dialog" aria-label="<?php echo esc_attr(sprintf(__('Open gallery image %1$d of %2$d', 'tora-tora'), $index + 1, $gallery_image_total)); ?>">
                             <img src="<?php echo esc_url($gallery_image); ?>" alt="<?php echo esc_attr(sprintf(__('Tora Tora gallery image %d', 'tora-tora'), $index + 1)); ?>" width="736" height="736" loading="lazy">
-                            <span class="gallery-image-index" aria-hidden="true"><?php echo esc_html(str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT)); ?></span>
-                            <span class="gallery-image-view" aria-hidden="true"><?php esc_html_e('View', 'tora-tora'); ?></span>
                         </button>
                     <?php endforeach; ?>
                 </div>
@@ -269,15 +271,14 @@ $platforms = [
             <?php get_template_part('template-parts/panel', 'back'); ?>
             <div class="careers-layout">
                 <div class="careers-copy panel-copy">
-                    <span class="panel-eyebrow"><?php esc_html_e('Join the team', 'tora-tora'); ?></span>
                     <h2 id="careers-title"><?php echo esc_html($careers_title); ?></h2>
                     <div class="entry-content"><?php echo wp_kses_post($careers_content); ?></div>
                     <div class="button-row">
-                        <a class="button" href="mailto:<?php echo esc_attr(antispambot($careers_email)); ?>?subject=<?php echo rawurlencode('Job application'); ?>"><?php esc_html_e('Email Your CV', 'tora-tora'); ?></a>
-                        <a class="button button-outline nav-link" href="#contact" data-target="contact"><?php esc_html_e('Contact', 'tora-tora'); ?></a>
+                        <a class="button nav-link" href="#contact" data-target="contact"><?php esc_html_e('Apply Now', 'tora-tora'); ?></a>
+                        <a class="button button-outline" href="mailto:<?php echo esc_attr(antispambot($careers_email)); ?>?subject=<?php echo rawurlencode('Job application'); ?>"><?php esc_html_e('Email Us', 'tora-tora'); ?></a>
                     </div>
                 </div>
-                <aside class="careers-card" aria-labelledby="careers-openings-title">
+                <section class="careers-openings" aria-labelledby="careers-openings-title">
                     <h3 id="careers-openings-title"><?php esc_html_e('Current openings', 'tora-tora'); ?></h3>
                     <?php if ($job_listings) : ?>
                         <ul class="careers-job-list">
@@ -308,9 +309,8 @@ $platforms = [
                         </ul>
                     <?php else : ?>
                         <p class="careers-empty"><?php esc_html_e('No vacancies at the moment. We still welcome introductions from people who care deeply about food and hospitality.', 'tora-tora'); ?></p>
-                        <a class="button button-inverse" href="mailto:<?php echo esc_attr(antispambot($careers_email)); ?>?subject=<?php echo rawurlencode('Job application'); ?>"><?php esc_html_e('Email Your CV', 'tora-tora'); ?></a>
                     <?php endif; ?>
-                </aside>
+                </section>
             </div>
         </div>
     </section>

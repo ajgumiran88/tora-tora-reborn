@@ -62,7 +62,7 @@ function tora_tora_enqueue_assets(): void
     // Keep the Google Fonts URL short — long weight lists + optimizers have caused head fatals on SG stacks.
     wp_enqueue_style(
         'tora-tora-fonts',
-        'https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;800&display=swap',
+        'https://fonts.googleapis.com/css2?family=Raleway:wght@200;400;500;600;700;800&display=swap',
         [],
         false
     );
