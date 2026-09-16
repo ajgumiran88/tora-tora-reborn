@@ -49,12 +49,12 @@ function tora_tora_render_document_head(): void
 
     // Do not call WordPress's asset hooks in staging. The installed lte-ext
     // Fontello integration fatals while WordPress collects third-party assets.
-    echo '<title>' . esc_html(get_bloginfo('name')) . '</title>' . "\n";
-    echo '<meta name="robots" content="noindex,nofollow" />' . "\n";
-    echo '<link rel="preconnect" href="https://fonts.googleapis.com" />' . "\n";
-    echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />' . "\n";
-    echo '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;800&amp;display=swap" />' . "\n";
-    echo '<link rel="stylesheet" href="' . esc_url($main_css) . '" />' . "\n";
+    echo '<title>' . esc_html(get_bloginfo('name')) . '</title>' . PHP_EOL;
+    echo '<meta name="robots" content="noindex,nofollow" />' . PHP_EOL;
+    echo '<link rel="preconnect" href="https://fonts.googleapis.com" />' . PHP_EOL;
+    echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />' . PHP_EOL;
+    echo '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;800&amp;display=swap" />' . PHP_EOL;
+    echo '<link rel="stylesheet" href="' . esc_url($main_css) . '" />' . PHP_EOL;
 }
 
 function tora_tora_render_document_footer(): void
@@ -65,5 +65,5 @@ function tora_tora_render_document_footer(): void
     }
 
     $site_js = tora_tora_uri() . '/assets/js/site.js?ver=' . rawurlencode(tora_tora_asset_version('assets/js/site.js'));
-    echo '<script src="' . esc_url($site_js) . '" defer></script>' . "\n";
+    echo '<script src="' . esc_url($site_js) . '" defer></script>' . PHP_EOL;
 }

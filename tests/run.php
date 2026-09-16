@@ -55,6 +55,7 @@ file_contains($theme . '/header.php', 'tora_tora_render_document_head', 'Safe he
 file_contains($theme . '/inc/compatibility.php', 'tora_tora_use_safe_head', 'Host compatibility helper is missing.');
 file_contains($theme . '/inc/compatibility.php', 'rank_math/frontend/disable', 'Rank Math staging guard is missing.');
 file_does_not_contain($theme . '/inc/compatibility.php', "if (!did_action('wp_enqueue_scripts'))", 'The staging-safe head still fires third-party asset hooks.');
+file_contains($theme . '/inc/compatibility.php', "'</title>' . PHP_EOL", 'The staging-safe document title is not closed.');
 file_contains($theme . '/inc/compatibility.php', "tora_tora_asset_version('assets/css/main.css')", 'The staging-safe head does not render the theme stylesheet directly.');
 file_contains($theme . '/inc/compatibility.php', "tora_tora_asset_version('assets/js/site.js')", 'The staging-safe footer does not render the theme script directly.');
 file_contains($theme . '/front-page.php', 'aria-modal="true"', 'Accessible modal semantics are missing.');
