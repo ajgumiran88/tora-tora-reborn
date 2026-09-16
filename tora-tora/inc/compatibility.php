@@ -55,6 +55,30 @@ function tora_tora_render_document_head(): void
     echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />' . PHP_EOL;
     echo '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;800&amp;display=swap" />' . PHP_EOL;
     echo '<link rel="stylesheet" href="' . esc_url($main_css) . '" />' . PHP_EOL;
+    tora_tora_render_safe_admin_bar_assets();
+}
+
+/**
+ * Render the core toolbar styles that wp_head() would normally print.
+ *
+ * Safe staging intentionally skips the global WordPress asset pipeline because
+ * the installed lte-ext Fontello integration fatals inside it. The WordPress
+ * toolbar is still rendered through wp_body_open() for logged-in reviewers,
+ * so its core-only styles must be emitted directly.
+ */
+function tora_tora_render_safe_admin_bar_assets(): void
+{
+    if (!function_exists('is_admin_bar_showing') || !is_admin_bar_showing()) {
+        return;
+    }
+
+    $version = rawurlencode((string) get_bloginfo('version'));
+    $dashicons_css = includes_url('css/dashicons.min.css') . '?ver=' . $version;
+    $admin_bar_css = includes_url('css/admin-bar.min.css') . '?ver=' . $version;
+
+    echo '<link rel="stylesheet" id="tora-tora-dashicons-css" href="' . esc_url($dashicons_css) . '" />' . PHP_EOL;
+    echo '<link rel="stylesheet" id="tora-tora-admin-bar-css" href="' . esc_url($admin_bar_css) . '" />' . PHP_EOL;
+    echo '<style id="tora-tora-admin-bar-bump" media="screen">html{margin-top:32px!important}@media screen and (max-width:782px){html{margin-top:46px!important}}@media screen and (max-width:600px){html{margin-top:0!important}#wpadminbar{position:fixed}}</style>' . PHP_EOL;
 }
 
 function tora_tora_render_document_footer(): void
