@@ -89,6 +89,12 @@ file_contains($theme . '/single-job_listing.php', 'job-application.php', 'Single
 file_contains($theme . '/assets/css/main.css', '.careers-job-list', 'Careers job list styling is missing.');
 file_contains($theme . '/functions.php', '/inc/jobs.php', 'jobs.php is not bootstrapped.');
 
+file_contains($theme . '/inc/setup.php', 'tora_tora_maps_embed_url', 'Google Maps embed helper is missing.');
+file_contains($theme . '/front-page.php', 'tora_tora_maps_embed_url', 'Contact panel does not embed Google Maps.');
+file_contains($theme . '/front-page.php', 'contact-map-frame', 'Contact map iframe markup is missing.');
+file_does_not_contain($theme . '/front-page.php', 'contact-card media-reveal', 'Contact panel still uses the interior photo instead of a map.');
+file_contains($theme . '/assets/css/main.css', '.contact-map-frame', 'Contact map iframe styling is missing.');
+
 file_contains($theme . '/header.php', 'About Tora Tora', 'Overlay is missing the About Tora Tora label.');
 file_contains($theme . '/header.php', 'data-target="delivery"', 'Overlay is missing Delivery navigation.');
 file_contains($theme . '/header.php', 'overlay-close', 'Overlay is missing the Figma close (X) control.');

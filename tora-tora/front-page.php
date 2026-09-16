@@ -330,7 +330,18 @@ $platforms = [
                     </dl>
                     <a class="button button-inverse" href="https://maps.google.com/?q=<?php echo rawurlencode($address); ?>" target="_blank" rel="noopener"><?php esc_html_e('Directions', 'tora-tora'); ?></a>
                 </div>
-                <figure class="contact-card media-reveal"><img src="<?php echo esc_url($contact['image']); ?>" alt="<?php esc_attr_e('Tora Tora interior', 'tora-tora'); ?>" width="736" height="736" loading="lazy"></figure>
+                <figure class="contact-card contact-map" aria-label="<?php echo esc_attr(sprintf(/* translators: %s: street address */ __('Map of Tora Tora at %s', 'tora-tora'), $address)); ?>">
+                    <iframe
+                        class="contact-map-frame"
+                        title="<?php echo esc_attr(sprintf(/* translators: %s: street address */ __('Google Map showing %s', 'tora-tora'), $address)); ?>"
+                        src="<?php echo esc_url(tora_tora_maps_embed_url($address)); ?>"
+                        width="736"
+                        height="920"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        allowfullscreen
+                    ></iframe>
+                </figure>
             </div>
         </div>
     </section>

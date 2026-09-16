@@ -132,6 +132,27 @@ function tora_tora_logo_url(): string
     return $custom_logo ?: tora_tora_asset('images/tora-tora-logo.png');
 }
 
+/**
+ * Google Maps embed URL with a pin on the given address (no API key required).
+ */
+function tora_tora_maps_embed_url(string $address): string
+{
+    $query = trim($address);
+    if ($query === '') {
+        $query = 'Al Wasl Road, Umm Suqeim 1, Dubai, UAE';
+    }
+
+    return add_query_arg(
+        [
+            'q'      => $query,
+            'hl'     => 'en',
+            'z'      => '16',
+            'output' => 'embed',
+        ],
+        'https://maps.google.com/maps'
+    );
+}
+
 function tora_tora_image_setting(string $setting, string $fallback): string
 {
     $value = get_theme_mod($setting, '');
