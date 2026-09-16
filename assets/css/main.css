@@ -374,12 +374,19 @@ h1, h2, h3, h4 {
   min-width: 44px;
 }
 
-.panel-back-arrow { position: relative; width: 52px; height: 2px; background: currentColor; }
+/* Margin reserves space for the rotated head so overflow:auto panels don't clip the tip. */
+.panel-back-arrow {
+  position: relative;
+  width: 52px;
+  height: 2px;
+  margin-left: 8px;
+  background: currentColor;
+}
 .panel-back-arrow::before {
   content: "";
   position: absolute;
   top: -5px;
-  left: 0;
+  left: -5px;
   width: 10px;
   height: 10px;
   border-left: 2px solid currentColor;

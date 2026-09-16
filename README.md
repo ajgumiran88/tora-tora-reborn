@@ -3,7 +3,8 @@
 ZIP-installable, staging-safe WordPress theme for the **Tora Tora** Dubai restaurant site. Content website only — no booking, ordering checkout, payments, or e-commerce. Delivery CTAs are outbound links to partner platforms.
 
 **Theme files live at the repository root** (`style.css`, `functions.php`, …) so **WP Pusher** can install them as `tora-tora-reborn`.  
-**Installable package:** [`dist/tora-tora-reborn.zip`](dist/tora-tora-reborn.zip)  
+**WordPress Admin ZIP (recommended):** [`dist/tora-tora.zip`](dist/tora-tora.zip) — root folder `tora-tora/`  
+**Download:** [Release v1.1.0 → tora-tora.zip](https://github.com/ajgumiran88/tora-tora-reborn/releases/download/v1.1.0/tora-tora.zip)  
 **Theme version:** 1.1.0
 
 ---
@@ -94,15 +95,16 @@ Overlay navigation matches Figma labels: Home · About Tora Tora · Menu · Deli
 
 ---
 
-## Manual ZIP install
+## Manual ZIP install (easiest)
 
-1. WordPress Admin → **Appearance → Themes → Add New → Upload Theme**.
-2. Upload `dist/tora-tora-reborn.zip`, install, activate **Tora Tora**.
-3. Edit Pages for copy; set Featured Images on Home / About / Contact panels as needed.
-4. Manage dishes under **Food Menu**; categories follow Figma tabs.
-5. Configure **Appearance → Customize → Tora Tora details**.
+1. Download [tora-tora.zip](https://github.com/ajgumiran88/tora-tora-reborn/releases/download/v1.1.0/tora-tora.zip).
+2. WordPress Admin → **Appearance → Themes → Add New → Upload Theme**.
+3. Choose `tora-tora.zip` → **Install Now** → **Activate**.
+4. Edit Pages for copy; set Featured Images on Home / About / Contact panels as needed.
+5. Manage dishes under **Food Menu**; categories follow Figma tabs.
+6. Configure **Appearance → Customize → Tora Tora details**.
 
-Requires WordPress 6.4+, PHP 8.0+.
+Requires WordPress 6.4+, PHP 8.0+. The ZIP contains a single folder `tora-tora/` with `style.css` inside.
 
 ---
 
