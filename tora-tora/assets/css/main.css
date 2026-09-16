@@ -4,6 +4,7 @@
   --tora-cream: #F4ECE7;
   --tora-cream-deep: #E8D9D1;
   --tora-ink: #0500F5;
+  --tora-tiger: #F5B800;
   --font-main: "Raleway", Arial, sans-serif;
   --ease: cubic-bezier(.22, 1, .36, 1);
   --side: clamp(1.25rem, 5vw, 5rem);
@@ -154,6 +155,7 @@ h1, h2, h3, h4 {
   padding: .8rem var(--side) 0;
   color: var(--tora-white);
   pointer-events: none;
+  overflow: visible;
   transition: color .25s ease;
 }
 
@@ -204,11 +206,43 @@ h1, h2, h3, h4 {
 .nav-toggle span:nth-child(3) { top: 32px; }
 .nav-open .nav-toggle { visibility: hidden; }
 
-/* Pattern home: solid chips so chrome stays readable on the busy speckle. */
+/* Pattern home: blue chip + tiger-yellow ring (border stays visible if glow is clipped). */
 .pattern-panel:not(.nav-open) .nav-toggle {
   color: var(--tora-white);
   background: var(--tora-blue);
-  box-shadow: 0 4px 16px rgba(5, 0, 245, 0.4);
+  border: 3px solid var(--tora-tiger);
+  box-shadow:
+    0 0 0 3px rgba(245, 184, 0, .35),
+    0 0 18px 2px rgba(245, 184, 0, .75),
+    0 0 32px 6px rgba(245, 184, 0, .4),
+    0 4px 16px rgba(5, 0, 245, .4);
+}
+
+.pattern-panel:not(.nav-open) .nav-toggle::after {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border: 2px solid rgba(245, 184, 0, .9);
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 0 0 12px 2px rgba(245, 184, 0, .55);
+}
+
+.pattern-panel:not(.nav-open) .nav-toggle:hover,
+.pattern-panel:not(.nav-open) .nav-toggle:focus-visible {
+  border-color: #ffd54a;
+  box-shadow:
+    0 0 0 4px rgba(245, 184, 0, .45),
+    0 0 24px 4px rgba(245, 184, 0, .9),
+    0 0 40px 8px rgba(245, 184, 0, .5),
+    0 6px 18px rgba(5, 0, 245, .45);
+}
+
+.pattern-panel:not(.nav-open) .nav-toggle:hover::after,
+.pattern-panel:not(.nav-open) .nav-toggle:focus-visible::after {
+  inset: -8px;
+  border-color: #ffd54a;
+  box-shadow: 0 0 16px 3px rgba(255, 213, 74, .7);
 }
 
 .pattern-panel:not(.nav-open) .footer-strip {
@@ -627,6 +661,15 @@ h1, h2, h3, h4 {
 }
 
 .delivery-panel { padding-left: 0; padding-right: 0; padding-bottom: 0; }
+
+/* Keep "ORDER DELIVERY" on one line — panel h2 max-width:14ch forces a wrap. */
+.delivery-panel #delivery-title {
+  max-width: none;
+  width: max-content;
+  max-inline-size: 100%;
+  white-space: nowrap;
+  font-size: clamp(2.2rem, 5.2vw, 6.2rem);
+}
 .delivery-band {
   position: absolute;
   top: 0;
