@@ -35,7 +35,7 @@ $required = [
     'assets/images/tora-tora-logo.png', 'assets/images/tora-tora-pattern.jpg', 'assets/images/tiger-mark.png',
     'assets/images/tora-tora-pattern.png', 'assets/images/tora-tora-pattern.webp',
     'assets/images/delivery-talabat.svg', 'assets/images/delivery-noon.png', 'assets/images/delivery-deliveroo.svg',
-    'inc/setup.php', 'inc/customizer.php', 'inc/menu-items.php', 'inc/staging.php', 'inc/default-content.php',
+    'inc/setup.php', 'inc/customizer.php', 'inc/menu-items.php', 'inc/staging.php', 'inc/compatibility.php', 'inc/default-content.php',
 ];
 
 foreach ($required as $file) {
@@ -51,6 +51,9 @@ file_contains($theme . '/inc/staging.php', 'wp_robots', 'Staging robots filter i
 file_contains($theme . '/inc/staging.php', 'X-Robots-Tag', 'Staging HTTP robots header is missing.');
 file_contains($theme . '/header.php', 'STAGING PREVIEW', 'Visible staging preview notice is missing.');
 file_contains($theme . '/header.php', 'skip-link', 'Skip link is missing.');
+file_contains($theme . '/header.php', 'tora_tora_render_document_head', 'Safe head renderer is missing from header.php.');
+file_contains($theme . '/inc/compatibility.php', 'tora_tora_use_safe_head', 'Host compatibility helper is missing.');
+file_contains($theme . '/inc/compatibility.php', 'rank_math/frontend/disable', 'Rank Math staging guard is missing.');
 file_contains($theme . '/front-page.php', 'aria-modal="true"', 'Accessible modal semantics are missing.');
 file_contains($theme . '/assets/js/site.js', 'history.pushState', 'Panel history support is missing.');
 file_contains($theme . '/assets/js/site.js', 'prefers-reduced-motion', 'Reduced motion support is missing.');

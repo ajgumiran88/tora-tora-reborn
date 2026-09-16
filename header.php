@@ -10,8 +10,8 @@
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#0500F5">
-    <?php wp_head(); ?>
-    <!-- tora-tora:<?php echo esc_html(TORA_TORA_VERSION); ?> -->
+    <?php tora_tora_render_document_head(); ?>
+    <!-- tora-tora:<?php echo esc_html(TORA_TORA_VERSION); ?> safe-head=<?php echo tora_tora_use_safe_head() ? '1' : '0'; ?> -->
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>

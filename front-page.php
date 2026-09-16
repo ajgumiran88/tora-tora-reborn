@@ -5,6 +5,8 @@
  * @package Tora_Tora
  */
 
+get_header();
+
 $home = tora_tora_panel_page(
     'home',
     __('Authentic Japanese Ramen in Dubai', 'tora-tora'),
@@ -75,8 +77,6 @@ $platforms = [
         'height' => 80,
     ],
 ];
-
-get_header();
 ?>
 <main id="main-content" tabindex="-1">
     <section class="panel home-panel is-active" id="home" data-theme="pattern" aria-labelledby="home-title">

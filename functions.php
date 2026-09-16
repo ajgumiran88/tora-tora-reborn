@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('TORA_TORA_VERSION', '1.1.1');
+define('TORA_TORA_VERSION', '1.1.2');
 
 /**
  * Theme directory (resolved at call time so WP Pusher / switched themes stay correct).
@@ -39,4 +39,5 @@ require_once tora_tora_dir() . '/inc/setup.php';
 require_once tora_tora_dir() . '/inc/customizer.php';
 require_once tora_tora_dir() . '/inc/menu-items.php';
 require_once tora_tora_dir() . '/inc/staging.php';
+require_once tora_tora_dir() . '/inc/compatibility.php';
 require_once tora_tora_dir() . '/inc/default-content.php';
