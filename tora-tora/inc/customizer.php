@@ -35,10 +35,15 @@ function tora_tora_customize_register(WP_Customize_Manager $customize): void
     );
 
     $text_settings = [
-        'tora_address' => [__('Address', 'tora-tora'), 'Al Wasl Road, Umm Suqeim 1, Dubai, UAE'],
-        'tora_phone'   => [__('Phone', 'tora-tora'), '+9-500-025-200'],
-        'tora_email'   => [__('Contact email', 'tora-tora'), 'support@toratora.ae'],
+        'tora_address' => [__('Address', 'tora-tora'), 'Al Wasl Road, Umm Suqeim 1 - Dubai, UAE'],
+        'tora_phone'   => [__('Phone', 'tora-tora'), '+971 4 000 0000'],
+        'tora_email'   => [__('Contact email', 'tora-tora'), 'hello@toratora.ae'],
+        'tora_reservation_email' => [__('Reservation email', 'tora-tora'), 'reserve@toratora.ae'],
         'tora_careers_email' => [__('Careers email', 'tora-tora'), 'hello@toratora.ae'],
+        'tora_instagram_handle' => [__('Instagram handle', 'tora-tora'), '@toratora.dxb'],
+        'tora_instagram_url' => [__('Instagram URL', 'tora-tora'), 'https://www.instagram.com/toratora.dxb'],
+        'tora_tiktok_handle' => [__('TikTok handle', 'tora-tora'), '@toratora.dxb'],
+        'tora_tiktok_url' => [__('TikTok URL', 'tora-tora'), 'https://www.tiktok.com/@toratora.dxb'],
         'tora_social'  => [__('Social label', 'tora-tora'), 'Facebook / TikTok / Instagram / WhatsApp'],
         'tora_footer'  => [__('Footer text', 'tora-tora'), 'Reborn Consultancy © ' . gmdate('Y')],
         'tora_talabat_url' => [__('Talabat URL', 'tora-tora'), 'https://www.talabat.com'],
@@ -47,6 +52,8 @@ function tora_tora_customize_register(WP_Customize_Manager $customize): void
         'tora_hours_weekday' => [__('Hours Monday–Friday', 'tora-tora'), '11:00 - 22:30'],
         'tora_hours_saturday' => [__('Hours Saturday', 'tora-tora'), '10:00 - 23:00'],
         'tora_hours_sunday' => [__('Hours Sunday', 'tora-tora'), '10:00 - 23:00'],
+        'tora_hours_sun_thu' => [__('Contact hours Sunday–Thursday', 'tora-tora'), '08:00 - 23:00'],
+        'tora_hours_fri_sat' => [__('Contact hours Friday–Saturday', 'tora-tora'), '08:00 - 00:00'],
         'tora_featured_zone' => [__('Highlighted delivery zone', 'tora-tora'), 'Business Bay'],
     ];
 
@@ -95,6 +102,7 @@ function tora_tora_customize_register(WP_Customize_Manager $customize): void
         'tora_gallery_3' => [__('Gallery image 3', 'tora-tora'), 'gallery-3.jpg'],
         'tora_gallery_4' => [__('Gallery image 4', 'tora-tora'), 'gallery-4.jpg'],
         'tora_gallery_5' => [__('Gallery image 5', 'tora-tora'), 'gallery-5.jpg'],
+        'tora_contact_map' => [__('Contact Dubai map', 'tora-tora'), 'contact-dubai-map.png'],
     ];
 
     foreach ($image_settings as $id => [$label, $fallback]) {

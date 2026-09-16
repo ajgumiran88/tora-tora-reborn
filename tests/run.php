@@ -33,6 +33,7 @@ $required = [
     'style.css', 'screenshot.png', 'functions.php', 'front-page.php', 'index.php', 'header.php', 'footer.php',
     'theme.json', 'assets/css/main.css', 'assets/js/site.js',
     'assets/images/tora-tora-logo.png', 'assets/images/tora-tora-pattern.jpg', 'assets/images/tiger-mark.png',
+    'assets/images/hero-chopsticks.png', 'assets/images/contact-dubai-map.png',
     'assets/images/tora-tora-pattern.png', 'assets/images/tora-tora-pattern.webp',
     'assets/images/delivery-talabat.svg', 'assets/images/delivery-noon.png', 'assets/images/delivery-deliveroo.svg',
     'assets/fonts/avantgarde-400.woff2', 'assets/fonts/avantgarde-500.woff2',
@@ -75,9 +76,12 @@ file_contains($theme . '/assets/css/main.css', 'z-index: 250', 'Overlay navigati
 file_does_not_contain($theme . '/front-page.php', 'menu-item-placeholder', 'Menu still renders circular dish placeholders.');
 file_contains($theme . '/front-page.php', 'hero-bowl', 'Home is missing the Figma ramen bowl.');
 file_contains($theme . '/front-page.php', 'hero-ramen.png', 'Home is missing the packaged ramen asset.');
+file_contains($theme . '/front-page.php', 'hero-chopsticks', 'Home is missing the Figma chopsticks overlay.');
+file_contains($theme . '/assets/css/main.css', '.home-pattern::before', 'Home pattern is missing the right-edge gutter.');
 file_contains($theme . '/front-page.php', 'delivery-partners', 'Delivery partner logos are not grouped on the first screen.');
 file_contains($theme . '/assets/css/main.css', '.delivery-primary', 'Delivery first-screen partner block is missing.');
-file_contains($theme . '/assets/css/main.css', 'justify-content: space-between', 'Delivery single-viewport spacing is missing.');
+file_contains($theme . '/assets/css/main.css', '.delivery-zones-block { grid-column: 1 / span 2;', 'Delivery zones do not share the partner-card grid.');
+file_contains($theme . '/assets/css/main.css', 'grid-template-columns: repeat(4, minmax(0, 1fr));', 'Delivery zone chips are not aligned to an equal-width grid.');
 file_does_not_contain($theme . '/assets/css/main.css', 'min-height: calc(100svh - var(--header) - var(--staging) - 1.15rem)', 'Delivery still forces a second full-screen block.');
 
 file_contains($theme . '/assets/css/main.css', '.light-panel:not(.nav-open) .brand-link img', 'Light-panel logo invert is missing.');
@@ -101,10 +105,16 @@ file_contains($theme . '/assets/css/main.css', '.careers-job-list', 'Careers job
 file_contains($theme . '/functions.php', '/inc/jobs.php', 'jobs.php is not bootstrapped.');
 
 file_contains($theme . '/inc/setup.php', 'tora_tora_maps_embed_url', 'Google Maps embed helper is missing.');
-file_contains($theme . '/front-page.php', 'tora_tora_maps_embed_url', 'Contact panel does not embed Google Maps.');
-file_contains($theme . '/front-page.php', 'contact-map-frame', 'Contact map iframe markup is missing.');
+file_contains($theme . '/front-page.php', 'contact-map-art', 'Contact panel is missing the Figma Dubai map artwork.');
+file_contains($theme . '/front-page.php', 'contact-tiger', 'Contact panel is missing the Figma tiger mark.');
+file_contains($theme . '/front-page.php', 'Get in touch', 'Contact panel is missing the Figma Get in touch block.');
+file_contains($theme . '/front-page.php', 'Opening hours', 'Contact panel is missing the Figma opening hours block.');
+file_contains($theme . '/front-page.php', 'Follow us', 'Contact panel is missing the Figma Follow us block.');
 file_does_not_contain($theme . '/front-page.php', 'contact-card media-reveal', 'Contact panel still uses the interior photo instead of a map.');
-file_contains($theme . '/assets/css/main.css', '.contact-map-frame', 'Contact map iframe styling is missing.');
+file_contains($theme . '/assets/css/main.css', '.contact-map-art', 'Contact map artwork styling is missing.');
+file_contains($theme . '/assets/js/site.js', 'contact-view', 'Contact chrome body class toggle is missing.');
+file_contains($theme . '/inc/customizer.php', 'tora_reservation_email', 'Reservation email Customizer setting is missing.');
+file_contains($theme . '/inc/customizer.php', 'tora_instagram_url', 'Instagram URL Customizer setting is missing.');
 
 file_contains($theme . '/header.php', 'About Tora Tora', 'Overlay is missing the About Tora Tora label.');
 file_contains($theme . '/header.php', 'data-target="delivery"', 'Overlay is missing Delivery navigation.');
@@ -134,9 +144,12 @@ file_contains($theme . '/inc/menu-items.php', 'draft-food-menu', 'Menu group ord
 
 file_contains($theme . '/front-page.php', 'id="about"', 'About panel is missing.');
 file_does_not_contain($theme . '/front-page.php', 'story-figure-gold', 'Gold medallion should not appear on primary About surfaces.');
-file_does_not_contain($theme . '/front-page.php', 'gallery-kicker', 'Gallery still renders the extra editorial kicker.');
+file_contains($theme . '/front-page.php', 'gallery-blog', 'Gallery is missing the Figma /Blog label.');
+file_contains($theme . '/front-page.php', 'gallery-mark', 'Gallery is missing the Figma image numbers.');
+file_contains($theme . '/front-page.php', 'gallery-ticker', 'Gallery is missing the repeating Tora Tora footer line.');
+file_contains($theme . '/front-page.php', "esc_html_e('Gallery', 'tora-tora')", 'Gallery heading does not use the Figma title.');
 file_does_not_contain($theme . '/front-page.php', 'gallery-count', 'Gallery still renders the image count chrome.');
-file_does_not_contain($theme . '/front-page.php', 'gallery-image-index', 'Gallery still renders image index labels.');
+file_contains($theme . '/assets/js/site.js', 'gallery-view', 'Gallery chrome body class toggle is missing.');
 file_contains($theme . '/assets/css/main.css', '.gallery-link:focus-visible', 'Gallery tiles are missing a dedicated keyboard focus treatment.');
 file_contains($theme . '/assets/css/main.css', 'background: var(--tora-white)', 'Light panels do not use the Figma white surface.');
 file_does_not_contain($theme . '/assets/css/main.css', '.panel::before', 'Panels still render the tiger watermark layer.');
@@ -144,13 +157,20 @@ file_does_not_contain($theme . '/assets/css/main.css', '.standard-page::before',
 file_contains($theme . '/assets/css/main.css', '--tora-cream:', 'The staging cream token is missing.');
 file_contains($theme . '/inc/setup.php', 'wght@200;400;500;600;700;800', 'Raleway ExtraLight and mid weights are not enqueued.');
 file_contains($theme . '/inc/compatibility.php', 'wght@200;400;500;600;700;800', 'Safe-head Raleway weights are incomplete.');
-file_contains($theme . '/front-page.php', 'story-scroll-inner', 'About is missing the two-screen scroll wrapper.');
+file_contains($theme . '/front-page.php', 'story-scroll-inner', 'About is missing the Figma poster wrapper.');
 file_contains($theme . '/front-page.php', 'story-pattern-disc', 'About is missing the Figma speckle disc.');
 file_contains($theme . '/front-page.php', 'story-tiger-disc', 'About is missing the overlapping tiger badge.');
 file_contains($theme . '/front-page.php', 'story-band', 'About is missing the Figma pattern foot band.');
-file_contains($theme . '/assets/css/main.css', 'height: 200%', 'About scroll inner is not locked to two viewports.');
+file_does_not_contain($theme . '/front-page.php', 'story-screen-secondary', 'About still has a second empty scroll screen.');
+file_does_not_contain($theme . '/assets/css/main.css', 'height: 200%', 'About is still locked to a two-viewport scroller.');
 file_contains($theme . '/assets/js/site.js', 'about-panel', 'About panel body class toggle is missing.');
 file_contains($theme . '/inc/default-content.php', 'courage, strength and indomitable spirit', 'Figma About copy is missing from defaults.');
+file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_about_copy_1_3_4', 'About Figma emphasis upgrade is missing.');
+file_contains($theme . '/assets/css/main.css', '.story-art {', 'About art positioning block is missing.');
+file_contains($theme . '/front-page.php', 'story-copy-body', 'About copy is missing the Figma rule wrapper.');
+file_contains($theme . '/assets/css/main.css', '.story-copy .entry-content p {
+  font-size: clamp(1rem, 1.25vw, 1.125rem);', 'About body type is below the Figma/Raleway readable size.');
+file_contains($theme . '/assets/css/main.css', '.story-panel #about-title', 'About title is missing its Avant Garde display size.');
 file_contains($theme . '/front-page.php', 'home-split', 'Home is missing the Figma split layout wrapper.');
 file_contains($theme . '/assets/css/main.css', ".home-panel {\n  padding: 0;", 'Home panel still has inset padding instead of a full-bleed Figma split.');
 file_contains($theme . '/assets/css/main.css', 'grid-template-columns: minmax(0, 58%) minmax(0, 42%)', 'Home split columns do not match the Figma 58/42 proportion.');

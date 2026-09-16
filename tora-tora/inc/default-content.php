@@ -21,7 +21,7 @@ function tora_tora_default_pages(): array
         ],
         'story' => [
             'title' => 'About Tora Tora',
-            'content' => '<p>Tora Tora, derived from the Japanese word for \'tiger\', captures the essence of the powerful and majestic animal revered in Japanese mythology.</p><p>A symbol of <strong>courage, strength and indomitable spirit</strong>, the tiger has a storied presence in folklore, often representing protection and good fortune. This name reflects our brand\'s commitment to bold flavours and vibrant dining experiences.</p><p>Tora Tora brings a slice of Japanese culture to Dubai, offering a dining experience that\'s as dynamic and powerful as the tiger itself, perfectly blending tradition with contemporary flair.</p>',
+            'content' => '<p>Tora Tora, derived from the Japanese word for \'tiger\', captures the essence of the powerful and majestic animal revered in Japanese mythology.</p><p>A symbol of <strong>courage, strength and indomitable spirit</strong>, the tiger has a storied presence in folklore, often representing protection and good fortune. This name reflects our brand\'s commitment to <strong>bold flavours and vibrant dining experiences</strong>.</p><p><strong>Tora Tora</strong> brings a slice of <strong>Japanese culture to Dubai</strong>, offering a dining experience that\'s as <strong>dynamic and powerful as the tiger itself</strong>, perfectly blending tradition with contemporary flair.</p>',
         ],
         'delivery' => [
             'title' => 'ORDER DELIVERY',
@@ -32,7 +32,7 @@ function tora_tora_default_pages(): array
             'content' => '<p>Bold design, steaming bowls of ramen and lively moments in a compact image-led scene.</p>',
         ],
         'contact' => [
-            'title' => 'Reach Us At',
+            'title' => 'Contact',
             'content' => '<p>Find us on Al Wasl Road in Umm Suqeim 1, Dubai.</p>',
         ],
         'careers' => [
@@ -310,12 +310,16 @@ function tora_tora_maybe_upgrade_content(): void
         update_option('tora_tora_seeded_version', $current, false);
     }
 
-    if (version_compare($current, '1.3.2', '>=')) {
-        return;
+    if (version_compare($current, '1.3.2', '<')) {
+        tora_tora_upgrade_about_copy_1_3_2();
+        $current = '1.3.2';
+        update_option('tora_tora_seeded_version', $current, false);
     }
 
-    tora_tora_upgrade_about_copy_1_3_2();
-    update_option('tora_tora_seeded_version', '1.3.2', false);
+    if (version_compare($current, '1.3.4', '<')) {
+        tora_tora_upgrade_about_copy_1_3_4();
+        update_option('tora_tora_seeded_version', '1.3.4', false);
+    }
 }
 
 function tora_tora_upgrade_home_intro_1_2_1(): void
@@ -348,6 +352,34 @@ function tora_tora_upgrade_about_copy_1_3_2(): void
     $old_copies = [
         trim((string) (tora_tora_legacy_page_seeds()['story']['content'] ?? '')),
         '<p>Tora Tora takes its name from the Japanese word for tiger — a powerful creature deeply rooted in mythology and symbolism.</p><p>Representing strength, courage and protection, the tiger reflects the spirit behind our restaurant and the bold character of our cuisine.</p><p>At Tora Tora, we bring authentic Japanese ramen and street-food culture to Dubai with bold flavours, vibrant energy, and a dining experience inspired by the roar of the tiger.</p>',
+    ];
+
+    $current = trim((string) $page->post_content);
+    $title = trim((string) $page->post_title);
+    $title_ok = $title === '' || strcasecmp($title, 'About Tora Tora') === 0 || strcasecmp($title, 'The Spirit of the Tiger') === 0;
+    if (!$title_ok || !in_array($current, $old_copies, true)) {
+        return;
+    }
+
+    wp_update_post([
+        'ID'           => (int) $page->ID,
+        'post_title'   => $defaults['story']['title'],
+        'post_content' => $defaults['story']['content'],
+    ]);
+}
+
+function tora_tora_upgrade_about_copy_1_3_4(): void
+{
+    $defaults = tora_tora_default_pages();
+    $page = get_page_by_path('story', OBJECT, 'page');
+    if (!$page instanceof WP_Post || !isset($defaults['story'])) {
+        return;
+    }
+
+    $old_copies = [
+        trim((string) (tora_tora_legacy_page_seeds()['story']['content'] ?? '')),
+        '<p>Tora Tora takes its name from the Japanese word for tiger — a powerful creature deeply rooted in mythology and symbolism.</p><p>Representing strength, courage and protection, the tiger reflects the spirit behind our restaurant and the bold character of our cuisine.</p><p>At Tora Tora, we bring authentic Japanese ramen and street-food culture to Dubai with bold flavours, vibrant energy, and a dining experience inspired by the roar of the tiger.</p>',
+        '<p>Tora Tora, derived from the Japanese word for \'tiger\', captures the essence of the powerful and majestic animal revered in Japanese mythology.</p><p>A symbol of <strong>courage, strength and indomitable spirit</strong>, the tiger has a storied presence in folklore, often representing protection and good fortune. This name reflects our brand\'s commitment to bold flavours and vibrant dining experiences.</p><p>Tora Tora brings a slice of Japanese culture to Dubai, offering a dining experience that\'s as dynamic and powerful as the tiger itself, perfectly blending tradition with contemporary flair.</p>',
     ];
 
     $current = trim((string) $page->post_content);

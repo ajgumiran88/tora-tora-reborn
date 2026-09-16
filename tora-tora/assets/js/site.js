@@ -83,6 +83,8 @@
     document.body.classList.toggle("dark-panel", theme === "pattern" || theme === "blue");
     document.body.classList.toggle("pattern-panel", theme === "pattern");
     document.body.classList.toggle("about-panel", panel.id === "about");
+    document.body.classList.toggle("gallery-view", panel.id === "gallery");
+    document.body.classList.toggle("contact-view", panel.id === "contact");
   }
 
   function showPanel(id, menuSlug, updateHistory, moveFocus) {
@@ -109,6 +111,12 @@
     document.body.dataset.panel = id;
     applyTheme(next);
     setNavOpen(false);
+    window.scrollTo(0, 0);
+
+    var scroller = next.querySelector(".panel-scroll");
+    if (scroller) {
+      scroller.scrollTop = 0;
+    }
 
     var nextHash = hashFor(id, id === "menu" ? activeMenuSlug : "");
     if (updateHistory && window.location.hash !== nextHash) {
@@ -234,8 +242,17 @@
     showPanel(parsed.panel, parsed.menu, false, false);
   });
 
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+
+  window.addEventListener("hashchange", function () {
+    window.scrollTo(0, 0);
+  });
+
   if (panels.length) {
     var initial = parseHash();
     showPanel(initial.panel, initial.menu, false, false);
+    window.scrollTo(0, 0);
   }
 })();
