@@ -35,7 +35,8 @@ $required = [
     'assets/images/tora-tora-logo.png', 'assets/images/tora-tora-pattern.jpg', 'assets/images/tiger-mark.png',
     'assets/images/tora-tora-pattern.png', 'assets/images/tora-tora-pattern.webp',
     'assets/images/delivery-talabat.svg', 'assets/images/delivery-noon.png', 'assets/images/delivery-deliveroo.svg',
-    'inc/setup.php', 'inc/customizer.php', 'inc/menu-items.php', 'inc/staging.php', 'inc/compatibility.php', 'inc/default-content.php',
+    'inc/setup.php', 'inc/customizer.php', 'inc/menu-items.php', 'inc/jobs.php', 'inc/staging.php', 'inc/compatibility.php', 'inc/default-content.php',
+    'single-job_listing.php',
 ];
 
 foreach ($required as $file) {
@@ -50,6 +51,7 @@ file_contains($theme . '/inc/menu-items.php', "register_post_meta('tora_menu_ite
 file_contains($theme . '/inc/staging.php', 'wp_robots', 'Staging robots filter is missing.');
 file_contains($theme . '/inc/staging.php', 'X-Robots-Tag', 'Staging HTTP robots header is missing.');
 file_contains($theme . '/header.php', 'STAGING PREVIEW', 'Visible staging preview notice is missing.');
+file_contains($theme . '/header.php', 'staging-only', 'Staging-only label above the preview notice is missing.');
 file_contains($theme . '/header.php', 'skip-link', 'Skip link is missing.');
 file_contains($theme . '/header.php', 'tora_tora_render_document_head', 'Safe head renderer is missing from header.php.');
 file_contains($theme . '/inc/compatibility.php', 'tora_tora_use_safe_head', 'Host compatibility helper is missing.');
@@ -76,6 +78,16 @@ file_contains($theme . '/assets/css/main.css', '#0500F5', 'Brand blue #0500F5 is
 file_contains($theme . '/theme.json', '#0500F5', 'Brand blue #0500F5 is missing from theme.json.');
 file_contains($theme . '/assets/css/main.css', '#FFFFFF', 'Brand white #FFFFFF is missing from CSS tokens.');
 file_does_not_contain($theme . '/assets/css/main.css', '--tora-blue: #0b2cff', 'Legacy off-brand blue is still the primary token.');
+
+file_contains($theme . '/inc/jobs.php', 'tora_tora_get_job_listings', 'Job Manager listing helper is missing.');
+file_contains($theme . '/inc/jobs.php', 'tora_tora_careers_content_is_polluted', 'Careers pollution guard is missing.');
+file_contains($theme . '/front-page.php', 'tora_tora_get_job_listings', 'Careers panel does not query Job Manager listings.');
+file_contains($theme . '/front-page.php', 'careers-job-list', 'Careers job list markup is missing.');
+file_contains($theme . '/front-page.php', 'View & apply', 'Careers apply CTA is missing.');
+file_does_not_contain($theme . '/front-page.php', "echo esc_html(\$careers['title']);", 'Careers still prints unsanitized page titles.');
+file_contains($theme . '/single-job_listing.php', 'job-application.php', 'Single job template does not load WP Job Manager apply UI.');
+file_contains($theme . '/assets/css/main.css', '.careers-job-list', 'Careers job list styling is missing.');
+file_contains($theme . '/functions.php', '/inc/jobs.php', 'jobs.php is not bootstrapped.');
 
 file_contains($theme . '/header.php', 'About Tora Tora', 'Overlay is missing the About Tora Tora label.');
 file_contains($theme . '/header.php', 'data-target="delivery"', 'Overlay is missing Delivery navigation.');

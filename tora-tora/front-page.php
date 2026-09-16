@@ -35,11 +35,16 @@ $contact = tora_tora_panel_page(
     __('Find us on Al Wasl Road in Umm Suqeim 1, Dubai.', 'tora-tora'),
     'gallery-1.jpg'
 );
+$careers_fallback_title = __('Join the Tora Tora Team', 'tora-tora');
+$careers_fallback_content = '<p>' . esc_html__('Tora Tora is built on passion for food, hospitality, and creativity. We’re always looking for talented individuals who share our energy for Japanese cuisine and exceptional service.', 'tora-tora') . '</p><h3>' . esc_html__('Why Work With Us', 'tora-tora') . '</h3><p>' . esc_html__('At Tora Tora, we value dedication, hospitality, teamwork, and a shared love for authentic Japanese cuisine. We are always looking for individuals who are passionate about creating memorable dining experiences.', 'tora-tora') . '</p><h3>' . esc_html__('What We’re Looking For', 'tora-tora') . '</h3><p>' . esc_html__('From kitchen professionals to front-of-house staff, we welcome talented people who bring energy, professionalism, and commitment to excellence.', 'tora-tora') . '</p>';
 $careers = tora_tora_panel_page(
     'careers',
-    __('Great food starts with great people.', 'tora-tora'),
-    __('Our doors are open for passionate, hard-working and curious people. Email your CV and include the role in the subject line.', 'tora-tora')
+    $careers_fallback_title,
+    $careers_fallback_content
 );
+$careers_title = tora_tora_clean_panel_title((string) $careers['title'], $careers_fallback_title);
+$careers_content = tora_tora_careers_content_html((string) $careers['content'], $careers_fallback_content);
+$job_listings = tora_tora_get_job_listings();
 $menu_groups = tora_get_menu_groups();
 $gallery_images = [];
 for ($gallery_index = 1; $gallery_index <= 5; $gallery_index++) {
@@ -265,16 +270,46 @@ $platforms = [
             <div class="careers-layout">
                 <div class="careers-copy panel-copy">
                     <span class="panel-eyebrow"><?php esc_html_e('Join the team', 'tora-tora'); ?></span>
-                    <h2 id="careers-title"><?php echo esc_html($careers['title']); ?></h2>
-                    <div class="entry-content"><?php echo wp_kses_post($careers['content']); ?></div>
+                    <h2 id="careers-title"><?php echo esc_html($careers_title); ?></h2>
+                    <div class="entry-content"><?php echo wp_kses_post($careers_content); ?></div>
                     <div class="button-row">
                         <a class="button" href="mailto:<?php echo esc_attr(antispambot($careers_email)); ?>?subject=<?php echo rawurlencode('Job application'); ?>"><?php esc_html_e('Email Your CV', 'tora-tora'); ?></a>
                         <a class="button button-outline nav-link" href="#contact" data-target="contact"><?php esc_html_e('Contact', 'tora-tora'); ?></a>
                     </div>
                 </div>
-                <aside class="careers-card">
-                    <h3><?php esc_html_e('Current openings', 'tora-tora'); ?></h3>
-                    <p><?php esc_html_e('No vacancies at the moment. We still welcome introductions from people who care deeply about food and hospitality.', 'tora-tora'); ?></p>
+                <aside class="careers-card" aria-labelledby="careers-openings-title">
+                    <h3 id="careers-openings-title"><?php esc_html_e('Current openings', 'tora-tora'); ?></h3>
+                    <?php if ($job_listings) : ?>
+                        <ul class="careers-job-list">
+                            <?php foreach ($job_listings as $job) : ?>
+                                <?php
+                                $job_id = (int) $job->ID;
+                                $job_location = tora_tora_job_location($job_id);
+                                $job_types = tora_tora_job_type_labels($job_id);
+                                $job_url = get_permalink($job_id);
+                                ?>
+                                <li class="careers-job-item">
+                                    <a class="careers-job-link" href="<?php echo esc_url($job_url ?: home_url('/#careers')); ?>">
+                                        <span class="careers-job-title"><?php echo esc_html(get_the_title($job)); ?></span>
+                                        <?php if ($job_location !== '' || $job_types) : ?>
+                                            <span class="careers-job-meta">
+                                                <?php if ($job_location !== '') : ?>
+                                                    <span class="careers-job-location"><?php echo esc_html($job_location); ?></span>
+                                                <?php endif; ?>
+                                                <?php foreach ($job_types as $job_type) : ?>
+                                                    <span class="job-type-badge"><?php echo esc_html($job_type); ?></span>
+                                                <?php endforeach; ?>
+                                            </span>
+                                        <?php endif; ?>
+                                        <span class="careers-job-cta"><?php esc_html_e('View & apply', 'tora-tora'); ?></span>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php else : ?>
+                        <p class="careers-empty"><?php esc_html_e('No vacancies at the moment. We still welcome introductions from people who care deeply about food and hospitality.', 'tora-tora'); ?></p>
+                        <a class="button button-inverse" href="mailto:<?php echo esc_attr(antispambot($careers_email)); ?>?subject=<?php echo rawurlencode('Job application'); ?>"><?php esc_html_e('Email Your CV', 'tora-tora'); ?></a>
+                    <?php endif; ?>
                 </aside>
             </div>
         </div>

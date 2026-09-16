@@ -16,6 +16,11 @@ if (!defined('ABSPATH')) {
  */
 function tora_tora_use_safe_head(): bool
 {
+    // Job apply forms need WP Job Manager assets from the normal head/footer pipeline.
+    if (function_exists('is_singular') && is_singular('job_listing')) {
+        return (bool) apply_filters('tora_tora_use_safe_head', false);
+    }
+
     $default = function_exists('tora_tora_staging_enabled') && tora_tora_staging_enabled();
     return (bool) apply_filters('tora_tora_use_safe_head', $default);
 }

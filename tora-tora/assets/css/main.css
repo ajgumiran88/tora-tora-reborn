@@ -18,7 +18,8 @@
   --shadow-soft: 0 1.5rem 4rem rgba(5, 0, 245, .1);
 }
 
-.tora-staging { --staging: 32px; }
+.tora-staging { --staging: 52px; }
+.admin-bar.tora-staging { --staging: calc(32px + 52px); }
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -98,10 +99,35 @@ h1, h2, h3, h4 {
   isolation: isolate;
 }
 
-.staging-notice {
+.staging-chrome {
   position: fixed;
-  inset: 0 0 auto;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 1100;
+}
+
+.admin-bar .staging-chrome { top: 32px; }
+
+@media screen and (max-width: 782px) {
+  .admin-bar .staging-chrome { top: 46px; }
+  .admin-bar.tora-staging { --staging: calc(46px + 52px); }
+}
+
+.staging-only {
+  padding: .2rem 1rem;
+  color: var(--tora-blue);
+  background: var(--tora-cream);
+  border-bottom: 1px solid rgba(5, 0, 245, .18);
+  font-size: .58rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  line-height: 1.3;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.staging-notice {
   min-height: 32px;
   padding: .42rem 3rem;
   color: var(--tora-white);
@@ -822,7 +848,13 @@ h1, h2, h3, h4 {
 .contact-card { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: rgba(255, 255, 255, .12); }
 .contact-card img { width: 100%; height: 100%; object-fit: cover; }
 
-.careers-copy h2 { font-size: clamp(2.5rem, 5vw, 5.6rem); }
+.careers-copy .entry-content h3 {
+  max-width: none;
+  margin: 1.6rem 0 .7rem;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  letter-spacing: .12em;
+  line-height: 1.2;
+}
 .careers-card {
   padding: clamp(2rem, 5vw, 4.5rem);
   color: var(--tora-white);
@@ -831,6 +863,128 @@ h1, h2, h3, h4 {
   box-shadow: var(--shadow-soft);
 }
 .careers-card h3 { max-width: none; margin-bottom: 1.2rem; font-size: clamp(1.8rem, 3.4vw, 3.2rem); }
+.careers-empty { margin: 0 0 1.25rem; font-size: clamp(1rem, 1.2vw, 1.15rem); line-height: 1.55; }
+.careers-job-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .85rem; }
+.careers-job-item { margin: 0; }
+.careers-job-link {
+  display: grid;
+  gap: .55rem;
+  padding: 1rem 1.05rem;
+  color: var(--tora-white);
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .28);
+  transition: background .2s var(--ease), transform .2s var(--ease), border-color .2s ease;
+}
+.careers-job-link:hover,
+.careers-job-link:focus-visible {
+  background: rgba(255, 255, 255, .16);
+  border-color: rgba(255, 255, 255, .55);
+  transform: translateY(-2px);
+}
+.careers-job-title {
+  font-size: clamp(1.15rem, 2vw, 1.55rem);
+  font-weight: 800;
+  letter-spacing: -.03em;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+.careers-job-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .45rem .65rem;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  opacity: .92;
+}
+.careers-job-location { min-width: 0; }
+.job-type-badge {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  padding: .35rem .7rem;
+  color: var(--tora-blue);
+  background: var(--tora-white);
+  border-radius: 999px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.careers-job-cta {
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: .18em;
+}
+
+.job-listing-page { color: var(--tora-blue); }
+.job-listing-back { margin-bottom: 1.5rem; }
+.job-listing-back .panel-back-link {
+  gap: .75rem;
+  color: var(--tora-blue);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.job-listing-header { margin-bottom: 1.75rem; }
+.job-listing-header h1 { max-width: 16ch; margin-top: .35rem; }
+.job-listing-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem .85rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.job-listing-meta .job-type-badge {
+  color: var(--tora-white);
+  background: var(--tora-blue);
+}
+.job-listing-body { max-width: 42rem; }
+.job-listing-apply {
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  background: rgba(5, 0, 245, .06);
+  border: 1px solid rgba(5, 0, 245, .18);
+}
+.job-listing-apply h2 {
+  max-width: none;
+  margin-bottom: 1rem;
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+}
+.job-listing-apply .application_details,
+.job-listing-apply .job-manager-application-wrapper,
+.job-listing-apply .application_button,
+.job-listing-apply .button {
+  margin-top: .75rem;
+}
+.job-listing-apply input,
+.job-listing-apply textarea,
+.job-listing-apply select {
+  width: 100%;
+  max-width: 32rem;
+  margin: .35rem 0 .85rem;
+  padding: .7rem .85rem;
+  color: var(--tora-blue);
+  background: var(--tora-white);
+  border: 1px solid rgba(5, 0, 245, .28);
+}
+.job-listing-apply label {
+  display: block;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
 
 .footer-strip {
   position: fixed;
@@ -902,8 +1056,10 @@ h1, h2, h3, h4 {
 
 @media (max-width: 700px) {
   :root { --side: 1.15rem; --header: 5.2rem; }
-  .tora-staging { --staging: 42px; }
+  .tora-staging { --staging: 64px; }
+  .admin-bar.tora-staging { --staging: calc(46px + 64px); }
   .site-shell { min-height: 30rem; }
+  .staging-only { font-size: .52rem; padding: .16rem .75rem; }
   .staging-notice { min-height: 42px; padding: .38rem 1rem; font-size: .62rem; }
   .brand-link { width: 6.7rem; height: 4.6rem; }
   .panel { padding-bottom: 3.5rem; overflow: auto; }

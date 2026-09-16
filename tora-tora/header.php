@@ -17,7 +17,10 @@
 <?php wp_body_open(); ?>
 <a class="skip-link" href="#main-content"><?php esc_html_e('Skip to content', 'tora-tora'); ?></a>
 <?php if (tora_tora_staging_enabled()) : ?>
-    <div class="staging-notice" role="status">STAGING PREVIEW — <?php esc_html_e('This website is for review only.', 'tora-tora'); ?></div>
+    <div class="staging-chrome" role="status">
+        <div class="staging-only"><?php esc_html_e('Staging only', 'tora-tora'); ?></div>
+        <div class="staging-notice">STAGING PREVIEW — <?php esc_html_e('This website is for review only.', 'tora-tora'); ?></div>
+    </div>
 <?php endif; ?>
 <div class="site-shell">
     <header class="site-header">
