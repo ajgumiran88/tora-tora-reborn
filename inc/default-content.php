@@ -137,7 +137,18 @@ function tora_tora_ensure_menu_terms_and_items(): void
         wp_update_term($term_id, 'tora_menu_category', ['name' => $category, 'slug' => $group['slug']]);
 
         foreach ($group['items'] as $order => [$name, $description, $price]) {
-            $existing = get_page_by_title($name, OBJECT, 'tora_menu_item');
+            $existing_query = new WP_Query([
+                'post_type'              => 'tora_menu_item',
+                'title'                  => $name,
+                'post_status'            => 'any',
+                'posts_per_page'         => 1,
+                'no_found_rows'          => true,
+                'ignore_sticky_posts'    => true,
+                'update_post_meta_cache' => false,
+                'update_post_term_cache' => false,
+            ]);
+            $existing = $existing_query->have_posts() ? $existing_query->posts[0] : null;
+            wp_reset_postdata();
             if ($existing instanceof WP_Post) {
                 continue;
             }
@@ -174,7 +185,18 @@ function tora_tora_upgrade_to_1_1_0(): void
         );
     }
 
-    $swiss = get_page_by_title('Japanese Swiss Roll', OBJECT, 'tora_menu_item');
+    $swiss_query = new WP_Query([
+        'post_type'              => 'tora_menu_item',
+        'title'                  => 'Japanese Swiss Roll',
+        'post_status'            => 'any',
+        'posts_per_page'         => 1,
+        'no_found_rows'          => true,
+        'ignore_sticky_posts'    => true,
+        'update_post_meta_cache' => false,
+        'update_post_term_cache' => false,
+    ]);
+    $swiss = $swiss_query->have_posts() ? $swiss_query->posts[0] : null;
+    wp_reset_postdata();
     if ($swiss instanceof WP_Post) {
         wp_update_post([
             'ID'         => $swiss->ID,

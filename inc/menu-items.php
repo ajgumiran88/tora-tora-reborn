@@ -148,13 +148,17 @@ function tora_get_menu_groups(): array
     $preferred = tora_tora_menu_category_slugs();
     usort(
         $terms,
-        static function (WP_Term $left, WP_Term $right) use ($preferred): int {
-            $left_index = array_search($left->slug, $preferred, true);
-            $right_index = array_search($right->slug, $preferred, true);
+        static function ($left, $right) use ($preferred): int {
+            $left_slug = is_object($left) && isset($left->slug) ? (string) $left->slug : '';
+            $right_slug = is_object($right) && isset($right->slug) ? (string) $right->slug : '';
+            $left_index = array_search($left_slug, $preferred, true);
+            $right_index = array_search($right_slug, $preferred, true);
             $left_index = false === $left_index ? 100 : $left_index;
             $right_index = false === $right_index ? 100 : $right_index;
             if ($left_index === $right_index) {
-                return $left->term_id <=> $right->term_id;
+                $left_id = is_object($left) && isset($left->term_id) ? (int) $left->term_id : 0;
+                $right_id = is_object($right) && isset($right->term_id) ? (int) $right->term_id : 0;
+                return $left_id <=> $right_id;
             }
             return $left_index <=> $right_index;
         }

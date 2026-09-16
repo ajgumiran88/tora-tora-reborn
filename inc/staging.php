@@ -14,8 +14,15 @@ function tora_tora_staging_enabled(): bool
     return (bool) get_theme_mod('tora_staging_mode', true);
 }
 
-function tora_tora_staging_robots(array $robots): array
+/**
+ * @param array<string,bool|string> $robots
+ * @return array<string,bool|string>
+ */
+function tora_tora_staging_robots($robots)
 {
+    if (!is_array($robots)) {
+        $robots = [];
+    }
     if (!tora_tora_staging_enabled()) {
         return $robots;
     }

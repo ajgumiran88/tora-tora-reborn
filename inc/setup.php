@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
 
 function tora_tora_setup(): void
 {
-    load_theme_textdomain('tora-tora', TORA_TORA_DIR . '/languages');
+    load_theme_textdomain('tora-tora', tora_tora_dir() . '/languages');
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
     add_theme_support('responsive-embeds');
@@ -42,29 +42,42 @@ function tora_tora_setup(): void
 }
 add_action('after_setup_theme', 'tora_tora_setup');
 
+/**
+ * Filemtime-based cache buster that never warns/fatals on missing files (SiteGround).
+ */
+function tora_tora_asset_version(string $relative_path): string
+{
+    $path = tora_tora_dir() . '/' . ltrim($relative_path, '/');
+    if (is_readable($path)) {
+        $mtime = @filemtime($path);
+        if (false !== $mtime) {
+            return TORA_TORA_VERSION . '.' . $mtime;
+        }
+    }
+    return TORA_TORA_VERSION;
+}
+
 function tora_tora_enqueue_assets(): void
 {
-    $css_version = TORA_TORA_VERSION . '.' . (string) filemtime(TORA_TORA_DIR . '/assets/css/main.css');
-    $js_version = TORA_TORA_VERSION . '.' . (string) filemtime(TORA_TORA_DIR . '/assets/js/site.js');
-
+    // Keep the Google Fonts URL short — long weight lists + optimizers have caused head fatals on SG stacks.
     wp_enqueue_style(
         'tora-tora-fonts',
-        'https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,400&display=swap',
+        'https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;800&display=swap',
         [],
-        null
+        false
     );
     wp_enqueue_style('tora-tora-style', get_stylesheet_uri(), [], TORA_TORA_VERSION);
     wp_enqueue_style(
         'tora-tora-main',
-        TORA_TORA_URI . '/assets/css/main.css',
-        ['tora-tora-style'],
-        $css_version
+        tora_tora_uri() . '/assets/css/main.css',
+        ['tora-tora-style', 'tora-tora-fonts'],
+        tora_tora_asset_version('assets/css/main.css')
     );
     wp_enqueue_script(
         'tora-tora-site',
-        TORA_TORA_URI . '/assets/js/site.js',
+        tora_tora_uri() . '/assets/js/site.js',
         [],
-        $js_version,
+        tora_tora_asset_version('assets/js/site.js'),
         true
     );
 }
@@ -72,11 +85,12 @@ add_action('wp_enqueue_scripts', 'tora_tora_enqueue_assets');
 
 function tora_tora_asset(string $relative_path): string
 {
-    return TORA_TORA_URI . '/assets/' . ltrim($relative_path, '/');
+    return tora_tora_uri() . '/assets/' . ltrim($relative_path, '/');
 }
 
 /**
  * Return page content with a safe seeded fallback.
+ * Does not run `the_content` filters before `wp_head` ( Rank Math / optimizers / TEC ).
  *
  * @return array{title:string,content:string,id:int,image:string}
  */
@@ -95,10 +109,17 @@ function tora_tora_panel_page(string $slug, string $title, string $content, stri
     }
 
     $featured = get_the_post_thumbnail_url($page, 'full');
+    $raw = (string) $page->post_content;
+
+    // Prefer stored HTML; only autop plain text. Avoid apply_filters('the_content') before get_header().
+    $html = $raw;
+    if ($html !== '' && !preg_match('/<\s*\w+/', $html)) {
+        $html = wpautop($html);
+    }
 
     return [
         'title'   => get_the_title($page),
-        'content' => apply_filters('the_content', $page->post_content),
+        'content' => $html !== '' ? $html : wpautop($content),
         'id'      => (int) $page->ID,
         'image'   => $featured ?: $image,
     ];
@@ -122,8 +143,15 @@ function tora_tora_platform_logo(string $slug, string $fallback): string
     return tora_tora_image_setting('tora_' . sanitize_key($slug) . '_logo', $fallback);
 }
 
-function tora_tora_body_classes(array $classes): array
+/**
+ * @param string[] $classes
+ * @return string[]
+ */
+function tora_tora_body_classes($classes)
 {
+    if (!is_array($classes)) {
+        $classes = [];
+    }
     $classes[] = 'tora-tora-site';
     if (is_front_page()) {
         $classes[] = 'dark-panel';
@@ -131,7 +159,7 @@ function tora_tora_body_classes(array $classes): array
         $classes[] = 'light-panel';
         $classes[] = 'standard-page-context';
     }
-    if (tora_tora_staging_enabled()) {
+    if (function_exists('tora_tora_staging_enabled') && tora_tora_staging_enabled()) {
         $classes[] = 'tora-staging';
     }
     return $classes;

@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#0500F5">
     <?php wp_head(); ?>
+    <!-- tora-tora:<?php echo esc_html(TORA_TORA_VERSION); ?> -->
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
