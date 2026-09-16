@@ -44,20 +44,17 @@ function tora_tora_render_document_head(): void
         return;
     }
 
-    if (!did_action('wp_enqueue_scripts')) {
-        wp_enqueue_scripts();
-    }
+    $theme_uri = tora_tora_uri();
+    $main_css = $theme_uri . '/assets/css/main.css?ver=' . rawurlencode(tora_tora_asset_version('assets/css/main.css'));
 
-    echo '<title>' . esc_html(wp_get_document_title()) . '</title>' . "\n";
+    // Do not call WordPress's asset hooks in staging. The installed lte-ext
+    // Fontello integration fatals while WordPress collects third-party assets.
+    echo '<title>' . esc_html(get_bloginfo('name')) . '</title>' . "\n";
     echo '<meta name="robots" content="noindex,nofollow" />' . "\n";
     echo '<link rel="preconnect" href="https://fonts.googleapis.com" />' . "\n";
     echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />' . "\n";
     echo '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;800&amp;display=swap" />' . "\n";
-
-    wp_print_styles();
-    if (function_exists('wp_print_head_scripts')) {
-        wp_print_head_scripts();
-    }
+    echo '<link rel="stylesheet" href="' . esc_url($main_css) . '" />' . "\n";
 }
 
 function tora_tora_render_document_footer(): void
@@ -67,5 +64,6 @@ function tora_tora_render_document_footer(): void
         return;
     }
 
-    wp_print_footer_scripts();
+    $site_js = tora_tora_uri() . '/assets/js/site.js?ver=' . rawurlencode(tora_tora_asset_version('assets/js/site.js'));
+    echo '<script src="' . esc_url($site_js) . '" defer></script>' . "\n";
 }
