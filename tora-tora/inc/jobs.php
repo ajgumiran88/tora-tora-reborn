@@ -176,31 +176,31 @@ function tora_tora_default_careers_jobs(): array
             'title'   => 'Head Ramen Chef',
             'meta'    => 'FULL TIME — DUBAI MARINA',
             'url'     => '',
-            'content' => '',
+            'content' => '<p>Lead the ramen line with precision and pace. You will craft broths, manage prep, train the team, and keep every bowl consistent with Tora Tora standards.</p>',
         ],
         [
             'title'   => 'Line Cook',
             'meta'    => 'FULL-TIME / PART-TIME — DUBAI MARINA',
             'url'     => '',
-            'content' => '',
+            'content' => '<p>Support service on a fast-moving line. Prep ingredients, cook to spec, and keep the pass clean, calm, and ready for peak hours.</p>',
         ],
         [
             'title'   => 'Floor Staff / Server',
             'meta'    => 'FULL TIME — DUBAI MARINA',
             'url'     => '',
-            'content' => '',
+            'content' => '<p>Bring energy to the dining room. Guide guests, take orders, and deliver a warm, confident Tora Tora experience from first hello to last bowl.</p>',
         ],
         [
             'title'   => 'Cashier',
             'meta'    => 'FULL TIME — DUBAI MARINA',
             'url'     => '',
-            'content' => '',
+            'content' => '<p>Own the front counter with accuracy and speed. Handle payments, manage takeout flow, and keep the guest handoff smooth and friendly.</p>',
         ],
         [
             'title'   => 'Kitchen Porter',
             'meta'    => 'FULL TIME — DUBAI MARINA',
             'url'     => '',
-            'content' => '',
+            'content' => '<p>Keep the kitchen running clean and stocked. Wash, organize, restock, and support the team so service never slows down.</p>',
         ],
     ];
 }

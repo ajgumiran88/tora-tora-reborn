@@ -101,7 +101,7 @@ file_contains($theme . '/front-page.php', 'tora_tora_careers_jobs_for_display', 
 file_contains($theme . '/front-page.php', 'careers-job-list', 'Careers job list markup is missing.');
 file_contains($theme . '/front-page.php', 'careers-roles-badge', 'Careers roles badge is missing.');
 file_contains($theme . '/front-page.php', 'careers-rule', 'Careers vertical rule is missing.');
-file_contains($theme . '/front-page.php', 'careers-pattern-disc', 'Careers speckle disc is missing.');
+file_does_not_contain($theme . '/front-page.php', 'careers-art', 'Careers panel still renders bottom decorative artwork.');
 file_contains($theme . '/front-page.php', 'JOIN THE TEAM', 'Careers title does not match the Figma copy.');
 file_contains($theme . '/front-page.php', 'View & apply', 'Careers apply CTA is missing.');
 file_does_not_contain($theme . '/front-page.php', "echo esc_html(\$careers['title']);", 'Careers still prints unsanitized page titles.');

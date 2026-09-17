@@ -353,12 +353,6 @@ $platforms = [
                     <span class="careers-rule" aria-hidden="true"></span>
                 </div>
             </div>
-            <div class="careers-art" aria-hidden="true">
-                <span class="careers-pattern-disc"></span>
-                <figure class="careers-tiger-disc">
-                    <img src="<?php echo esc_url(tora_tora_asset('images/tiger-mark.png')); ?>" alt="" width="512" height="512" loading="lazy" decoding="async">
-                </figure>
-            </div>
         </div>
     </section>
 
