@@ -43,7 +43,7 @@ function tora_tora_default_pages(): array
 }
 
 /**
- * @return array<string,array{slug:string,items:array<int,array{0:string,1:string,2:string}>}>
+ * @return array<string,array{slug:string,items:array<int,array{0:string,1:string,2:string,3?:string}>}>
  */
 function tora_tora_default_menu(): array
 {
@@ -51,45 +51,85 @@ function tora_tora_default_menu(): array
         'Breakfast' => [
             'slug' => 'breakfast',
             'items' => [
-                ['Tamago Sando', 'Japanese egg sandwich', 'AED 34'],
-                ['Katsu Sando', 'Choice of beef, chicken or mushroom', 'AED 42'],
-                ['Avocado & Togarashi Sando', 'Avocado, togarashi and milk bread', 'AED 38'],
-                ['Japanese French Toast Sando', 'Soft milk bread with a sweet finish', 'AED 36'],
+                ['TAMAGO SANDO', '(Japanese Egg Sandwich)', ''],
+                ['KATSU SANDO', '(Option of Beef, Chicken or Mushroom)', ''],
+                ['TAMAGO KATSU SANDO', '', ''],
+                ['BREAKFAST SANDO WITH EGG AND BEEF BACON', '', ''],
+                ['SMOKED SALMON AND WASABI CREAM CHEESE SANDO', '', ''],
+                ['AVOCADO & TOGARASHI SANDO', '', ''],
+                ['KARAAGE SANDO', '', ''],
+                ['SWEET POTATO & EGGPLANT MISO SANDO', '', ''],
+                ['JAPANESE FRENCH TOAST SANDO', '', ''],
             ],
         ],
         'Appetizers' => [
             'slug' => 'appetizers',
             'items' => [
-                ['Handmade Gyoza', 'Pan-seared dumplings with house dipping sauce', 'AED 32'],
-                ['Karaage', 'Crisp Japanese fried chicken', 'AED 36'],
-                ['Takoyaki', 'Octopus bites, bonito and signature sauce', 'AED 34'],
-                ['Edamame', 'Sea salt or spicy togarashi', 'AED 24'],
+                ['HANDMADE GYOZA', '', ''],
+                ['KARAAGE', '', ''],
+                ['MEAT SUSHI', '', ''],
+                ['KATSU SANDO', '', ''],
+                ['OMURICE', '', ''],
+                ['KIMCHI', '', ''],
+                ['TAKOYAKI', '', ''],
+                ['EDAMAME', '', ''],
             ],
         ],
         'Draft Food Menu' => [
             'slug' => 'draft-food-menu',
             'items' => [
-                ['Chicken Paitan Ramen', 'Rich chicken broth, noodles, egg and seasonal garnish', 'AED 58'],
-                ['Shoyu', 'Clear soy broth with springy noodles and aromatics', 'AED 54'],
-                ['Tantanmen', 'Creamy sesame broth with a warming chilli finish', 'AED 59'],
-                ['Vegan Ramen Miso', 'Plant-based miso broth with seasonal vegetables', 'AED 52'],
+                // RAMEN
+                ['CHICKEN PAITAN RAMEN', '', '', 'RAMEN'],
+                ['SHOYU', '', '', 'RAMEN'],
+                ['SHIO', '', '', 'RAMEN'],
+                ['TANTANMEN', '', '', 'RAMEN'],
+                ['TSUKEMEN CHICKEN PAITAN', '', '', 'RAMEN'],
+                ['TSUKEMEN SHOYU', '', '', 'RAMEN'],
+                ['TSUKEMEN SHIO', '', '', 'RAMEN'],
+                ['MAZE-SOBA CLASSIC', '', '', 'RAMEN'],
+                ['TAIWANESE MAZE SOBA', '', '', 'RAMEN'],
+                ['VEGAN RAMEN MISO', '', '', 'RAMEN'],
+                ['VEGAN RAMEN SPICY MISO', '', '', 'RAMEN'],
+                ['HIYASHI CHUKA (COLD RAMEN)', '', '', 'RAMEN'],
+                ['COLD TSUKEMEN', '', '', 'RAMEN'],
             ],
         ],
         'Desserts' => [
             'slug' => 'desserts',
             'items' => [
-                ['Japanese Swiss Rolls', 'Light sponge with seasonal cream', 'AED 30'],
-                ['Japanese Cheesecake', 'Airy, gently sweet baked cheesecake', 'AED 32'],
-                ['Soft Serve Ice Cream', 'Ask about today’s flavour', 'AED 26'],
+                // DESSERTS
+                ['JAPANESE SWISS ROLLS', '', '', 'DESSERTS'],
+                ['JAPANESE CHEESECAKE', '', '', 'DESSERTS'],
+                ['SOFT SERVE ICE CREAM', '', '', 'DESSERTS'],
             ],
         ],
         'Beverage' => [
-            'slug' => 'beverage',
+            'slug' => 'beverages',
             'items' => [
-                ['House Green Tea', 'Hot or iced Japanese green tea', 'AED 18'],
-                ['Yuzu Soda', 'Citrus soda with yuzu', 'AED 22'],
-                ['Matcha Latte', 'Ceremonial-grade matcha with milk', 'AED 26'],
-                ['Japanese Beer', 'Ask about today’s pour', 'AED 32'],
+                // JAPANESE INSPIRED
+                ['SIGNATURE - COLOR CHANGING CREAM SODA', '', '', 'JAPANESE INSPIRED'],
+                ['ICED MATCHA LATTE', '', '', 'JAPANESE INSPIRED'],
+                ['HOT MATCHA LATTE', '', '', 'JAPANESE INSPIRED'],
+                ['MATCHA LEMONADE', '', '', 'JAPANESE INSPIRED'],
+                ['HOJICHA LATTE', '', '', 'JAPANESE INSPIRED'],
+                ['GENMAICHA', '', '', 'JAPANESE INSPIRED'],
+                ['SENCHA GREEN TEA', '', '', 'JAPANESE INSPIRED'],
+                // MOCKTAILS
+                ['CUCUMBER MINT COOLER', '', '', 'MOCKTAILS'],
+                ['SHISO & LIME SPRITZER', '', '', 'MOCKTAILS'],
+                ['WATERMELON YUZU FIZZ', '', '', 'MOCKTAILS'],
+                ['GINGER LEMONGRASS ICED TEA', '', '', 'MOCKTAILS'],
+                // SPECIALTY COLD DRINKS
+                ['YUZU LEMONADE / YUZU ICED TEA', '', '', 'SPECIALTY COLD DRINKS'],
+                ['JAPANESE PLUM SODA (UME)', '', '', 'SPECIALTY COLD DRINKS'],
+                ['RAMUNE BOTTLES', '(Classic Japanese Soda)', '', 'SPECIALTY COLD DRINKS'],
+                ['SEASONAL COLD BREW TEAS', '', '', 'SPECIALTY COLD DRINKS'],
+                // COFFEE
+                ['Espresso, Americano, Latte, Cappuccino', '', '', 'COFFEE'],
+                // WATER & SOFT DRINKS
+                ['Still, Sparkling, Coke, Sprite, Fanta', '', '', 'WATER & SOFT DRINKS'],
+                // FRESH JUICES
+                ['Orange, Watermelon, Apple', '', '', 'FRESH JUICES'],
             ],
         ],
     ];
@@ -136,7 +176,12 @@ function tora_tora_ensure_menu_terms_and_items(): void
         $term_id = (int) (is_array($term) ? $term['term_id'] : $term);
         wp_update_term($term_id, 'tora_menu_category', ['name' => $category, 'slug' => $group['slug']]);
 
-        foreach ($group['items'] as $order => [$name, $description, $price]) {
+        foreach ($group['items'] as $order => $item_data) {
+            $name = $item_data[0];
+            $description = $item_data[1];
+            $price = $item_data[2];
+            $subgroup = $item_data[3] ?? '';
+            
             $existing_query = new WP_Query([
                 'post_type'              => 'tora_menu_item',
                 'title'                  => $name,
@@ -162,6 +207,7 @@ function tora_tora_ensure_menu_terms_and_items(): void
             if (!is_wp_error($item_id)) {
                 wp_set_object_terms($item_id, [$term_id], 'tora_menu_category');
                 update_post_meta($item_id, 'tora_price', $price);
+                update_post_meta($item_id, 'tora_subgroup', $subgroup);
                 update_post_meta($item_id, 'tora_available', '1');
             }
         }
@@ -318,8 +364,42 @@ function tora_tora_maybe_upgrade_content(): void
 
     if (version_compare($current, '1.3.4', '<')) {
         tora_tora_upgrade_about_copy_1_3_4();
-        update_option('tora_tora_seeded_version', '1.3.4', false);
+        $current = '1.3.4';
+        update_option('tora_tora_seeded_version', $current, false);
     }
+
+    if (version_compare($current, '1.3.5', '<')) {
+        tora_tora_upgrade_menu_1_3_5();
+        $current = '1.3.5';
+        update_option('tora_tora_seeded_version', $current, false);
+    }
+}
+
+function tora_tora_upgrade_menu_1_3_5(): void
+{
+    $categories = ['breakfast', 'appetizers', 'draft-food-menu', 'desserts', 'beverage'];
+    foreach ($categories as $slug) {
+        $term = get_term_by('slug', $slug, 'tora_menu_category');
+        if ($term instanceof WP_Term) {
+            $items = get_posts([
+                'post_type' => 'tora_menu_item',
+                'numberposts' => -1,
+                'post_status' => 'any',
+                'tax_query' => [
+                    [
+                        'taxonomy' => 'tora_menu_category',
+                        'field' => 'slug',
+                        'terms' => $slug,
+                    ]
+                ]
+            ]);
+            foreach ($items as $item) {
+                wp_delete_post($item->ID, true);
+            }
+        }
+    }
+    
+    tora_tora_ensure_menu_terms_and_items();
 }
 
 function tora_tora_upgrade_home_intro_1_2_1(): void

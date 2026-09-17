@@ -160,8 +160,13 @@ $platforms = [
     <section class="panel menu-panel" id="menu" data-theme="light" aria-labelledby="menu-title" aria-hidden="true">
         <div class="menu-rail menu-rail-left" aria-hidden="true"></div>
         <div class="panel-scroll menu-layout">
-            <?php get_template_part('template-parts/panel', 'back'); ?>
-            <h2 id="menu-title"><?php esc_html_e('MENU', 'tora-tora'); ?></h2>
+            <div class="menu-heading">
+                <div class="menu-heading-copy">
+                    <?php get_template_part('template-parts/panel', 'back'); ?>
+                    <h2 id="menu-title"><?php esc_html_e('MENU', 'tora-tora'); ?></h2>
+                </div>
+                <img class="menu-tiger-mark" src="<?php echo esc_url(tora_tora_asset('images/tiger-mark.png')); ?>" alt="" width="512" height="512" loading="lazy" decoding="async">
+            </div>
             <?php if ($menu_groups) : ?>
                 <div class="menu-tabs" role="tablist" aria-label="<?php esc_attr_e('Menu categories', 'tora-tora'); ?>">
                     <?php foreach ($menu_groups as $index => $group) : ?>
@@ -188,8 +193,19 @@ $platforms = [
                             data-menu-slug="<?php echo esc_attr($group['term']->slug); ?>"
                             <?php echo 0 === $index ? '' : 'hidden'; ?>
                         >
-                            <h3><?php echo esc_html($group['term']->name); ?></h3>
-                            <?php foreach ($group['items'] as $item) : ?>
+                            <?php 
+                                $current_subgroup = false;
+                                foreach ($group['items'] as $item) : 
+                                    $item_subgroup = trim((string) get_post_meta($item->ID, 'tora_subgroup', true));
+                                    if ($item_subgroup && $item_subgroup !== $current_subgroup) {
+                                        $current_subgroup = $item_subgroup;
+                                        echo '<h3>' . esc_html($current_subgroup) . '</h3>';
+                                    } elseif ($current_subgroup === false && !$item_subgroup) {
+                                        // Only show the term name as a heading if there are no subgroups defined at the start
+                                        $current_subgroup = '';
+                                        echo '<h3>' . esc_html($group['term']->name) . '</h3>';
+                                    }
+                            ?>
                                 <article class="menu-item">
                                     <div class="menu-item-copy">
                                         <h4><?php echo esc_html(get_the_title($item)); ?></h4>
@@ -323,6 +339,7 @@ $platforms = [
                             $job_meta = (string) $careers_job['meta'];
                             $job_url = (string) $careers_job['url'];
                             $job_content = (string) $careers_job['content'];
+                            $job_apply_label = (string) ($careers_job['apply_label'] ?? ($job_url !== '' ? __('View & apply', 'tora-tora') : __('Email your CV', 'tora-tora')));
                             $job_apply_href = $job_url !== ''
                                 ? $job_url
                                 : 'mailto:' . antispambot($careers_email) . '?subject=' . rawurlencode('Job application: ' . $job_title);
@@ -343,7 +360,7 @@ $platforms = [
                                             <p class="careers-job-description"><?php esc_html_e('Bring the tiger spirit to Tora Tora. Email your CV and tell us why you belong on the team.', 'tora-tora'); ?></p>
                                         <?php endif; ?>
                                         <a class="careers-job-apply" href="<?php echo esc_url($job_apply_href); ?>">
-                                            <?php echo $job_url !== '' ? esc_html__('View & apply', 'tora-tora') : esc_html__('Email your CV', 'tora-tora'); ?>
+                                            <?php echo esc_html($job_apply_label); ?>
                                         </a>
                                     </div>
                                 </details>

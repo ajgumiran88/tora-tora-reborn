@@ -49,6 +49,15 @@ function tora_tora_register_menu_content(): void
         'auth_callback'     => static fn(): bool => current_user_can('edit_posts'),
     ]);
 
+    register_post_meta('tora_menu_item', 'tora_subgroup', [
+        'type'              => 'string',
+        'single'            => true,
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+        'show_in_rest'      => true,
+        'auth_callback'     => static fn(): bool => current_user_can('edit_posts'),
+    ]);
+
     register_post_meta('tora_menu_item', 'tora_available', [
         'type'              => 'boolean',
         'single'            => true,
@@ -77,10 +86,18 @@ function tora_tora_render_menu_meta_box(WP_Post $post): void
 {
     wp_nonce_field('tora_save_menu_details', 'tora_menu_details_nonce');
     $price = (string) get_post_meta($post->ID, 'tora_price', true);
+    $subgroup = (string) get_post_meta($post->ID, 'tora_subgroup', true);
     $available_meta = get_post_meta($post->ID, 'tora_available', true);
     $available = '' === $available_meta || (bool) $available_meta;
     ?>
     <p>
+        <label for="tora_price"><strong><?php esc_html_e('Price string', 'tora-tora'); ?></strong></label><br>
+        <input type="text" id="tora_price" name="tora_price" value="<?php echo esc_attr($price); ?>" class="widefat" placeholder="e.g. AED 58">
+    </p>
+    <p>
+        <label for="tora_subgroup"><strong><?php esc_html_e('Subgroup heading', 'tora-tora'); ?></strong></label><br>
+        <input type="text" id="tora_subgroup" name="tora_subgroup" value="<?php echo esc_attr($subgroup); ?>" class="widefat" placeholder="e.g. RAMEN or JAPANESE INSPIRED">
+    </p>
         <label for="tora-price"><strong><?php esc_html_e('Price', 'tora-tora'); ?></strong></label><br>
         <input class="widefat" id="tora-price" name="tora_price" type="text" value="<?php echo esc_attr($price); ?>" placeholder="AED 48">
     </p>
@@ -106,7 +123,9 @@ function tora_tora_save_menu_details(int $post_id): void
     }
 
     $price = isset($_POST['tora_price']) ? sanitize_text_field(wp_unslash($_POST['tora_price'])) : '';
+    $subgroup = isset($_POST['tora_subgroup']) ? sanitize_text_field(wp_unslash($_POST['tora_subgroup'])) : '';
     update_post_meta($post_id, 'tora_price', $price);
+    update_post_meta($post_id, 'tora_subgroup', $subgroup);
     update_post_meta($post_id, 'tora_available', isset($_POST['tora_available']) ? '1' : '0');
 }
 add_action('save_post_tora_menu_item', 'tora_tora_save_menu_details');
@@ -130,27 +149,64 @@ function tora_tora_menu_category_slugs(): array
 /**
  * Return available menu items grouped by category.
  *
- * @return array<int,array{term:WP_Term,items:array<int,WP_Post>}>
+ * @return array<int,array{term:object,items:array<int,WP_Post>}>
  */
 function tora_get_menu_groups(): array
 {
     $terms = get_terms([
         'taxonomy'   => 'tora_menu_category',
-        'hide_empty' => true,
+        'hide_empty' => false,
         'orderby'    => 'term_id',
         'order'      => 'ASC',
     ]);
 
-    if (is_wp_error($terms) || !$terms) {
-        return [];
+    $preferred = tora_tora_menu_category_slugs();
+    $terms = is_wp_error($terms) ? [] : (array) $terms;
+
+    // Keep the five Figma categories visible even before an editor adds items.
+    // This prevents the tab strip from changing shape as categories are filled.
+    $category_aliases = [
+        'beverage' => ['beverage', 'beverages'],
+    ];
+    $known_terms = [];
+    foreach ($preferred as $slug) {
+        $term = null;
+        foreach ($category_aliases[$slug] ?? [$slug] as $alias) {
+            $candidate = get_term_by('slug', $alias, 'tora_menu_category');
+            if ($candidate instanceof WP_Term) {
+                $term = $candidate;
+                break;
+            }
+        }
+
+        if (!$term) {
+            $term = (object) [
+                'term_id' => 0,
+                'slug'    => $slug,
+                'name'    => ucwords(str_replace('-', ' ', $slug)),
+            ];
+        }
+
+        $known_terms[(string) $term->slug] = $term;
     }
 
-    $preferred = tora_tora_menu_category_slugs();
+    foreach ($terms as $term) {
+        if ($term instanceof WP_Term) {
+            if ('beverages' === $term->slug && isset($known_terms['beverage'])) {
+                continue;
+            }
+            $known_terms[(string) $term->slug] = $term;
+        }
+    }
+
+    $terms = array_values($known_terms);
     usort(
         $terms,
         static function ($left, $right) use ($preferred): int {
             $left_slug = is_object($left) && isset($left->slug) ? (string) $left->slug : '';
             $right_slug = is_object($right) && isset($right->slug) ? (string) $right->slug : '';
+            $left_slug = 'beverages' === $left_slug ? 'beverage' : $left_slug;
+            $right_slug = 'beverages' === $right_slug ? 'beverage' : $right_slug;
             $left_index = array_search($left_slug, $preferred, true);
             $right_index = array_search($right_slug, $preferred, true);
             $left_index = false === $left_index ? 100 : $left_index;
@@ -211,4 +267,3 @@ function tora_tora_menu_admin_column(string $column, int $post_id): void
     }
 }
 add_action('manage_tora_menu_item_posts_custom_column', 'tora_tora_menu_admin_column', 10, 2);
-

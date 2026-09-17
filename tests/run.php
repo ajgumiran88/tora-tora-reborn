@@ -97,6 +97,13 @@ file_does_not_contain($theme . '/assets/css/main.css', '--tora-blue: #0b2cff', '
 file_contains($theme . '/inc/jobs.php', 'tora_tora_get_job_listings', 'Job Manager listing helper is missing.');
 file_contains($theme . '/inc/jobs.php', 'tora_tora_careers_jobs_for_display', 'Careers display job helper is missing.');
 file_contains($theme . '/inc/jobs.php', 'tora_tora_careers_content_is_polluted', 'Careers pollution guard is missing.');
+file_contains($theme . '/inc/jobs.php', "'_job_expires'", 'Job listings do not filter WPJM expiry metadata.');
+file_contains($theme . '/inc/jobs.php', "'menu_order' => 'ASC'", 'Job listings do not honor menu order.');
+file_contains($theme . '/inc/jobs.php', 'tora_tora_job_is_active', 'Job listings do not apply the filled/expiry safety guard.');
+file_contains($theme . '/inc/jobs.php', "'_application'", 'Job application metadata mapping is missing.');
+file_contains($theme . '/inc/jobs.php', 'tora_tora_default_careers_jobs', 'Static careers fallback is missing.');
+file_contains($theme . '/assets/css/main.css', '.careers-job-description ul', 'WP HTML list styling is missing from careers descriptions.');
+file_contains($theme . '/README.txt', 'WP Job Manager is required', 'WP Job Manager editor documentation is missing.');
 file_contains($theme . '/front-page.php', 'tora_tora_careers_jobs_for_display', 'Careers panel does not load display jobs.');
 file_contains($theme . '/front-page.php', 'careers-job-list', 'Careers job list markup is missing.');
 file_contains($theme . '/front-page.php', 'careers-roles-badge', 'Careers roles badge is missing.');
@@ -144,10 +151,18 @@ file_contains($theme . '/front-page.php', 'class="delivery-logo"', 'Delivery car
 
 file_contains($theme . '/front-page.php', 'menu-tabs', 'Tabbed menu navigation is missing.');
 file_contains($theme . '/front-page.php', 'menu-tab-panels', 'Tabbed menu panels are missing.');
+file_contains($theme . '/front-page.php', 'menu-tiger-mark', 'Menu tiger mark is missing.');
+file_contains($theme . '/front-page.php', 'menu-heading', 'Menu heading layout wrapper is missing.');
 file_does_not_contain($theme . '/front-page.php', 'id="menu-modal"', 'The old menu modal should be removed.');
 file_contains($theme . '/inc/default-content.php', 'Draft Food Menu', 'Draft Food Menu category is not seeded.');
 file_contains($theme . '/inc/default-content.php', 'Beverage', 'Beverage category is not seeded.');
 file_contains($theme . '/inc/menu-items.php', 'draft-food-menu', 'Menu group ordering does not include Draft Food Menu.');
+file_contains($theme . '/inc/menu-items.php', "'breakfast'", 'Breakfast category order is missing.');
+file_contains($theme . '/inc/menu-items.php', "'appetizers'", 'Appetizers category order is missing.');
+file_contains($theme . '/inc/menu-items.php', "'desserts'", 'Desserts category order is missing.');
+file_contains($theme . '/inc/menu-items.php', "'beverage'", 'Beverage category order is missing.');
+file_contains($theme . '/inc/menu-items.php', "'hide_empty' => false", 'Empty menu categories should remain visible.');
+file_contains($theme . '/inc/menu-items.php', "'beverages'", 'Beverage category alias is missing.');
 
 file_contains($theme . '/front-page.php', 'id="about"', 'About panel is missing.');
 file_does_not_contain($theme . '/front-page.php', 'story-figure-gold', 'Gold medallion should not appear on primary About surfaces.');

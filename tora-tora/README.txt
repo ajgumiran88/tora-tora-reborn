@@ -23,3 +23,6 @@ Staging mode is enabled by default. It displays a review-only banner and outputs
 == Plugins ==
 
 No premium plugin, page builder, booking plugin, or e-commerce plugin is required. Delivery cards are outbound links to Talabat, Noon, and Deliveroo.
+
+== Careers / WP Job Manager ==
+WP Job Manager is required for live careers data on staging and production. Editors manage openings in WordPress Admin under Jobs > Job Listings. Each opening should have a Title, Job type, Location, and Description. Published, unfilled, non-expired listings replace the five static Figma preview roles automatically; marking a listing filled or expired removes it from the Careers panel. The listing permalink is used for View & apply. If no permalink is available, the WP Job Manager Application URL or email is used, with the Careers email Customizer setting as the final fallback.
