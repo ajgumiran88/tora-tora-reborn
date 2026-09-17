@@ -158,7 +158,6 @@ $platforms = [
     </section>
 
     <section class="panel menu-panel" id="menu" data-theme="light" aria-labelledby="menu-title" aria-hidden="true">
-        <div class="menu-rail menu-rail-left" aria-hidden="true"></div>
         <div class="panel-scroll menu-layout">
             <div class="menu-heading">
                 <div class="menu-heading-copy">
