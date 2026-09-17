@@ -32,7 +32,7 @@ $gallery = tora_tora_panel_page(
 $contact = tora_tora_panel_page(
     'contact',
     __('Reach Us At', 'tora-tora'),
-    __('Find us on Al Wasl Road in Umm Suqeim 1, Dubai.', 'tora-tora'),
+    __('Find us at First Avenue Mall, Jumeira, Dubai.', 'tora-tora'),
     'gallery-1.jpg'
 );
 $careers_jobs = tora_tora_careers_jobs_for_display();
@@ -58,7 +58,7 @@ $gallery_tiles = [
     ['label' => __('Food', 'tora-tora'), 'mark' => '03'],
 ];
 $gallery_image_total = count($gallery_tiles);
-$address = (string) get_theme_mod('tora_address', 'Al Wasl Road, Umm Suqeim 1 - Dubai, UAE');
+$address = (string) get_theme_mod('tora_address', 'First Avenue Mall, Jumeira, Dubai, UAE');
 $phone = (string) get_theme_mod('tora_phone', '+971 4 000 0000');
 $email = (string) get_theme_mod('tora_email', 'hello@toratora.ae');
 $reservation_email = (string) get_theme_mod('tora_reservation_email', 'reserve@toratora.ae');
@@ -69,7 +69,8 @@ $tiktok_handle = (string) get_theme_mod('tora_tiktok_handle', '@toratora.dxb');
 $tiktok_url = (string) get_theme_mod('tora_tiktok_url', 'https://www.tiktok.com/@toratora.dxb');
 $hours_sun_thu = (string) get_theme_mod('tora_hours_sun_thu', '08:00 - 23:00');
 $hours_fri_sat = (string) get_theme_mod('tora_hours_fri_sat', '08:00 - 00:00');
-$contact_map = tora_tora_image_setting('tora_contact_map', 'contact-dubai-map.png');
+$maps_url = tora_tora_maps_url();
+$maps_embed = tora_tora_maps_embed_url($address);
 $featured_zone = (string) get_theme_mod('tora_featured_zone', 'Business Bay');
 $platforms = [
     [
@@ -439,22 +440,23 @@ $platforms = [
                 </div>
             </div>
             <figure class="contact-map">
+                <iframe
+                    class="contact-map-art"
+                    src="<?php echo esc_url($maps_embed); ?>"
+                    title="<?php echo esc_attr(sprintf(/* translators: %s: street address */ __('Google Map showing Tora Tora at %s', 'tora-tora'), $address)); ?>"
+                    width="1360"
+                    height="440"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    allowfullscreen
+                ></iframe>
                 <a
                     class="contact-map-link"
-                    href="https://maps.google.com/?q=<?php echo rawurlencode($address); ?>"
+                    href="<?php echo esc_url($maps_url); ?>"
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label="<?php echo esc_attr(sprintf(/* translators: %s: street address */ __('Open directions to Tora Tora at %s', 'tora-tora'), $address)); ?>"
                 >
-                    <img
-                        class="contact-map-art"
-                        src="<?php echo esc_url($contact_map); ?>"
-                        alt="<?php echo esc_attr(sprintf(/* translators: %s: street address */ __('Illustrated map of Dubai near %s', 'tora-tora'), $address)); ?>"
-                        width="1360"
-                        height="440"
-                        loading="lazy"
-                        decoding="async"
-                    >
+                    <?php esc_html_e('Open in Google Maps', 'tora-tora'); ?>
                 </a>
             </figure>
         </div>

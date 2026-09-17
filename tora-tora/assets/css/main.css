@@ -1605,17 +1605,34 @@ h1, h2, h3, h4 {
   background: rgba(255, 255, 255, .08);
 }
 
-.contact-map-link {
-  display: block;
-}
-
 .contact-map-art {
   display: block;
   width: 100%;
   height: auto;
+  min-height: clamp(14rem, 32vh, 22rem);
   aspect-ratio: 16 / 5.2;
-  object-fit: cover;
-  object-position: center;
+  border: 0;
+  filter: grayscale(0.08) contrast(1.02);
+}
+
+.contact-map-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: .85rem;
+  padding: .35rem 0;
+  color: var(--tora-white);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+
+.contact-map-link:hover,
+.contact-map-link:focus-visible {
+  opacity: .85;
 }
 
 .contact-view:not(.nav-open) .brand-link { visibility: hidden; }

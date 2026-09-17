@@ -33,7 +33,7 @@ function tora_tora_default_pages(): array
         ],
         'contact' => [
             'title' => 'Contact',
-            'content' => '<p>Find us on Al Wasl Road in Umm Suqeim 1, Dubai.</p>',
+            'content' => '<p>Find us at First Avenue Mall, Jumeira, Dubai.</p>',
         ],
         'careers' => [
             'title' => 'JOIN THE TEAM',

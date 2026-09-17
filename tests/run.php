@@ -119,7 +119,16 @@ file_contains($theme . '/assets/js/site.js', 'careers-view', 'Careers chrome bod
 file_contains($theme . '/functions.php', '/inc/jobs.php', 'jobs.php is not bootstrapped.');
 
 file_contains($theme . '/inc/setup.php', 'tora_tora_maps_embed_url', 'Google Maps embed helper is missing.');
-file_contains($theme . '/front-page.php', 'contact-map-art', 'Contact panel is missing the Figma Dubai map artwork.');
+file_contains($theme . '/inc/setup.php', 'tora_tora_maps_url', 'Google Maps place URL helper is missing.');
+file_contains($theme . '/inc/setup.php', 'maps.app.goo.gl/e8q15vCemqi5rcZX7', 'First Avenue Mall Google Maps URL is missing.');
+file_contains($theme . '/inc/setup.php', '25.2104867,55.2478384', 'First Avenue Mall map pin coordinates are missing.');
+file_contains($theme . '/inc/setup.php', 'First Avenue Mall Jumeira', 'First Avenue Mall embed query is missing.');
+file_contains($theme . '/front-page.php', 'contact-map-art', 'Contact panel is missing the map embed.');
+file_contains($theme . '/front-page.php', '<iframe', 'Contact panel is missing a live Google Maps iframe.');
+file_contains($theme . '/front-page.php', 'tora_tora_maps_embed_url', 'Contact map does not use the Google Maps embed helper.');
+file_contains($theme . '/front-page.php', 'tora_tora_maps_url', 'Contact map does not use the Google Maps place URL helper.');
+file_contains($theme . '/inc/customizer.php', 'tora_maps_url', 'Google Maps URL Customizer setting is missing.');
+file_does_not_contain($theme . '/front-page.php', 'contact-dubai-map.png', 'Contact panel still uses the sample Dubai map artwork.');
 file_contains($theme . '/front-page.php', 'contact-tiger', 'Contact panel is missing the Figma tiger mark.');
 file_contains($theme . '/front-page.php', 'Get in touch', 'Contact panel is missing the Figma Get in touch block.');
 file_contains($theme . '/front-page.php', 'Opening hours', 'Contact panel is missing the Figma opening hours block.');

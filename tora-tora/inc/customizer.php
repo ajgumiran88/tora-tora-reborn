@@ -35,7 +35,7 @@ function tora_tora_customize_register(WP_Customize_Manager $customize): void
     );
 
     $text_settings = [
-        'tora_address' => [__('Address', 'tora-tora'), 'Al Wasl Road, Umm Suqeim 1 - Dubai, UAE'],
+        'tora_address' => [__('Address', 'tora-tora'), 'First Avenue Mall, Jumeira, Dubai, UAE'],
         'tora_phone'   => [__('Phone', 'tora-tora'), '+971 4 000 0000'],
         'tora_email'   => [__('Contact email', 'tora-tora'), 'hello@toratora.ae'],
         'tora_reservation_email' => [__('Reservation email', 'tora-tora'), 'reserve@toratora.ae'],
@@ -44,6 +44,7 @@ function tora_tora_customize_register(WP_Customize_Manager $customize): void
         'tora_instagram_url' => [__('Instagram URL', 'tora-tora'), 'https://www.instagram.com/toratora.dxb'],
         'tora_tiktok_handle' => [__('TikTok handle', 'tora-tora'), '@toratora.dxb'],
         'tora_tiktok_url' => [__('TikTok URL', 'tora-tora'), 'https://www.tiktok.com/@toratora.dxb'],
+        'tora_maps_url' => [__('Google Maps URL', 'tora-tora'), 'https://maps.app.goo.gl/e8q15vCemqi5rcZX7'],
         'tora_social'  => [__('Social label', 'tora-tora'), 'Facebook / TikTok / Instagram / WhatsApp'],
         'tora_footer'  => [__('Footer text', 'tora-tora'), 'Reborn Consultancy © ' . gmdate('Y')],
         'tora_talabat_url' => [__('Talabat URL', 'tora-tora'), 'https://www.talabat.com'],

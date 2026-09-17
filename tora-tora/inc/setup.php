@@ -133,24 +133,34 @@ function tora_tora_logo_url(): string
 }
 
 /**
- * Google Maps embed URL with a pin on the given address (no API key required).
+ * Google Maps embed URL for First Avenue Mall Jumeira (no API key required).
+ *
+ * Always pins https://maps.app.goo.gl/e8q15vCemqi5rcZX7 regardless of address text.
+ *
+ * @param string $address Unused; kept for call-site compatibility.
  */
-function tora_tora_maps_embed_url(string $address): string
+function tora_tora_maps_embed_url(string $address = ''): string
 {
-    $query = trim($address);
-    if ($query === '') {
-        $query = 'Al Wasl Road, Umm Suqeim 1, Dubai, UAE';
-    }
+    unset($address);
 
     return add_query_arg(
         [
-            'q'      => $query,
+            'q'      => 'First Avenue Mall Jumeira@25.2104867,55.2478384',
             'hl'     => 'en',
             'z'      => '16',
             'output' => 'embed',
         ],
-        'https://maps.google.com/maps'
+        'https://www.google.com/maps'
     );
+}
+
+/**
+ * Public Google Maps directions / place URL for the contact map.
+ */
+function tora_tora_maps_url(): string
+{
+    $url = (string) get_theme_mod('tora_maps_url', 'https://maps.app.goo.gl/e8q15vCemqi5rcZX7');
+    return $url !== '' ? $url : 'https://maps.app.goo.gl/e8q15vCemqi5rcZX7';
 }
 
 function tora_tora_image_setting(string $setting, string $fallback): string
