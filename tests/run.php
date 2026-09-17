@@ -95,13 +95,20 @@ file_contains($theme . '/assets/css/main.css', '#FFFFFF', 'Brand white #FFFFFF i
 file_does_not_contain($theme . '/assets/css/main.css', '--tora-blue: #0b2cff', 'Legacy off-brand blue is still the primary token.');
 
 file_contains($theme . '/inc/jobs.php', 'tora_tora_get_job_listings', 'Job Manager listing helper is missing.');
+file_contains($theme . '/inc/jobs.php', 'tora_tora_careers_jobs_for_display', 'Careers display job helper is missing.');
 file_contains($theme . '/inc/jobs.php', 'tora_tora_careers_content_is_polluted', 'Careers pollution guard is missing.');
-file_contains($theme . '/front-page.php', 'tora_tora_get_job_listings', 'Careers panel does not query Job Manager listings.');
+file_contains($theme . '/front-page.php', 'tora_tora_careers_jobs_for_display', 'Careers panel does not load display jobs.');
 file_contains($theme . '/front-page.php', 'careers-job-list', 'Careers job list markup is missing.');
+file_contains($theme . '/front-page.php', 'careers-roles-badge', 'Careers roles badge is missing.');
+file_contains($theme . '/front-page.php', 'careers-rule', 'Careers vertical rule is missing.');
+file_contains($theme . '/front-page.php', 'careers-pattern-disc', 'Careers speckle disc is missing.');
+file_contains($theme . '/front-page.php', 'JOIN THE TEAM', 'Careers title does not match the Figma copy.');
 file_contains($theme . '/front-page.php', 'View & apply', 'Careers apply CTA is missing.');
 file_does_not_contain($theme . '/front-page.php', "echo esc_html(\$careers['title']);", 'Careers still prints unsanitized page titles.');
 file_contains($theme . '/single-job_listing.php', 'job-application.php', 'Single job template does not load WP Job Manager apply UI.');
 file_contains($theme . '/assets/css/main.css', '.careers-job-list', 'Careers job list styling is missing.');
+file_contains($theme . '/assets/css/main.css', '.careers-view:not(.nav-open)', 'Careers chrome body class styling is missing.');
+file_contains($theme . '/assets/js/site.js', 'careers-view', 'Careers chrome body class toggle is missing.');
 file_contains($theme . '/functions.php', '/inc/jobs.php', 'jobs.php is not bootstrapped.');
 
 file_contains($theme . '/inc/setup.php', 'tora_tora_maps_embed_url', 'Google Maps embed helper is missing.');
@@ -176,7 +183,7 @@ file_contains($theme . '/assets/css/main.css', ".home-panel {\n  padding: 0;", '
 file_contains($theme . '/assets/css/main.css', 'grid-template-columns: minmax(0, 58%) minmax(0, 42%)', 'Home split columns do not match the Figma 58/42 proportion.');
 file_does_not_contain($theme . '/assets/css/main.css', 'outline: 3px solid var(--tora-tiger)', 'Home hamburger still uses the off-Figma yellow ring.');
 file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_home_intro_1_2_1', 'Home intro restoration upgrade is missing.');
-file_contains($theme . '/front-page.php', 'careers-openings', 'Careers openings are not separated into scroll space.');
+file_contains($theme . '/inc/default-content.php', 'JOIN THE TEAM', 'Careers default content does not match the Figma copy.');
 file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_to_1_2_0', 'Figma content upgrade hook is missing.');
 file_contains($theme . '/assets/css/main.css', '.delivery-card:hover', 'Delivery cards are missing a clear hover treatment.');
 file_does_not_contain($theme . '/assets/css/main.css', 'filter: contrast(1.1)', 'The pattern still amplifies JPEG compression artifacts.');

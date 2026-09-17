@@ -143,3 +143,91 @@ function tora_tora_job_location(int $post_id): string
     $meta = get_post_meta($post_id, '_job_location', true);
     return is_string($meta) ? $meta : '';
 }
+
+/**
+ * Format job type + location the way the Figma careers list shows it.
+ */
+function tora_tora_job_meta_line(int $post_id): string
+{
+    $types = tora_tora_job_type_labels($post_id);
+    $location = tora_tora_job_location($post_id);
+    if ($location === '') {
+        $location = 'Dubai Marina';
+    }
+
+    if ($types) {
+        $type_line = implode(' / ', array_map('strtoupper', $types));
+    } else {
+        $type_line = 'FULL TIME';
+    }
+
+    return $type_line . ' — ' . strtoupper($location);
+}
+
+/**
+ * Static Figma openings used when Job Manager has no published listings.
+ *
+ * @return array<int,array{title:string,meta:string,url:string,content:string}>
+ */
+function tora_tora_default_careers_jobs(): array
+{
+    return [
+        [
+            'title'   => 'Head Ramen Chef',
+            'meta'    => 'FULL TIME — DUBAI MARINA',
+            'url'     => '',
+            'content' => '',
+        ],
+        [
+            'title'   => 'Line Cook',
+            'meta'    => 'FULL-TIME / PART-TIME — DUBAI MARINA',
+            'url'     => '',
+            'content' => '',
+        ],
+        [
+            'title'   => 'Floor Staff / Server',
+            'meta'    => 'FULL TIME — DUBAI MARINA',
+            'url'     => '',
+            'content' => '',
+        ],
+        [
+            'title'   => 'Cashier',
+            'meta'    => 'FULL TIME — DUBAI MARINA',
+            'url'     => '',
+            'content' => '',
+        ],
+        [
+            'title'   => 'Kitchen Porter',
+            'meta'    => 'FULL TIME — DUBAI MARINA',
+            'url'     => '',
+            'content' => '',
+        ],
+    ];
+}
+
+/**
+ * Careers rows for the Figma accordion list.
+ *
+ * @return array<int,array{title:string,meta:string,url:string,content:string}>
+ */
+function tora_tora_careers_jobs_for_display(): array
+{
+    $listings = tora_tora_get_job_listings();
+
+    if (!$listings) {
+        return tora_tora_default_careers_jobs();
+    }
+
+    $jobs = [];
+    foreach ($listings as $job) {
+        $job_id = (int) $job->ID;
+        $jobs[] = [
+            'title'   => get_the_title($job),
+            'meta'    => tora_tora_job_meta_line($job_id),
+            'url'     => (string) (get_permalink($job_id) ?: ''),
+            'content' => apply_filters('the_content', $job->post_content),
+        ];
+    }
+
+    return $jobs;
+}

@@ -85,6 +85,7 @@
     document.body.classList.toggle("about-panel", panel.id === "about");
     document.body.classList.toggle("gallery-view", panel.id === "gallery");
     document.body.classList.toggle("contact-view", panel.id === "contact");
+    document.body.classList.toggle("careers-view", panel.id === "careers");
   }
 
   function showPanel(id, menuSlug, updateHistory, moveFocus) {

@@ -36,8 +36,8 @@ function tora_tora_default_pages(): array
             'content' => '<p>Find us on Al Wasl Road in Umm Suqeim 1, Dubai.</p>',
         ],
         'careers' => [
-            'title' => 'Join the Tora Tora Team',
-            'content' => '<p>Tora Tora is built on passion for food, hospitality, and creativity. We’re always looking for talented individuals who share our energy for Japanese cuisine and exceptional service.</p><h3>Why Work With Us</h3><p>At Tora Tora, we value dedication, hospitality, teamwork, and a shared love for authentic Japanese cuisine. We are always looking for individuals who are passionate about creating memorable dining experiences.</p><h3>What We’re Looking For</h3><p>From kitchen professionals to front-of-house staff, we welcome talented people who bring energy, professionalism, and commitment to excellence.</p>',
+            'title' => 'JOIN THE TEAM',
+            'content' => '<p>AT TORA TORA, WE MOVE FAST, COOK BOLD, AND CELEBRATE EVERYONE WHO BRINGS THE TIGER SPIRIT TO WORK. WE ARE BUILDING SOMETHING EXCEPTIONAL IN DUBAI AND WE WANT EXCEPTIONAL PEOPLE WITH US.</p>',
         ],
     ];
 }
