@@ -187,8 +187,19 @@ file_contains($theme . '/inc/customizer.php', 'tora_reservation_email', 'Reserva
 file_contains($theme . '/inc/customizer.php', 'tora_instagram_url', 'Instagram URL Customizer setting is missing.');
 file_contains($theme . '/inc/customizer.php', "'https://www.instagram.com/toratora.ae'", 'Instagram URL default is not the live toratora.ae profile.');
 file_contains($theme . '/inc/customizer.php', "'https://www.tiktok.com/@toratora.ae'", 'TikTok URL default is not the live toratora.ae profile.');
-file_contains($theme . '/front-page.php', "'@toratora.ae'", 'Contact social handles do not default to @toratora.ae.');
+file_contains($theme . '/inc/setup.php', "'@toratora.ae'", 'Contact social handles do not default to @toratora.ae.');
 file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_social_handles_1_4_2', 'Saved staging social links will stay on the old .dxb handles.');
+file_contains($theme . '/inc/setup.php', 'function tora_tora_instagram_url', 'Instagram URL helper is missing, so Contact can keep a stale Customizer link.');
+file_contains($theme . '/inc/setup.php', "'https://www.instagram.com/toratora.ae'", 'Instagram helper does not canonicalize to the live toratora.ae profile.');
+file_contains($theme . '/inc/setup.php', "'https://www.tiktok.com/@toratora.ae'", 'TikTok helper does not canonicalize to the live toratora.ae profile.');
+file_contains($theme . '/front-page.php', 'tora_tora_instagram_url()', 'Contact Instagram link does not use the canonical helper.');
+file_contains($theme . '/front-page.php', 'tora_tora_tiktok_url()', 'Contact TikTok link does not use the canonical helper.');
+file_contains($theme . '/inc/setup.php', 'contact-social-icon', 'Follow us rows are missing social icons.');
+file_contains($theme . '/assets/css/main.css', '.contact-social-icon {', 'Social icons have no blue-theme sizing.');
+file_contains($theme . '/assets/css/main.css', '.contact-social-handle {', 'Follow us handles have no dedicated styling.');
+file_contains($theme . '/assets/css/main.css', "letter-spacing: .04em;\n  text-transform: none;", 'Social handles are still forced to @TORATORA.AE instead of the live @toratora.ae username.');
+file_contains($theme . '/inc/setup.php', "return '@toratora.ae';", 'Social handle helpers do not canonicalize to @toratora.ae.');
+file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_social_handles_1_4_3', 'Stale Instagram Customizer values will not be overwritten.');
 
 file_contains($theme . '/header.php', 'About Tora Tora', 'Overlay is missing the About Tora Tora label.');
 file_contains($theme . '/header.php', 'data-target="delivery"', 'Overlay is missing Delivery navigation.');

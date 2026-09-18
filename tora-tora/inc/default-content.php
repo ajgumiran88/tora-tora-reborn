@@ -499,6 +499,12 @@ function tora_tora_maybe_upgrade_content(): void
         $current = '1.4.2';
         update_option('tora_tora_seeded_version', $current, false);
     }
+
+    if (version_compare($current, '1.4.3', '<')) {
+        tora_tora_upgrade_social_handles_1_4_3();
+        $current = '1.4.3';
+        update_option('tora_tora_seeded_version', $current, false);
+    }
 }
 
 function tora_tora_upgrade_menu_1_3_5(): void
@@ -725,6 +731,14 @@ function tora_tora_upgrade_social_handles_1_4_2(): void
             set_theme_mod($mod, $new);
         }
     }
+}
+
+function tora_tora_upgrade_social_handles_1_4_3(): void
+{
+    set_theme_mod('tora_instagram_handle', '@toratora.ae');
+    set_theme_mod('tora_instagram_url', 'https://www.instagram.com/toratora.ae');
+    set_theme_mod('tora_tiktok_handle', '@toratora.ae');
+    set_theme_mod('tora_tiktok_url', 'https://www.tiktok.com/@toratora.ae');
 }
 
 add_action('init', 'tora_tora_maybe_upgrade_content', 30);

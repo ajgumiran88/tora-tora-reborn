@@ -83,10 +83,10 @@ $phone = (string) get_theme_mod('tora_phone', '+971 4 000 0000');
 $email = (string) get_theme_mod('tora_email', 'hello@toratora.ae');
 $reservation_email = (string) get_theme_mod('tora_reservation_email', 'reserve@toratora.ae');
 $careers_email = (string) get_theme_mod('tora_careers_email', 'hello@toratora.ae');
-$instagram_handle = (string) get_theme_mod('tora_instagram_handle', '@toratora.ae');
-$instagram_url = (string) get_theme_mod('tora_instagram_url', 'https://www.instagram.com/toratora.ae');
-$tiktok_handle = (string) get_theme_mod('tora_tiktok_handle', '@toratora.ae');
-$tiktok_url = (string) get_theme_mod('tora_tiktok_url', 'https://www.tiktok.com/@toratora.ae');
+$instagram_handle = tora_tora_instagram_handle();
+$instagram_url = tora_tora_instagram_url();
+$tiktok_handle = tora_tora_tiktok_handle();
+$tiktok_url = tora_tora_tiktok_url();
 $hours_sun_thu = (string) get_theme_mod('tora_hours_sun_thu', '08:00 - 23:00');
 $hours_fri_sat = (string) get_theme_mod('tora_hours_fri_sat', '08:00 - 00:00');
 $maps_url = tora_tora_maps_url();
@@ -477,14 +477,20 @@ $platforms = [
                         <ul class="contact-social">
                             <li>
                                 <a class="contact-social-link" href="<?php echo esc_url($instagram_url); ?>" target="_blank" rel="noopener noreferrer">
-                                    <span><?php esc_html_e('Instagram', 'tora-tora'); ?></span>
-                                    <span class="contact-social-handle"><?php echo esc_html($instagram_handle); ?><span aria-hidden="true">→</span></span>
+                                    <span class="contact-social-brand">
+                                        <?php echo tora_tora_social_icon('instagram'); ?>
+                                        <span><?php esc_html_e('Instagram', 'tora-tora'); ?></span>
+                                    </span>
+                                    <span class="contact-social-handle"><?php echo esc_html($instagram_handle); ?></span>
                                 </a>
                             </li>
                             <li>
                                 <a class="contact-social-link" href="<?php echo esc_url($tiktok_url); ?>" target="_blank" rel="noopener noreferrer">
-                                    <span><?php esc_html_e('TikTok', 'tora-tora'); ?></span>
-                                    <span class="contact-social-handle"><?php echo esc_html($tiktok_handle); ?><span aria-hidden="true">→</span></span>
+                                    <span class="contact-social-brand">
+                                        <?php echo tora_tora_social_icon('tiktok'); ?>
+                                        <span><?php esc_html_e('TikTok', 'tora-tora'); ?></span>
+                                    </span>
+                                    <span class="contact-social-handle"><?php echo esc_html($tiktok_handle); ?></span>
                                 </a>
                             </li>
                         </ul>

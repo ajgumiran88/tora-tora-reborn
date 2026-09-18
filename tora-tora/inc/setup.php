@@ -171,6 +171,40 @@ function tora_tora_logo_url(): string
     return add_query_arg('ver', tora_tora_asset_version('assets/images/tora-tora-logo.png'), $url);
 }
 
+function tora_tora_instagram_url(): string
+{
+    return 'https://www.instagram.com/toratora.ae';
+}
+
+function tora_tora_tiktok_url(): string
+{
+    return 'https://www.tiktok.com/@toratora.ae';
+}
+
+function tora_tora_instagram_handle(): string
+{
+    return '@toratora.ae';
+}
+
+function tora_tora_tiktok_handle(): string
+{
+    return '@toratora.ae';
+}
+
+function tora_tora_social_icon(string $network): string
+{
+    $icons = [
+        'instagram' => '<path d="M7.75 2.5h8.5A5.25 5.25 0 0 1 21.5 7.75v8.5a5.25 5.25 0 0 1-5.25 5.25h-8.5A5.25 5.25 0 0 1 2.5 16.25v-8.5A5.25 5.25 0 0 1 7.75 2.5Zm0 1.75A3.5 3.5 0 0 0 4.25 7.75v8.5a3.5 3.5 0 0 0 3.5 3.5h8.5a3.5 3.5 0 0 0 3.5-3.5v-8.5a3.5 3.5 0 0 0-3.5-3.5h-8.5Zm9.38 1.4a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3ZM12 7.25A4.75 4.75 0 1 1 7.25 12 4.75 4.75 0 0 1 12 7.25Zm0 1.75A3 3 0 1 0 15 12a3 3 0 0 0-3-3Z"/>',
+        'tiktok' => '<path d="M14.7 3.2c.5 2.4 2.1 4.2 4.5 4.7v2.5a7.1 7.1 0 0 1-4.5-1.5v6.6a5.7 5.7 0 1 1-5.7-5.7c.3 0 .6 0 .9.1v2.6a3.1 3.1 0 1 0 2.2 3v-13Z"/>',
+    ];
+
+    if (!isset($icons[$network])) {
+        return '';
+    }
+
+    return '<svg class="contact-social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' . $icons[$network] . '</svg>';
+}
+
 /**
  * Split a postal address into one or two display lines without changing its content.
  *
