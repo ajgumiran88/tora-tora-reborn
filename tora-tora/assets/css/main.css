@@ -209,14 +209,6 @@ h1, h2, h3, h4 {
 .light-panel:not(.nav-open) .nav-toggle { color: var(--tora-blue); }
 .nav-open .brand-link { visibility: hidden; }
 
-.header-stuck.light-panel:not(.nav-open):not(.pattern-panel):not(.about-panel) .site-header {
-  background: #FFFFFF;
-}
-.header-stuck.gallery-view:not(.nav-open) .site-header,
-.header-stuck.contact-view:not(.nav-open) .site-header {
-  background: var(--tora-blue);
-}
-
 .brand-link {
   display: inline-flex;
   align-items: center;

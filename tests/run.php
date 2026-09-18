@@ -129,8 +129,8 @@ file_does_not_contain($theme . '/assets/css/main.css', "\n.light-panel:not(.nav-
 file_does_not_contain($theme . '/assets/css/main.css', ".gallery-view:not(.nav-open) .site-header,\n.contact-view:not(.nav-open) .site-header {\n  background: var(--tora-blue);", 'Gallery/Contact header must stay transparent until scrolled.');
 file_does_not_contain($theme . '/assets/css/main.css', 'position: absolute;\n  top: .35rem;\n  right: clamp(.9rem, 2vw, 1.25rem);', 'About hamburger should not be relocated by the sticky-header experiment.');
 file_contains($theme . '/assets/js/site.js', 'header-stuck', 'Header stuck class is not toggled on panel scroll.');
-file_contains($theme . '/assets/css/main.css', ".header-stuck.light-panel:not(.nav-open):not(.pattern-panel):not(.about-panel) .site-header {\n  background: #FFFFFF;", 'Scrolled light panels do not get an opaque header bar.');
-file_contains($theme . '/assets/css/main.css', ".header-stuck.gallery-view:not(.nav-open) .site-header,\n.header-stuck.contact-view:not(.nav-open) .site-header {\n  background: var(--tora-blue);", 'Scrolled blue panels do not get an opaque header bar.');
+file_does_not_contain($theme . '/assets/css/main.css', ".header-stuck.light-panel:not(.nav-open):not(.pattern-panel):not(.about-panel) .site-header {\n  background: #FFFFFF;", 'Scrolled header must stay transparent so it does not hide page objects.');
+file_does_not_contain($theme . '/assets/css/main.css', ".header-stuck.gallery-view:not(.nav-open) .site-header,\n.header-stuck.contact-view:not(.nav-open) .site-header {\n  background: var(--tora-blue);", 'Scrolled blue header must stay transparent so it does not hide page objects.');
 file_contains($theme . '/assets/css/main.css', '.pattern-panel:not(.nav-open) .nav-toggle', 'Pattern-panel hamburger contrast chip is missing.');
 file_contains($theme . '/assets/css/main.css', '--font-display', 'Brand Book Typeface 01 token is missing.');
 file_contains($theme . '/assets/css/main.css', 'font-family: "ITC Avant Garde Gothic"', 'ITC Avant Garde Gothic @font-face is missing.');
