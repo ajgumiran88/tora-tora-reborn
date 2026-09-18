@@ -167,9 +167,8 @@ function tora_tora_delivery_enabled(): bool
 
 function tora_tora_logo_url(): string
 {
-    $custom_logo_id = (int) get_theme_mod('custom_logo', 0);
-    $custom_logo = $custom_logo_id ? wp_get_attachment_image_url($custom_logo_id, 'full') : false;
-    return $custom_logo ?: tora_tora_asset('images/tora-tora-logo.png');
+    $url = tora_tora_asset('images/tora-tora-logo.png');
+    return add_query_arg('ver', tora_tora_asset_version('assets/images/tora-tora-logo.png'), $url);
 }
 
 /**

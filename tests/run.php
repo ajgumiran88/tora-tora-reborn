@@ -348,6 +348,9 @@ file_contains($theme . '/inc/setup.php', 'tora_tora_format_address_lines', 'Cont
 file_contains($theme . '/front-page.php', 'contact-location-line', 'Contact address is not rendered as two lines.');
 file_contains($theme . '/assets/css/main.css', 'overflow-wrap: anywhere;', 'Long custom Contact addresses can overflow on mobile.');
 file_contains($theme . '/front-page.php', 'tora_tora_logo_url()', 'Contact does not use the full Tora Tora wordmark.');
+file_contains($theme . '/inc/setup.php', "tora_tora_asset('images/tora-tora-logo.png')", 'Front-end brand mark does not use the packaged header logo.');
+file_contains($theme . '/inc/setup.php', "tora_tora_asset_version('assets/images/tora-tora-logo.png')", 'Packaged logo is not cache-busted, so staging can keep serving the old circular mark.');
+file_does_not_contain($theme . '/inc/setup.php', "get_theme_mod('custom_logo'", 'Site Identity custom logo still overrides the packaged header mark on staging.');
 file_does_not_contain($theme . '/inc/default-content.php', 'wp_delete_post($item->ID, true);', 'The 1.3.5 migration can delete editor-created menu items.');
 file_does_not_contain($theme . '/assets/css/main.css', 'outline: 3px solid var(--tora-tiger)', 'Home hamburger still uses the off-Figma yellow ring.');
 file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_home_intro_1_2_1', 'Home intro restoration upgrade is missing.');
