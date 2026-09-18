@@ -43,6 +43,9 @@
   --ease: cubic-bezier(.22, 1, .36, 1);
   --side: clamp(1.25rem, 5vw, 5rem);
   --panel-left: clamp(4.5rem, 12.5vw, 10.25rem);
+  --panel-title: clamp(2.25rem, 4.6vw, 3.75rem);
+  --brand-mark: clamp(4.5rem, 8vw, 7rem);
+  --panel-top-gap: clamp(2.15rem, 4vh, 2.75rem);
   --header: clamp(4.5rem, 8vw, 6.5rem);
   --staging: 0px;
   --pattern: url("../images/tora-tora-pattern.png");
@@ -52,6 +55,11 @@
   );
   --tiger-mark: url("../images/tiger-mark.png");
   --shadow-soft: 0 1.5rem 4rem rgba(5, 0, 245, .1);
+}
+
+/* Resolve under body so --staging from .tora-staging is included. */
+body {
+  --panel-top: calc(var(--staging) + var(--brand-mark) + var(--panel-top-gap));
 }
 
 .tora-staging { --staging: 52px; }
@@ -190,9 +198,10 @@ h1, h2, h3, h4 {
   min-height: var(--header);
   padding: .8rem var(--side) 0;
   color: var(--tora-white);
+  background: transparent;
   pointer-events: none;
   overflow: visible;
-  transition: color .25s ease;
+  transition: color .25s ease, background-color .2s ease;
 }
 
 .site-header > * { pointer-events: auto; }
@@ -200,11 +209,19 @@ h1, h2, h3, h4 {
 .light-panel:not(.nav-open) .nav-toggle { color: var(--tora-blue); }
 .nav-open .brand-link { visibility: hidden; }
 
+.header-stuck.light-panel:not(.nav-open):not(.pattern-panel):not(.about-panel) .site-header {
+  background: #FFFFFF;
+}
+.header-stuck.gallery-view:not(.nav-open) .site-header,
+.header-stuck.contact-view:not(.nav-open) .site-header {
+  background: var(--tora-blue);
+}
+
 .brand-link {
   display: inline-flex;
   align-items: center;
   width: clamp(7.5rem, 12vw, 10.5rem);
-  height: clamp(4.5rem, 8vw, 7rem);
+  height: var(--brand-mark);
 }
 
 .brand-link img {
@@ -396,7 +413,23 @@ h1, h2, h3, h4 {
 }
 
 .panel h1 { max-width: 14ch; font-size: clamp(3.1rem, 7.3vw, 7.2rem); }
-.panel h2 { max-width: 14ch; font-size: clamp(2.8rem, 6vw, 6.2rem); }
+.panel h2 { max-width: 14ch; font-size: var(--panel-title); }
+
+/* One display scale for every section title — scanning stays consistent. */
+.story-panel #about-title,
+.menu-layout h2,
+.delivery-panel #delivery-title,
+.gallery-heading h2,
+.careers-panel #careers-title,
+.contact-heading h2 {
+  max-width: none;
+  font-family: var(--font-display);
+  font-size: var(--panel-title);
+  font-weight: 700;
+  letter-spacing: -.04em;
+  line-height: .9;
+  text-transform: uppercase;
+}
 .entry-content { max-width: 42rem; }
 .entry-content > * + * { margin-top: 1rem; }
 .entry-content p { font-size: clamp(1rem, 1.25vw, 1.25rem); font-weight: 400; letter-spacing: .02em; }
@@ -583,7 +616,7 @@ h1, h2, h3, h4 {
 }
 
 .careers-scroll {
-  padding-top: calc(var(--header) * .35 + var(--staging));
+  padding-top: var(--panel-top);
   padding-right: clamp(4.5rem, 8vw, 7rem);
   padding-bottom: clamp(2rem, 4vh, 3rem);
   padding-left: var(--panel-left);
@@ -606,14 +639,7 @@ h1, h2, h3, h4 {
 }
 
 .careers-panel #careers-title {
-  max-width: none;
   width: max-content;
-  font-family: var(--font-display);
-  font-size: clamp(1.7rem, 3.6vw, 3.2rem);
-  font-weight: 700;
-  letter-spacing: -.04em;
-  line-height: .9;
-  text-transform: uppercase;
   white-space: nowrap;
 }
 
@@ -787,9 +813,7 @@ h1, h2, h3, h4 {
   text-underline-offset: .18em;
 }
 
-.careers-view:not(.nav-open) .brand-link { visibility: hidden; }
 .careers-view:not(.nav-open) .footer-strip { display: none; }
-.menu-view:not(.nav-open) .brand-link { visibility: hidden; }
 .menu-view:not(.nav-open) .footer-strip { display: none; }
 .menu-view:not(.nav-open) .site-header {
   /* Keep flex spacing; the toggle is absolutely pinned to the solid blue half. */
@@ -809,7 +833,7 @@ h1, h2, h3, h4 {
   background: transparent;
 }
 
-/* Figma About: one locked poster, not a two-screen scroller. */
+/* Figma About: poster chrome stays put; copy scrolls so the last lines stay readable. */
 .story-panel {
   padding: 0;
   overflow: hidden;
@@ -821,18 +845,21 @@ h1, h2, h3, h4 {
   position: relative;
   height: 100%;
   min-height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   background: #FFFFFF;
 }
 
 .story-copy {
-  position: absolute;
+  position: relative;
   left: var(--panel-left);
-  top: calc(var(--staging) + clamp(3.4rem, 7.5vh, 5.25rem));
   z-index: 2;
-  width: min(34rem, 42vw);
-  max-width: 36rem;
-  padding: 0 2.5rem 4.5rem 0;
+  width: min(52rem, calc(100% - var(--panel-left) - 5.5rem));
+  max-width: none;
+  padding-top: var(--panel-top);
+  padding-right: 2.5rem;
+  padding-bottom: calc(clamp(2.6rem, 5vh, 3.5rem) + .85rem);
 }
 
 .story-panel .panel-back {
@@ -844,11 +871,6 @@ h1, h2, h3, h4 {
 }
 
 .story-panel #about-title {
-  max-width: none;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(2.2rem, 3.9vw, 3.2rem);
-  letter-spacing: -.045em;
   line-height: .88;
 }
 
@@ -859,7 +881,7 @@ h1, h2, h3, h4 {
 
 .story-copy .entry-content {
   position: relative;
-  max-width: 36rem;
+  max-width: none;
   margin-top: 1.55rem;
   font-family: var(--font-main);
   letter-spacing: .02em;
@@ -870,8 +892,22 @@ h1, h2, h3, h4 {
   font-size: clamp(1.02rem, 1.38vw, 1.22rem);
   font-weight: 500;
   letter-spacing: .045em;
-  line-height: 1.58;
-  max-width: 65ch;
+  line-height: 1.5;
+}
+
+.story-copy .entry-content p:empty {
+  display: none;
+}
+
+.story-copy .entry-content br {
+  display: none;
+}
+
+.story-copy .entry-content br + br {
+  display: block;
+  height: .85rem;
+  line-height: 0;
+  font-size: 0;
 }
 
 .story-copy .entry-content strong {
@@ -943,7 +979,6 @@ h1, h2, h3, h4 {
 
 .story-copy-body {
   position: relative;
-  max-width: 36rem;
 }
 
 .story-rule {
@@ -969,13 +1004,8 @@ h1, h2, h3, h4 {
   pointer-events: none;
 }
 
-/* Figma About chrome: no brand mark, hamburger bars sit on the corner arc, no footer credit. */
-.about-panel:not(.nav-open) .brand-link { visibility: hidden; }
+/* Figma About chrome: brand mark stays visible like Home; hamburger sits on the corner arc; no footer credit. */
 .about-panel:not(.nav-open) .footer-strip { display: none; }
-.about-panel:not(.nav-open) .site-header {
-  padding: .15rem 1.05rem 0;
-  align-items: flex-start;
-}
 .about-panel:not(.nav-open) .nav-toggle {
   width: 52px;
   height: 52px;
@@ -1053,7 +1083,7 @@ h1, h2, h3, h4 {
   margin: 0;
   min-width: 0;
   height: 100%;
-  padding-top: calc(var(--header) + var(--staging) + .75rem);
+  padding-top: var(--panel-top);
   padding-right: calc(min(14vw, 12.5rem) + 1.25rem);
   padding-bottom: clamp(3rem, 5vh, 4.5rem);
   padding-left: var(--panel-left);
@@ -1086,9 +1116,7 @@ h1, h2, h3, h4 {
 }
 
 .menu-layout h2 {
-  max-width: none;
   margin-bottom: clamp(1rem, 2vh, 1.5rem);
-  font-size: clamp(3.25rem, 7vw, 6.8rem);
 }
 
 .menu-tabs {
@@ -1235,7 +1263,7 @@ h1, h2, h3, h4 {
 .delivery-panel {
   display: flex;
   flex-direction: column;
-  padding: calc(var(--header) + var(--staging)) 0 0;
+  padding: var(--panel-top) 0 0;
   overflow: hidden;
   color: var(--tora-blue);
   background: #FFFFFF;
@@ -1244,14 +1272,10 @@ h1, h2, h3, h4 {
 .delivery-view:not(.nav-open) .footer-strip { display: none; }
 
 .delivery-panel #delivery-title {
-  max-width: none;
   width: max-content;
   max-inline-size: 100%;
-  font-size: clamp(2.6rem, 5.2vw, 3.9rem);
-  line-height: .9;
-  letter-spacing: -.04em;
+  white-space: nowrap;
 }
-.delivery-title-line { display: block; }
 .delivery-footer {
   flex: 0 0 clamp(1.05rem, 1.7vh, 1.35rem);
   height: clamp(1.05rem, 1.7vh, 1.35rem);
@@ -1288,7 +1312,10 @@ h1, h2, h3, h4 {
   min-height: 0;
   height: auto;
   max-height: none;
-  padding: clamp(1.05rem, 3vh, 2.1rem) clamp(2.4rem, 4.2vw, 3.5rem) clamp(1.25rem, 3vh, 2rem) clamp(2.6rem, 7vw, 6.5rem);
+  padding-top: clamp(1.05rem, 3vh, 2.1rem);
+  padding-right: clamp(2.4rem, 4.2vw, 3.5rem);
+  padding-bottom: clamp(1.25rem, 3vh, 2rem);
+  padding-left: var(--panel-left);
   overflow: auto;
   scrollbar-width: none;
 }
@@ -1301,8 +1328,8 @@ h1, h2, h3, h4 {
   min-height: min-content;
   padding: 0;
 }
-.delivery-panel .panel-back { margin-bottom: clamp(.85rem, 2.4vh, 1.6rem); }
-.delivery-copy h2 { max-width: 10ch; }
+.delivery-panel .panel-back { margin: 0 0 .55rem; }
+.delivery-panel .panel-back-arrow { width: 48px; }
 .delivery-copy .entry-content {
   max-width: 42rem;
   margin-top: clamp(.55rem, 1.4vh, .85rem);
@@ -1463,7 +1490,10 @@ h1, h2, h3, h4 {
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: calc(var(--header) * .35 + var(--staging)) var(--side) clamp(2rem, 5vh, 3.5rem);
+  padding-top: var(--panel-top);
+  padding-right: var(--side);
+  padding-bottom: clamp(2rem, 5vh, 3.5rem);
+  padding-left: var(--panel-left);
   scrollbar-width: thin;
 }
 
@@ -1471,18 +1501,13 @@ h1, h2, h3, h4 {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+  flex-shrink: 0;
   gap: 1rem;
   margin: 0 0 clamp(1.1rem, 2.8vh, 2rem);
 }
 
 .gallery-heading h2 {
-  max-width: none;
   color: var(--tora-white);
-  font-size: clamp(2.8rem, 6.2vw, 5.4rem);
-  font-weight: 700;
-  letter-spacing: -.04em;
-  line-height: .9;
-  text-transform: uppercase;
 }
 
 .gallery-blog {
@@ -1637,7 +1662,6 @@ h1, h2, h3, h4 {
   to { transform: translateX(-50%); }
 }
 
-.gallery-view:not(.nav-open) .brand-link { visibility: hidden; }
 .gallery-view:not(.nav-open) .footer-strip { display: none; }
 
 .contact-panel {
@@ -1647,7 +1671,10 @@ h1, h2, h3, h4 {
 .contact-scroll {
   height: 100%;
   min-height: 0;
-  padding: calc(var(--header) * .35 + var(--staging)) clamp(1.5rem, 5vw, 4.5rem) clamp(1.25rem, 3vh, 2rem);
+  padding-top: var(--panel-top);
+  padding-right: clamp(1.5rem, 5vw, 4.5rem);
+  padding-bottom: clamp(1.25rem, 3vh, 2rem);
+  padding-left: var(--panel-left);
 }
 
 .contact-heading {
@@ -1659,11 +1686,7 @@ h1, h2, h3, h4 {
 }
 
 .contact-heading h2 {
-  max-width: none;
   color: var(--tora-white);
-  font-size: clamp(3rem, 7vw, 6rem);
-  letter-spacing: -.04em;
-  line-height: .88;
 }
 
 .contact-logo {
@@ -1822,7 +1845,6 @@ h1, h2, h3, h4 {
   opacity: .85;
 }
 
-.contact-view:not(.nav-open) .brand-link { visibility: hidden; }
 .contact-view:not(.nav-open) .footer-strip { display: none; }
 .contact-view:not(.nav-open) .nav-toggle {
   color: var(--tora-white);
@@ -1986,7 +2008,10 @@ h1, h2, h3, h4 {
     height: auto;
     max-height: none;
     overflow: visible;
-    padding: 1.25rem var(--side) 3.5rem;
+    padding-top: 1.25rem;
+    padding-right: var(--side);
+    padding-bottom: 3.5rem;
+    padding-left: var(--panel-left);
   }
   .delivery-rail { display: none; }
   .delivery-platforms { grid-template-columns: 1fr; }
@@ -2020,9 +2045,10 @@ h1, h2, h3, h4 {
   .contact-location-line { white-space: normal; overflow-wrap: anywhere; }
   .contact-map-art { aspect-ratio: 16 / 8; }
   .story-scroll-inner {
-    height: auto;
-    min-height: 100%;
-    overflow: auto;
+    height: 100%;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
   .story-accent-arc {
     top: calc(var(--staging) - 5.5rem);
@@ -2044,7 +2070,7 @@ h1, h2, h3, h4 {
     top: auto;
     width: auto;
     max-width: none;
-    padding: 1.6rem var(--side) 4.5rem var(--panel-left);
+    padding: 1.6rem var(--side) calc(clamp(2.6rem, 5vh, 3.5rem) + .85rem) var(--panel-left);
   }
   .story-rule { display: none; }
   .menu-rail {
@@ -2056,7 +2082,7 @@ h1, h2, h3, h4 {
   }
   .menu-layout {
     max-width: none;
-    padding-top: calc(var(--header) + var(--staging) + .75rem);
+    padding-top: var(--panel-top);
     padding-right: calc(clamp(4.5rem, 18vw, 6.5rem) + .85rem);
     padding-bottom: 3.25rem;
     padding-left: var(--panel-left);
@@ -2068,7 +2094,6 @@ h1, h2, h3, h4 {
   }
   .menu-layout h2 {
     margin-bottom: 1rem;
-    font-size: clamp(3.1rem, 18vw, 5rem);
   }
   .menu-tabs {
     gap: .25rem .9rem;

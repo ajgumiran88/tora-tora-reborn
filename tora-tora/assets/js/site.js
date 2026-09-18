@@ -107,6 +107,11 @@
     document.body.classList.toggle("delivery-view", panel.id === "delivery");
   }
 
+  function syncHeaderStuck() {
+    var scroller = activePanel ? activePanel.querySelector(".panel-scroll") : null;
+    document.body.classList.toggle("header-stuck", !!(scroller && scroller.scrollTop > 8));
+  }
+
   function showPanel(id, menuSlug, updateHistory, moveFocus) {
     if (!validPanel(id)) id = "home";
     var next = document.getElementById(id);
@@ -138,6 +143,7 @@
     if (scroller) {
       scroller.scrollTop = 0;
     }
+    syncHeaderStuck();
 
     var nextHash = hashFor(id, id === "menu" ? activeMenuSlug : "");
     if (updateHistory && window.location.hash !== nextHash) {
@@ -269,6 +275,10 @@
 
   window.addEventListener("hashchange", function () {
     window.scrollTo(0, 0);
+  });
+
+  document.querySelectorAll(".panel-scroll").forEach(function (scroller) {
+    scroller.addEventListener("scroll", syncHeaderStuck, { passive: true });
   });
 
   if (panels.length) {

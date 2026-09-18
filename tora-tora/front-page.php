@@ -138,7 +138,7 @@ $platforms = [
     </section>
 
     <section class="panel story-panel" id="about" data-theme="light" aria-labelledby="about-title" aria-hidden="true">
-        <div class="story-scroll-inner">
+        <div class="panel-scroll story-scroll-inner">
             <span class="story-accent-arc" aria-hidden="true"></span>
             <div class="story-art" aria-hidden="true">
                 <span class="story-pattern-disc"></span>
@@ -154,8 +154,8 @@ $platforms = [
                     <span class="story-rule" aria-hidden="true"></span>
                 </div>
             </div>
-            <div class="story-footer-pattern" aria-hidden="true"></div>
         </div>
+        <div class="story-footer-pattern" aria-hidden="true"></div>
     </section>
 
     <section class="panel menu-panel" id="menu" data-theme="light" aria-labelledby="menu-title" aria-hidden="true">
@@ -258,10 +258,7 @@ $platforms = [
             <div class="delivery-primary">
                 <?php get_template_part('template-parts/panel', 'back'); ?>
                 <div class="delivery-copy panel-copy">
-                    <h2 id="delivery-title">
-                        <span class="delivery-title-line"><?php esc_html_e('ORDER', 'tora-tora'); ?></span>
-                        <span class="delivery-title-line"><?php esc_html_e('DELIVERY', 'tora-tora'); ?></span>
-                    </h2>
+                    <h2 id="delivery-title"><?php esc_html_e('ORDER DELIVERY', 'tora-tora'); ?></h2>
                     <div class="entry-content"><?php echo wp_kses_post($delivery['content']); ?></div>
                 </div>
                 <div class="delivery-partners">
