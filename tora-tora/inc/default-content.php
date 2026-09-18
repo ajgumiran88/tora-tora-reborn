@@ -21,7 +21,7 @@ function tora_tora_default_pages(): array
         ],
         'story' => [
             'title' => 'About Tora Tora',
-            'content' => '<p>Tora Tora, derived from the Japanese word for \'tiger\', captures the essence of the powerful and majestic animal revered in Japanese mythology.</p><p>A symbol of <em>courage, strength and indomitable spirit</em>. The tiger has a storied presence in folklore, often representing protection and good fortune. This name reflects our brand\'s commitment to bold flavours and vibrant dining experiences.</p><p>Tora Tora brings a slice of Japanese culture to Dubai, offering a dining experience that\'s as dynamic and powerful as the tiger itself, perfectly blending <em>tradition with contemporary flair</em>.</p>',
+            'content' => '<p>Tora Tora, derived from the Japanese word for \'tiger\', captures the essence of the powerful and majestic animal revered in Japanese mythology.</p><p>A symbol of <strong>courage, strength and indomitable spirit</strong>. The tiger has a storied presence in folklore, often representing protection and good fortune. This name reflects our brand\'s commitment to bold flavours and vibrant dining experiences.</p><p>Tora Tora brings a slice of Japanese culture to Dubai, offering a dining experience that\'s as dynamic and powerful as the tiger itself, perfectly blending <strong>tradition with contemporary flair</strong>.</p>',
         ],
         'delivery' => [
             'title' => 'ORDER DELIVERY',
@@ -487,6 +487,12 @@ function tora_tora_maybe_upgrade_content(): void
         $current = '1.3.15';
         update_option('tora_tora_seeded_version', $current, false);
     }
+
+    if (version_compare($current, '1.3.39', '<')) {
+        tora_tora_upgrade_about_copy_1_3_39();
+        $current = '1.3.39';
+        update_option('tora_tora_seeded_version', $current, false);
+    }
 }
 
 function tora_tora_upgrade_menu_1_3_5(): void
@@ -659,6 +665,39 @@ function tora_tora_upgrade_about_copy_1_3_15(): void
         'ID'           => (int) $page->ID,
         'post_title'   => $defaults['story']['title'],
         'post_content' => $defaults['story']['content'],
+    ]);
+}
+
+/**
+ * Staging still has the 1.3.15 italic About phrases; local renders them bold.
+ */
+function tora_tora_upgrade_about_copy_1_3_39(): void
+{
+    $page = get_page_by_path('story', OBJECT, 'page');
+    if (!$page instanceof WP_Post) {
+        return;
+    }
+
+    $current = (string) $page->post_content;
+    $updated = str_replace(
+        [
+            '<em>courage, strength and indomitable spirit</em>',
+            '<em>tradition with contemporary flair</em>',
+        ],
+        [
+            '<strong>courage, strength and indomitable spirit</strong>',
+            '<strong>tradition with contemporary flair</strong>',
+        ],
+        $current
+    );
+
+    if ($updated === $current) {
+        return;
+    }
+
+    wp_update_post([
+        'ID'           => (int) $page->ID,
+        'post_content' => $updated,
     ]);
 }
 

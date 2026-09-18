@@ -38,6 +38,7 @@ $required = [
     'assets/images/delivery-talabat.svg', 'assets/images/delivery-noon.png', 'assets/images/delivery-deliveroo.svg',
     'assets/fonts/avantgarde-400.woff2', 'assets/fonts/avantgarde-500.woff2',
     'assets/fonts/avantgarde-600.woff2', 'assets/fonts/avantgarde-700.woff2',
+    'assets/fonts/raleway-latin-wght-normal.woff2', 'assets/fonts/raleway-latin-wght-italic.woff2',
     'inc/setup.php', 'inc/customizer.php', 'inc/menu-items.php', 'inc/jobs.php', 'inc/staging.php', 'inc/compatibility.php', 'inc/default-content.php', 'inc/editor.php',
     'single-job_listing.php',
 ];
@@ -255,8 +256,9 @@ file_contains($theme . '/assets/css/main.css', 'background: var(--tora-white)', 
 file_does_not_contain($theme . '/assets/css/main.css', '.panel::before', 'Panels still render the tiger watermark layer.');
 file_does_not_contain($theme . '/assets/css/main.css', '.standard-page::before', 'Standard pages still render the tiger watermark layer.');
 file_contains($theme . '/assets/css/main.css', '--tora-cream:', 'The staging cream token is missing.');
-file_contains($theme . '/inc/setup.php', 'wght@200;400;500;600;700;800', 'Raleway ExtraLight and mid weights are not enqueued.');
-file_contains($theme . '/inc/compatibility.php', 'wght@200;400;500;600;700;800', 'Safe-head Raleway weights are incomplete.');
+file_contains($theme . '/inc/setup.php', "tora_tora_uri() . '/assets/css/main.css'", 'Theme stylesheet enqueue is missing.');
+file_does_not_contain($theme . '/inc/setup.php', 'fonts.googleapis.com', 'Raleway must be self-hosted so staging does not depend on Google Fonts.');
+file_does_not_contain($theme . '/inc/compatibility.php', 'fonts.googleapis.com', 'Safe-head still loads Google Fonts instead of the bundled Raleway files.');
 file_contains($theme . '/front-page.php', 'story-scroll-inner', 'About is missing the Figma poster wrapper.');
 file_contains($theme . '/front-page.php', 'class="panel-scroll story-scroll-inner"', 'About scroller is not a panel-scroll, so cut copy cannot scroll.');
 file_contains($theme . '/assets/css/main.css', ".story-scroll-inner {\n  position: relative;\n  height: 100%;\n  min-height: 100%;\n  overflow-x: hidden;\n  overflow-y: auto;", 'About panel still clips the last copy instead of scrolling.');
@@ -271,15 +273,18 @@ file_contains($theme . '/front-page.php', 'about-brand-line', 'About title does 
 file_does_not_contain($theme . '/front-page.php', 'story-screen-secondary', 'About still has a second empty scroll screen.');
 file_does_not_contain($theme . '/assets/css/main.css', 'height: 200%', 'About is still locked to a two-viewport scroller.');
 file_contains($theme . '/assets/js/site.js', 'about-panel', 'About panel body class toggle is missing.');
-file_contains($theme . '/inc/default-content.php', '<em>courage, strength and indomitable spirit</em>. The tiger has a storied presence', 'Figma About copy is missing the italic spirit line and sentence break.');
-file_contains($theme . '/inc/default-content.php', '<em>tradition with contemporary flair</em>', 'Figma About copy is missing the italic closing phrase.');
+file_contains($theme . '/inc/default-content.php', '<strong>courage, strength and indomitable spirit</strong>. The tiger has a storied presence', 'About emphasis is not the local bold spirit line.');
+file_contains($theme . '/inc/default-content.php', '<strong>tradition with contemporary flair</strong>', 'About closing emphasis is not the local bold flair line.');
 file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_about_copy_1_3_15', 'About Figma poster copy upgrade is missing.');
-file_contains($theme . '/inc/default-content.php', '<em>', 'About default copy is missing Figma italic emphasis.');
+file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_about_copy_1_3_39', 'About bold-emphasis upgrade is missing, so staging keeps italic copy.');
+file_contains($theme . '/inc/default-content.php', '<strong>', 'About default copy is missing bold emphasis.');
 file_does_not_contain($theme . '/front-page.php', "word for <em>", 'About fallback copy still italicizes tiger beyond the Figma poster.');
-file_contains($theme . '/front-page.php', "'em' => []", 'About fallback sanitization does not allow italic emphasis.');
+file_contains($theme . '/front-page.php', "'strong' => []", 'About fallback sanitization does not allow bold emphasis.');
 file_contains($theme . '/assets/css/main.css', '.story-copy .entry-content p:empty', 'About still lets an empty paragraph push copy under the speckle footer.');
 file_contains($theme . '/assets/css/main.css', '.story-copy .entry-content br + br', 'About double line-breaks still push the last copy under the speckle footer.');
-file_contains($theme . '/assets/css/main.css', '.story-copy .entry-content em', 'About italic emphasis styling is missing.');
+file_contains($theme . '/assets/css/main.css', ".story-copy .entry-content em {\n  font-style: normal;\n  font-weight: 700;\n}", 'Staging italic About markup is not forced to the local bold weight.');
+file_contains($theme . '/assets/css/main.css', 'url("../fonts/raleway-latin-wght-normal.woff2")', 'Bundled Raleway roman files are missing, so staging bold weight cannot load.');
+file_contains($theme . '/assets/css/main.css', 'url("../fonts/raleway-latin-wght-italic.woff2")', 'Bundled Raleway italic files are missing.');
 file_contains($theme . '/assets/css/main.css', '.story-art {', 'About art positioning block is missing.');
 file_contains($theme . '/front-page.php', 'story-copy-body', 'About copy is missing the Figma rule wrapper.');
 file_contains($theme . '/assets/css/main.css', ".story-copy .entry-content {\n  position: relative;\n  max-width: none;\n  margin-top: 1.55rem;\n  font-family: var(--font-main);\n  letter-spacing: .02em;\n  text-transform: uppercase;", 'About story copy is not rendered in Figma all-caps.');

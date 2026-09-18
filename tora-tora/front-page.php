@@ -15,7 +15,7 @@ $home = tora_tora_panel_page(
 $about = tora_tora_panel_page(
     'story',
     __('About Tora Tora', 'tora-tora'),
-    '<p>' . wp_kses(__('Tora Tora, derived from the Japanese word for \'tiger\', captures the essence of the powerful and majestic animal revered in Japanese mythology.', 'tora-tora'), []) . '</p><p>' . wp_kses(__('A symbol of <em>courage, strength and indomitable spirit</em>. The tiger has a storied presence in folklore, often representing protection and good fortune. This name reflects our brand\'s commitment to bold flavours and vibrant dining experiences.', 'tora-tora'), ['em' => []]) . '</p><p>' . wp_kses(__('Tora Tora brings a slice of Japanese culture to Dubai, offering a dining experience that\'s as dynamic and powerful as the tiger itself, perfectly blending <em>tradition with contemporary flair</em>.', 'tora-tora'), ['em' => []]) . '</p>',
+    '<p>' . wp_kses(__('Tora Tora, derived from the Japanese word for \'tiger\', captures the essence of the powerful and majestic animal revered in Japanese mythology.', 'tora-tora'), []) . '</p><p>' . wp_kses(__('A symbol of <strong>courage, strength and indomitable spirit</strong>. The tiger has a storied presence in folklore, often representing protection and good fortune. This name reflects our brand\'s commitment to bold flavours and vibrant dining experiences.', 'tora-tora'), ['strong' => []]) . '</p><p>' . wp_kses(__('Tora Tora brings a slice of Japanese culture to Dubai, offering a dining experience that\'s as dynamic and powerful as the tiger itself, perfectly blending <strong>tradition with contemporary flair</strong>.', 'tora-tora'), ['strong' => []]) . '</p>',
     'tiger-mark.png'
 );
 $delivery = tora_tora_panel_page(

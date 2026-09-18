@@ -56,9 +56,6 @@ function tora_tora_render_document_head(): void
     // Fontello integration fatals while WordPress collects third-party assets.
     echo '<title>' . esc_html(get_bloginfo('name')) . '</title>' . PHP_EOL;
     echo '<meta name="robots" content="noindex,nofollow" />' . PHP_EOL;
-    echo '<link rel="preconnect" href="https://fonts.googleapis.com" />' . PHP_EOL;
-    echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />' . PHP_EOL;
-    echo '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;400;500;600;700;800&amp;display=swap" />' . PHP_EOL;
     echo '<link rel="stylesheet" href="' . esc_url($main_css) . '" />' . PHP_EOL;
     tora_tora_render_safe_admin_bar_assets();
 }
