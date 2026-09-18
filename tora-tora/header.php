@@ -25,7 +25,7 @@
 <div class="site-shell">
     <header class="site-header">
         <a class="brand-link nav-link" href="<?php echo esc_url(home_url('/#home')); ?>" data-target="home" aria-label="<?php esc_attr_e('Tora Tora home', 'tora-tora'); ?>">
-            <img src="<?php echo esc_url(tora_tora_logo_url()); ?>" alt="<?php esc_attr_e('Tora Tora Dubai', 'tora-tora'); ?>" width="300" height="200">
+            <img src="<?php echo esc_url(tora_tora_logo_url()); ?>" alt="<?php esc_attr_e('Tora Tora Dubai', 'tora-tora'); ?>" width="300" height="152">
         </a>
         <button class="nav-toggle" type="button" aria-label="<?php esc_attr_e('Open menu', 'tora-tora'); ?>" aria-expanded="false" aria-controls="site-navigation">
             <span></span><span></span><span></span>
@@ -39,7 +39,9 @@
             <li><a class="nav-link is-active" href="<?php echo esc_url(home_url('/#home')); ?>" data-target="home"><?php esc_html_e('Home', 'tora-tora'); ?></a></li>
             <li><a class="nav-link" href="<?php echo esc_url(home_url('/#about')); ?>" data-target="about"><?php esc_html_e('About Tora Tora', 'tora-tora'); ?></a></li>
             <li><a class="nav-link" href="<?php echo esc_url(home_url('/#menu')); ?>" data-target="menu"><?php esc_html_e('Menu', 'tora-tora'); ?></a></li>
-            <li><a class="nav-link" href="<?php echo esc_url(home_url('/#delivery')); ?>" data-target="delivery"><?php esc_html_e('Delivery', 'tora-tora'); ?></a></li>
+            <?php if (tora_tora_delivery_enabled()) : ?>
+                <li><a class="nav-link" href="<?php echo esc_url(home_url('/#delivery')); ?>" data-target="delivery"><?php esc_html_e('Delivery', 'tora-tora'); ?></a></li>
+            <?php endif; ?>
             <li><a class="nav-link" href="<?php echo esc_url(home_url('/#gallery')); ?>" data-target="gallery"><?php esc_html_e('Gallery', 'tora-tora'); ?></a></li>
             <li><a class="nav-link" href="<?php echo esc_url(home_url('/#careers')); ?>" data-target="careers"><?php esc_html_e('Careers', 'tora-tora'); ?></a></li>
             <li><a class="nav-link" href="<?php echo esc_url(home_url('/#contact')); ?>" data-target="contact"><?php esc_html_e('Contact', 'tora-tora'); ?></a></li>

@@ -83,6 +83,28 @@ function tora_tora_customize_register(WP_Customize_Manager $customize): void
         ]
     );
 
+    $customize->add_setting('tora_menu_coming_soon', ['default' => true, 'sanitize_callback' => 'tora_tora_sanitize_checkbox']);
+    $customize->add_control(
+        'tora_menu_coming_soon',
+        [
+            'section'     => 'tora_tora_details',
+            'label'       => __('Menu: show "Coming soon" instead of the menu', 'tora-tora'),
+            'description' => __('Menu items stay saved in WordPress Admin. Turn this off to publish the full menu.', 'tora-tora'),
+            'type'        => 'checkbox',
+        ]
+    );
+
+    $customize->add_setting('tora_delivery_enabled', ['default' => false, 'sanitize_callback' => 'tora_tora_sanitize_checkbox']);
+    $customize->add_control(
+        'tora_delivery_enabled',
+        [
+            'section'     => 'tora_tora_details',
+            'label'       => __('Delivery: show the Delivery page', 'tora-tora'),
+            'description' => __('Off hides the Delivery panel and its navigation link. The Delivery page, partner links and zones are kept, so turning this on restores the page as it was.', 'tora-tora'),
+            'type'        => 'checkbox',
+        ]
+    );
+
     $customize->add_setting('tora_staging_mode', ['default' => true, 'sanitize_callback' => 'tora_tora_sanitize_checkbox']);
     $customize->add_control(
         'tora_staging_mode',

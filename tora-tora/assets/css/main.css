@@ -228,7 +228,7 @@ h1, h2, h3, h4 {
 .brand-link {
   display: inline-flex;
   align-items: center;
-  width: clamp(7.5rem, 12vw, 10.5rem);
+  width: clamp(9rem, 14.5vw, 13rem);
   height: var(--brand-mark);
 }
 
@@ -1181,6 +1181,19 @@ h1, h2, h3, h4 {
   font-size: .95rem;
 }
 
+/* Stands in for the menu until the client's item list and sizing are final. */
+.menu-coming-soon {
+  margin: 0;
+  padding: clamp(1.5rem, 6vh, 3.5rem) 0 0;
+  color: var(--tora-blue);
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -.01em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
 .menu-items {
   display: grid;
   gap: clamp(.55rem, 1.2vh, .85rem);
@@ -1711,7 +1724,7 @@ h1, h2, h3, h4 {
 
 .contact-logo {
   flex: 0 0 auto;
-  width: clamp(5.5rem, 9vw, 7.25rem);
+  width: clamp(6.75rem, 11vw, 9rem);
   margin: .15rem 0 0;
 }
 

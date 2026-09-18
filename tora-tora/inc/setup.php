@@ -150,6 +150,21 @@ function tora_tora_panel_page(string $slug, string $title, string $content, stri
     ];
 }
 
+/**
+ * Menu and Delivery are staged behind switches so the client can launch without them
+ * and turn each one on later. Neither panel's content is removed when it is off:
+ * the menu items, the Delivery page and its Customizer settings all stay in place.
+ */
+function tora_tora_menu_is_coming_soon(): bool
+{
+    return (bool) get_theme_mod('tora_menu_coming_soon', true);
+}
+
+function tora_tora_delivery_enabled(): bool
+{
+    return (bool) get_theme_mod('tora_delivery_enabled', false);
+}
+
 function tora_tora_logo_url(): string
 {
     $custom_logo_id = (int) get_theme_mod('custom_logo', 0);

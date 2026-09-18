@@ -167,7 +167,9 @@ $platforms = [
                 </div>
                 <img class="menu-tiger-mark" src="<?php echo esc_url(tora_tora_asset('images/tiger-mark.png')); ?>" alt="" width="512" height="512" loading="lazy" decoding="async">
             </div>
-            <?php if ($menu_groups) : ?>
+            <?php if (tora_tora_menu_is_coming_soon()) : ?>
+                <p class="menu-coming-soon"><?php esc_html_e('Coming soon…', 'tora-tora'); ?></p>
+            <?php elseif ($menu_groups) : ?>
                 <div class="menu-tabs" role="tablist" aria-label="<?php esc_attr_e('Menu categories', 'tora-tora'); ?>">
                     <?php foreach ($menu_groups as $index => $group) : ?>
                         <button
@@ -253,6 +255,7 @@ $platforms = [
         <div class="menu-rail menu-rail-right" aria-hidden="true"></div>
     </section>
 
+    <?php if (tora_tora_delivery_enabled()) : ?>
     <section class="panel delivery-panel" id="delivery" data-theme="light" aria-labelledby="delivery-title" aria-hidden="true">
         <div class="panel-scroll delivery-layout">
             <div class="delivery-primary">
@@ -314,6 +317,7 @@ $platforms = [
         <div class="delivery-rail" aria-hidden="true"></div>
         <div class="delivery-footer" aria-hidden="true"></div>
     </section>
+    <?php endif; ?>
 
     <section class="panel gallery-panel" id="gallery" data-theme="blue" aria-labelledby="gallery-title" aria-hidden="true">
         <div class="panel-scroll gallery-scroll">
@@ -423,7 +427,7 @@ $platforms = [
             <header class="contact-heading">
                 <h2 id="contact-title"><?php esc_html_e('Contact', 'tora-tora'); ?></h2>
                 <figure class="contact-logo" aria-hidden="true">
-                    <img src="<?php echo esc_url(tora_tora_logo_url()); ?>" alt="" width="330" height="220" loading="lazy" decoding="async">
+                    <img src="<?php echo esc_url(tora_tora_logo_url()); ?>" alt="" width="330" height="168" loading="lazy" decoding="async">
                 </figure>
             </header>
             <div class="contact-layout">

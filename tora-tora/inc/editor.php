@@ -68,6 +68,10 @@ function tora_tora_panel_edit_targets(): array
     $targets = [];
 
     foreach (tora_tora_panel_page_slugs() as $panel => $slug) {
+        // A hidden panel has no rendered section for the edit link to sit on.
+        if ('delivery' === $panel && !tora_tora_delivery_enabled()) {
+            continue;
+        }
         $page = tora_tora_find_panel_page($slug);
         if (!$page instanceof WP_Post) {
             continue;

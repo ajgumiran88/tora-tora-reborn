@@ -334,7 +334,16 @@ file_contains($theme . '/assets/css/main.css', '.delivery-order {
   margin-top: auto;', 'Delivery card CTA is not pinned to the bottom of each card.');
 file_contains($theme . '/assets/css/main.css', '.contact-logo {
   flex: 0 0 auto;
-  width: clamp(5.5rem, 9vw, 7.25rem);', 'Contact wordmark is not sized to the right column.');
+  width: clamp(6.75rem, 11vw, 9rem);', 'Contact wordmark is not sized to the right column.');
+file_contains($theme . '/inc/setup.php', 'function tora_tora_menu_is_coming_soon(): bool', 'Menu coming-soon switch helper is missing.');
+file_contains($theme . '/inc/setup.php', 'function tora_tora_delivery_enabled(): bool', 'Delivery visibility switch helper is missing.');
+file_contains($theme . '/inc/customizer.php', "add_setting('tora_menu_coming_soon'", 'Menu coming-soon Customizer setting is missing.');
+file_contains($theme . '/inc/customizer.php', "add_setting('tora_delivery_enabled'", 'Delivery visibility Customizer setting is missing.');
+file_contains($theme . '/front-page.php', 'tora_tora_menu_is_coming_soon()', 'Menu panel does not honour the coming-soon switch.');
+file_contains($theme . '/front-page.php', 'menu-coming-soon', 'Menu coming-soon notice is missing.');
+file_contains($theme . '/front-page.php', 'tora_tora_delivery_enabled()', 'Delivery panel is not gated behind the visibility switch.');
+file_contains($theme . '/header.php', 'tora_tora_delivery_enabled()', 'Delivery navigation link is not gated behind the visibility switch.');
+file_contains($theme . '/assets/css/main.css', '.menu-coming-soon {', 'Menu coming-soon notice has no styling.');
 file_contains($theme . '/inc/setup.php', 'tora_tora_format_address_lines', 'Contact address line formatting helper is missing.');
 file_contains($theme . '/front-page.php', 'contact-location-line', 'Contact address is not rendered as two lines.');
 file_contains($theme . '/assets/css/main.css', 'overflow-wrap: anywhere;', 'Long custom Contact addresses can overflow on mobile.');
