@@ -493,6 +493,12 @@ function tora_tora_maybe_upgrade_content(): void
         $current = '1.3.39';
         update_option('tora_tora_seeded_version', $current, false);
     }
+
+    if (version_compare($current, '1.4.2', '<')) {
+        tora_tora_upgrade_social_handles_1_4_2();
+        $current = '1.4.2';
+        update_option('tora_tora_seeded_version', $current, false);
+    }
 }
 
 function tora_tora_upgrade_menu_1_3_5(): void
@@ -699,6 +705,26 @@ function tora_tora_upgrade_about_copy_1_3_39(): void
         'ID'           => (int) $page->ID,
         'post_content' => $updated,
     ]);
+}
+
+/**
+ * Point saved Contact social links at the live toratora.ae profiles.
+ */
+function tora_tora_upgrade_social_handles_1_4_2(): void
+{
+    $replacements = [
+        'tora_instagram_handle' => ['@toratora.dxb', '@toratora.ae'],
+        'tora_instagram_url' => ['https://www.instagram.com/toratora.dxb', 'https://www.instagram.com/toratora.ae'],
+        'tora_tiktok_handle' => ['@toratora.dxb', '@toratora.ae'],
+        'tora_tiktok_url' => ['https://www.tiktok.com/@toratora.dxb', 'https://www.tiktok.com/@toratora.ae'],
+    ];
+
+    foreach ($replacements as $mod => [$old, $new]) {
+        $current = (string) get_theme_mod($mod, $old);
+        if ($current === '' || $current === $old) {
+            set_theme_mod($mod, $new);
+        }
+    }
 }
 
 add_action('init', 'tora_tora_maybe_upgrade_content', 30);
