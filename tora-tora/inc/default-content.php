@@ -17,7 +17,7 @@ function tora_tora_default_pages(): array
     return [
         'home' => [
             'title' => 'Authentic Japanese Ramen in Dubai',
-            'content' => '<p>Roar into bold Japanese flavours at Tora Tora — a vibrant ramen joint bringing Japanese street culture and authentic comfort food to Dubai.</p>',
+            'content' => '<p>Roar into bold Japanese flavours at Tora Tora - a vibrant ramen joint bringing Japanese street culture and authentic comfort food to Dubai.</p>',
         ],
         'story' => [
             'title' => 'About Tora Tora',
@@ -362,7 +362,7 @@ function tora_tora_legacy_page_seeds(): array
     return [
         'home' => [
             'title' => 'Authentic Japanese Ramen in Dubai',
-            'content' => '<p>Roar into bold Japanese flavours at Tora Tora — a vibrant ramen joint bringing Japanese street culture and authentic comfort food to Dubai.</p>',
+            'content' => '<p>Roar into bold Japanese flavours at Tora Tora - a vibrant ramen joint bringing Japanese street culture and authentic comfort food to Dubai.</p>',
         ],
         'story' => [
             'title' => 'The Spirit of the Tiger',

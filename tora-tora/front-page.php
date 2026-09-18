@@ -10,7 +10,7 @@ get_header();
 $home = tora_tora_panel_page(
     'home',
     __('Authentic Japanese Ramen in Dubai', 'tora-tora'),
-    __('Roar into bold Japanese flavours at Tora Tora — a vibrant ramen joint bringing Japanese street culture and authentic comfort food to Dubai.', 'tora-tora')
+    __('Roar into bold Japanese flavours at Tora Tora - a vibrant ramen joint bringing Japanese street culture and authentic comfort food to Dubai.', 'tora-tora')
 );
 $about = tora_tora_panel_page(
     'story',
