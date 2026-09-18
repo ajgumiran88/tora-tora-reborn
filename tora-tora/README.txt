@@ -12,7 +12,7 @@ An immersive native WordPress theme for Tora Tora Dubai.
 1. In WordPress Admin, open Appearance > Themes > Add New > Upload Theme.
 2. Select tora-tora.zip, install it, and activate Tora Tora.
 3. The theme creates editable Home, Story (About), Delivery, Gallery, Contact, and Careers pages and starter food menu data once.
-4. Edit page copy in Pages. Replace the Home, About, and Contact panel images with each page's Featured Image.
+4. Edit page copy in Pages. The homepage editor is the Home panel only — About copy lives on the About Tora Tora (Story) page. While viewing a section, use Edit Page in the admin bar (it follows the active panel). Replace the Home, About, and Contact panel images with each page's Featured Image.
 5. Manage dishes under Food Menu. Categories follow the Figma tabs: Breakfast, Appetizers, Draft Food Menu, Desserts, and Beverage.
 6. Open Appearance > Customize > Tora Tora details to update contact information, delivery platform URLs, hours, zones, gallery images, footer text, and staging mode.
 

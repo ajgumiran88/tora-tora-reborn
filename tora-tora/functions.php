@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('TORA_TORA_VERSION', '1.3.4');
+define('TORA_TORA_VERSION', '1.3.21');
 
 /**
  * Theme directory (resolved at call time so WP Pusher / switched themes stay correct).
@@ -42,3 +42,4 @@ require_once tora_tora_dir() . '/inc/jobs.php';
 require_once tora_tora_dir() . '/inc/staging.php';
 require_once tora_tora_dir() . '/inc/compatibility.php';
 require_once tora_tora_dir() . '/inc/default-content.php';
+require_once tora_tora_dir() . '/inc/editor.php';

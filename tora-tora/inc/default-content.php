@@ -21,7 +21,7 @@ function tora_tora_default_pages(): array
         ],
         'story' => [
             'title' => 'About Tora Tora',
-            'content' => '<p>Tora Tora, derived from the Japanese word for \'tiger\', captures the essence of the powerful and majestic animal revered in Japanese mythology.</p><p>A symbol of <strong>courage, strength and indomitable spirit</strong>, the tiger has a storied presence in folklore, often representing protection and good fortune. This name reflects our brand\'s commitment to <strong>bold flavours and vibrant dining experiences</strong>.</p><p><strong>Tora Tora</strong> brings a slice of <strong>Japanese culture to Dubai</strong>, offering a dining experience that\'s as <strong>dynamic and powerful as the tiger itself</strong>, perfectly blending tradition with contemporary flair.</p>',
+            'content' => '<p>Tora Tora, derived from the Japanese word for \'tiger\', captures the essence of the powerful and majestic animal revered in Japanese mythology.</p><p>A symbol of <em>courage, strength and indomitable spirit</em>. The tiger has a storied presence in folklore, often representing protection and good fortune. This name reflects our brand\'s commitment to bold flavours and vibrant dining experiences.</p><p>Tora Tora brings a slice of Japanese culture to Dubai, offering a dining experience that\'s as dynamic and powerful as the tiger itself, perfectly blending <em>tradition with contemporary flair</em>.</p>',
         ],
         'delivery' => [
             'title' => 'ORDER DELIVERY',
@@ -103,11 +103,11 @@ function tora_tora_default_menu(): array
                 ['SOFT SERVE ICE CREAM', '', '', 'DESSERTS'],
             ],
         ],
-        'Beverage' => [
+        'Beverages' => [
             'slug' => 'beverages',
             'items' => [
                 // JAPANESE INSPIRED
-                ['SIGNATURE - COLOR CHANGING CREAM SODA', '', '', 'JAPANESE INSPIRED'],
+                ['SIGNATURE', 'COLOR CHANGING CREAM SODA', '', 'JAPANESE INSPIRED'],
                 ['ICED MATCHA LATTE', '', '', 'JAPANESE INSPIRED'],
                 ['HOT MATCHA LATTE', '', '', 'JAPANESE INSPIRED'],
                 ['MATCHA LEMONADE', '', '', 'JAPANESE INSPIRED'],
@@ -181,20 +181,8 @@ function tora_tora_ensure_menu_terms_and_items(): void
             $description = $item_data[1];
             $price = $item_data[2];
             $subgroup = $item_data[3] ?? '';
-            
-            $existing_query = new WP_Query([
-                'post_type'              => 'tora_menu_item',
-                'title'                  => $name,
-                'post_status'            => 'any',
-                'posts_per_page'         => 1,
-                'no_found_rows'          => true,
-                'ignore_sticky_posts'    => true,
-                'update_post_meta_cache' => false,
-                'update_post_term_cache' => false,
-            ]);
-            $existing = $existing_query->have_posts() ? $existing_query->posts[0] : null;
-            wp_reset_postdata();
-            if ($existing instanceof WP_Post) {
+
+            if (tora_tora_find_menu_item_in_category($name, $term_id) instanceof WP_Post) {
                 continue;
             }
             $item_id = wp_insert_post([
@@ -212,6 +200,102 @@ function tora_tora_ensure_menu_terms_and_items(): void
             }
         }
     }
+}
+
+/**
+ * WordPress stores bare "&" in titles as "&amp;", so title lookups must try both forms.
+ */
+function tora_tora_menu_title_candidates(string $name): array
+{
+    $decoded = html_entity_decode($name, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    return array_values(array_unique(array_filter([
+        $name,
+        $decoded,
+        str_replace('&', '&amp;', $decoded),
+        htmlspecialchars($decoded, ENT_QUOTES | ENT_HTML5, 'UTF-8', false),
+    ])));
+}
+
+function tora_tora_find_menu_item_in_category(string $name, int $term_id): ?WP_Post
+{
+    foreach (tora_tora_menu_title_candidates($name) as $candidate) {
+        $query = new WP_Query([
+            'post_type'              => 'tora_menu_item',
+            'title'                  => $candidate,
+            'post_status'            => 'any',
+            'posts_per_page'         => 1,
+            'no_found_rows'          => true,
+            'ignore_sticky_posts'    => true,
+            'update_post_meta_cache' => false,
+            'update_post_term_cache' => false,
+            'tax_query'              => [
+                [
+                    'taxonomy' => 'tora_menu_category',
+                    'field'    => 'term_id',
+                    'terms'    => [$term_id],
+                ],
+            ],
+        ]);
+        $existing = $query->have_posts() ? $query->posts[0] : null;
+        wp_reset_postdata();
+        if ($existing instanceof WP_Post) {
+            return $existing;
+        }
+    }
+
+    return null;
+}
+
+/**
+ * Remove duplicate menu items created when "&" titles failed exact-title matching.
+ */
+function tora_tora_upgrade_menu_dedupe_1_3_10(): void
+{
+    $terms = get_terms([
+        'taxonomy'   => 'tora_menu_category',
+        'hide_empty' => false,
+    ]);
+    if (is_wp_error($terms) || !$terms) {
+        return;
+    }
+
+    foreach ($terms as $term) {
+        if (!$term instanceof WP_Term) {
+            continue;
+        }
+        $query = new WP_Query([
+            'post_type'              => 'tora_menu_item',
+            'post_status'            => 'any',
+            'posts_per_page'         => -1,
+            'orderby'                => ['menu_order' => 'ASC', 'ID' => 'ASC'],
+            'no_found_rows'          => true,
+            'ignore_sticky_posts'    => true,
+            'update_post_meta_cache' => false,
+            'update_post_term_cache' => false,
+            'tax_query'              => [
+                [
+                    'taxonomy' => 'tora_menu_category',
+                    'field'    => 'term_id',
+                    'terms'    => [(int) $term->term_id],
+                ],
+            ],
+        ]);
+        $seen = [];
+        foreach ($query->posts as $item) {
+            if (!$item instanceof WP_Post) {
+                continue;
+            }
+            $key = strtoupper(html_entity_decode((string) $item->post_title, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+            if (isset($seen[$key])) {
+                wp_delete_post((int) $item->ID, true);
+                continue;
+            }
+            $seen[$key] = true;
+        }
+        wp_reset_postdata();
+    }
+
+    tora_tora_ensure_menu_terms_and_items();
 }
 
 function tora_tora_upgrade_to_1_1_0(): void
@@ -373,33 +457,76 @@ function tora_tora_maybe_upgrade_content(): void
         $current = '1.3.5';
         update_option('tora_tora_seeded_version', $current, false);
     }
+
+    if (version_compare($current, '1.3.6', '<')) {
+        tora_tora_upgrade_about_copy_1_3_6();
+        $current = '1.3.6';
+        update_option('tora_tora_seeded_version', $current, false);
+    }
+
+    if (version_compare($current, '1.3.8', '<')) {
+        tora_tora_upgrade_menu_signature_1_3_8();
+        $current = '1.3.8';
+        update_option('tora_tora_seeded_version', $current, false);
+    }
+
+    if (version_compare($current, '1.3.9', '<')) {
+        tora_tora_ensure_menu_terms_and_items();
+        $current = '1.3.9';
+        update_option('tora_tora_seeded_version', $current, false);
+    }
+
+    if (version_compare($current, '1.3.10', '<')) {
+        tora_tora_upgrade_menu_dedupe_1_3_10();
+        $current = '1.3.10';
+        update_option('tora_tora_seeded_version', $current, false);
+    }
+
+    if (version_compare($current, '1.3.15', '<')) {
+        tora_tora_upgrade_about_copy_1_3_15();
+        $current = '1.3.15';
+        update_option('tora_tora_seeded_version', $current, false);
+    }
 }
 
 function tora_tora_upgrade_menu_1_3_5(): void
 {
-    $categories = ['breakfast', 'appetizers', 'draft-food-menu', 'desserts', 'beverage'];
-    foreach ($categories as $slug) {
-        $term = get_term_by('slug', $slug, 'tora_menu_category');
-        if ($term instanceof WP_Term) {
-            $items = get_posts([
-                'post_type' => 'tora_menu_item',
-                'numberposts' => -1,
-                'post_status' => 'any',
-                'tax_query' => [
-                    [
-                        'taxonomy' => 'tora_menu_category',
-                        'field' => 'slug',
-                        'terms' => $slug,
-                    ]
-                ]
-            ]);
-            foreach ($items as $item) {
-                wp_delete_post($item->ID, true);
-            }
-        }
-    }
-    
     tora_tora_ensure_menu_terms_and_items();
+}
+
+/**
+ * Split the Signature cream soda title so Figma can italicize the flavour name.
+ * Rename Beverage → Beverages to match the Figma tab label.
+ */
+function tora_tora_upgrade_menu_signature_1_3_8(): void
+{
+    $query = new WP_Query([
+        'post_type'              => 'tora_menu_item',
+        'title'                  => 'SIGNATURE - COLOR CHANGING CREAM SODA',
+        'post_status'            => 'any',
+        'posts_per_page'         => 1,
+        'no_found_rows'          => true,
+        'ignore_sticky_posts'    => true,
+        'update_post_meta_cache' => false,
+        'update_post_term_cache' => false,
+    ]);
+    $item = $query->have_posts() ? $query->posts[0] : null;
+    wp_reset_postdata();
+    if ($item instanceof WP_Post) {
+        wp_update_post([
+            'ID'           => (int) $item->ID,
+            'post_title'   => 'SIGNATURE',
+            'post_content' => 'COLOR CHANGING CREAM SODA',
+        ]);
+    }
+
+    $beverages = get_term_by('slug', 'beverages', 'tora_menu_category');
+    if ($beverages instanceof WP_Term) {
+        wp_update_term((int) $beverages->term_id, 'tora_menu_category', [
+            'name' => 'Beverages',
+            'slug' => 'beverages',
+        ]);
+    }
 }
 
 function tora_tora_upgrade_home_intro_1_2_1(): void
@@ -475,4 +602,64 @@ function tora_tora_upgrade_about_copy_1_3_4(): void
         'post_content' => $defaults['story']['content'],
     ]);
 }
+/**
+ * Upgrade untouched About starter copy to the final Figma emphasis treatment.
+ */
+function tora_tora_upgrade_about_copy_1_3_6(): void
+{
+    $defaults = tora_tora_default_pages();
+    $page = get_page_by_path('story', OBJECT, 'page');
+    if (!$page instanceof WP_Post || !isset($defaults['story'])) {
+        return;
+    }
+
+    $previous_default = '<p>Tora Tora, derived from the Japanese word for \'tiger\', captures the essence of the powerful and majestic animal revered in Japanese mythology.</p><p>A symbol of <strong>courage, strength and indomitable spirit</strong>, the tiger has a storied presence in folklore, often representing protection and good fortune. This name reflects our brand\'s commitment to <strong>bold flavours and vibrant dining experiences</strong>.</p><p><strong>Tora Tora</strong> brings a slice of <strong>Japanese culture to Dubai</strong>, offering a dining experience that\'s as <strong>dynamic and powerful as the tiger itself</strong>, perfectly blending tradition with contemporary flair.</p>';
+    $current = trim((string) $page->post_content);
+    $title = trim((string) $page->post_title);
+    $title_ok = $title === '' || strcasecmp($title, 'About Tora Tora') === 0 || strcasecmp($title, 'The Spirit of the Tiger') === 0;
+
+    if (!$title_ok || $current !== $previous_default) {
+        return;
+    }
+
+    wp_update_post([
+        'ID'           => (int) $page->ID,
+        'post_title'   => $defaults['story']['title'],
+        'post_content' => $defaults['story']['content'],
+    ]);
+}
+
+/**
+ * Align untouched About copy with Figma node 29-14: all-caps poster, two italic phrases.
+ */
+function tora_tora_upgrade_about_copy_1_3_15(): void
+{
+    $defaults = tora_tora_default_pages();
+    $page = get_page_by_path('story', OBJECT, 'page');
+    if (!$page instanceof WP_Post || !isset($defaults['story'])) {
+        return;
+    }
+
+    $old_copies = [
+        trim((string) (tora_tora_legacy_page_seeds()['story']['content'] ?? '')),
+        '<p>Tora Tora takes its name from the Japanese word for tiger — a powerful creature deeply rooted in mythology and symbolism.</p><p>Representing strength, courage and protection, the tiger reflects the spirit behind our restaurant and the bold character of our cuisine.</p><p>At Tora Tora, we bring authentic Japanese ramen and street-food culture to Dubai with bold flavours, vibrant energy, and a dining experience inspired by the roar of the tiger.</p>',
+        '<p>Tora Tora, derived from the Japanese word for \'tiger\', captures the essence of the powerful and majestic animal revered in Japanese mythology.</p><p>A symbol of <strong>courage, strength and indomitable spirit</strong>, the tiger has a storied presence in folklore, often representing protection and good fortune. This name reflects our brand\'s commitment to bold flavours and vibrant dining experiences.</p><p>Tora Tora brings a slice of Japanese culture to Dubai, offering a dining experience that\'s as dynamic and powerful as the tiger itself, perfectly blending tradition with contemporary flair.</p>',
+        '<p>Tora Tora, derived from the Japanese word for \'tiger\', captures the essence of the powerful and majestic animal revered in Japanese mythology.</p><p>A symbol of <strong>courage, strength and indomitable spirit</strong>, the tiger has a storied presence in folklore, often representing <em>protection and good fortune</em>. This name reflects our brand\'s commitment to <strong>bold flavours and vibrant dining experiences</strong>.</p><p><strong>Tora Tora</strong> brings a slice of <strong>Japanese culture to Dubai</strong>, offering a dining experience that\'s as <strong>dynamic and powerful as the tiger itself</strong>, perfectly blending tradition with contemporary flair.</p>',
+        '<p>Tora Tora, derived from the Japanese word for <em>\'tiger\'</em>, captures the essence of the powerful and majestic animal revered in Japanese mythology.</p><p>A symbol of <strong>courage, strength and indomitable spirit</strong>, the tiger has a storied presence in folklore, often representing <em>protection and good fortune</em>. This name reflects our brand\'s commitment to <strong>bold flavours and vibrant dining experiences</strong>.</p><p><strong>Tora Tora</strong> brings a slice of <strong>Japanese culture to Dubai</strong>, offering a dining experience that\'s as <strong>dynamic and powerful as the tiger itself</strong>, perfectly blending <em>tradition with contemporary flair</em>.</p>',
+    ];
+
+    $current = trim((string) $page->post_content);
+    $title = trim((string) $page->post_title);
+    $title_ok = $title === '' || strcasecmp($title, 'About Tora Tora') === 0 || strcasecmp($title, 'The Spirit of the Tiger') === 0;
+    if (!$title_ok || !in_array($current, $old_copies, true)) {
+        return;
+    }
+
+    wp_update_post([
+        'ID'           => (int) $page->ID,
+        'post_title'   => $defaults['story']['title'],
+        'post_content' => $defaults['story']['content'],
+    ]);
+}
+
 add_action('init', 'tora_tora_maybe_upgrade_content', 30);

@@ -76,6 +76,23 @@
     });
   }
 
+  function updateAdminBarEdit(panelId) {
+    var mapEl = document.getElementById("tora-tora-panel-edits");
+    if (!mapEl) return;
+    var map;
+    try {
+      map = JSON.parse(mapEl.textContent || "{}");
+    } catch (error) {
+      return;
+    }
+    var target = map[panelId];
+    if (!target || !target.url) return;
+    var editLink = document.querySelector("#wp-admin-bar-edit > a.ab-item");
+    if (!editLink) return;
+    editLink.setAttribute("href", target.url);
+    if (target.label) editLink.textContent = target.label;
+  }
+
   function applyTheme(panel) {
     var theme = panel.getAttribute("data-theme") || "light";
     document.body.classList.toggle("light-panel", theme === "light" || theme === "pattern");
@@ -83,9 +100,11 @@
     document.body.classList.toggle("dark-panel", theme === "pattern" || theme === "blue");
     document.body.classList.toggle("pattern-panel", theme === "pattern");
     document.body.classList.toggle("about-panel", panel.id === "about");
+    document.body.classList.toggle("menu-view", panel.id === "menu");
     document.body.classList.toggle("gallery-view", panel.id === "gallery");
     document.body.classList.toggle("contact-view", panel.id === "contact");
     document.body.classList.toggle("careers-view", panel.id === "careers");
+    document.body.classList.toggle("delivery-view", panel.id === "delivery");
   }
 
   function showPanel(id, menuSlug, updateHistory, moveFocus) {
@@ -111,6 +130,7 @@
     activePanel = next;
     document.body.dataset.panel = id;
     applyTheme(next);
+    updateAdminBarEdit(id);
     setNavOpen(false);
     window.scrollTo(0, 0);
 

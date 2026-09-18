@@ -33,12 +33,12 @@ $required = [
     'style.css', 'screenshot.png', 'functions.php', 'front-page.php', 'index.php', 'header.php', 'footer.php',
     'theme.json', 'assets/css/main.css', 'assets/js/site.js',
     'assets/images/tora-tora-logo.png', 'assets/images/tora-tora-pattern.jpg', 'assets/images/tiger-mark.png',
-    'assets/images/hero-chopsticks.png', 'assets/images/contact-dubai-map.png',
+    'assets/images/contact-dubai-map.png',
     'assets/images/tora-tora-pattern.png', 'assets/images/tora-tora-pattern.webp',
     'assets/images/delivery-talabat.svg', 'assets/images/delivery-noon.png', 'assets/images/delivery-deliveroo.svg',
     'assets/fonts/avantgarde-400.woff2', 'assets/fonts/avantgarde-500.woff2',
     'assets/fonts/avantgarde-600.woff2', 'assets/fonts/avantgarde-700.woff2',
-    'inc/setup.php', 'inc/customizer.php', 'inc/menu-items.php', 'inc/jobs.php', 'inc/staging.php', 'inc/compatibility.php', 'inc/default-content.php',
+    'inc/setup.php', 'inc/customizer.php', 'inc/menu-items.php', 'inc/jobs.php', 'inc/staging.php', 'inc/compatibility.php', 'inc/default-content.php', 'inc/editor.php',
     'single-job_listing.php',
 ];
 
@@ -74,14 +74,24 @@ file_contains($theme . '/assets/css/main.css', '@media (prefers-reduced-motion: 
 file_contains($theme . '/front-page.php', 'tora_get_menu_groups', 'Dynamic menu rendering is missing.');
 file_contains($theme . '/assets/css/main.css', 'z-index: 250', 'Overlay navigation is not stacked above page panels.');
 file_does_not_contain($theme . '/front-page.php', 'menu-item-placeholder', 'Menu still renders circular dish placeholders.');
-file_contains($theme . '/front-page.php', 'hero-bowl', 'Home is missing the Figma ramen bowl.');
-file_contains($theme . '/front-page.php', 'hero-ramen.png', 'Home is missing the packaged ramen asset.');
-file_contains($theme . '/front-page.php', 'hero-chopsticks', 'Home is missing the Figma chopsticks overlay.');
+file_does_not_contain($theme . '/front-page.php', 'hero-art', 'Home still renders the removed ramen hero artwork.');
+file_does_not_contain($theme . '/front-page.php', 'hero-ramen.png', 'Home still requests the removed ramen asset.');
+file_does_not_contain($theme . '/front-page.php', 'hero-chopsticks', 'Home still renders the removed chopsticks overlay.');
+file_does_not_contain($theme . '/assets/css/main.css', '.hero-art', 'Home still ships ramen hero artwork CSS.');
+file_does_not_contain($theme . '/assets/css/main.css', '.hero-bowl', 'Home still ships ramen bowl CSS.');
+file_does_not_contain($theme . '/assets/css/main.css', '.hero-chopsticks', 'Home still ships chopsticks CSS.');
 file_contains($theme . '/assets/css/main.css', '.home-pattern::before', 'Home pattern is missing the right-edge gutter.');
+file_does_not_contain($theme . '/assets/css/main.css', '-webkit-mask-image: radial-gradient', 'Home pattern still uses a concave cutout mask.');
+file_does_not_contain($theme . '/assets/css/main.css', 'mask-image: radial-gradient', 'Home pattern still uses a concave cutout mask.');
 file_contains($theme . '/front-page.php', 'delivery-partners', 'Delivery partner logos are not grouped on the first screen.');
 file_contains($theme . '/assets/css/main.css', '.delivery-primary', 'Delivery first-screen partner block is missing.');
-file_contains($theme . '/assets/css/main.css', '.delivery-zones-block { grid-column: 1 / span 2;', 'Delivery zones do not share the partner-card grid.');
-file_contains($theme . '/assets/css/main.css', 'grid-template-columns: repeat(4, minmax(0, 1fr));', 'Delivery zone chips are not aligned to an equal-width grid.');
+file_contains($theme . '/assets/css/main.css', '.delivery-boxes {', 'Delivery zone and hours boxes are missing.');
+file_contains($theme . '/assets/css/main.css', '.delivery-box {', 'Delivery info cards are missing equal box styling.');
+file_contains($theme . '/front-page.php', 'delivery-boxes', 'Delivery panel is missing the zones and hours info boxes.');
+file_contains($theme . '/front-page.php', 'delivery-title-line', 'Delivery heading is not split into ORDER / DELIVERY lines.');
+file_contains($theme . '/front-page.php', 'delivery-rail', 'Delivery panel is missing the Figma right-edge rail.');
+file_contains($theme . '/assets/js/site.js', 'delivery-view', 'Delivery view body class is missing.');
+file_contains($theme . '/assets/css/main.css', '.delivery-view:not(.nav-open) .footer-strip', 'Delivery still shows the footer credit over the hours column.');
 file_does_not_contain($theme . '/assets/css/main.css', 'min-height: calc(100svh - var(--header) - var(--staging) - 1.15rem)', 'Delivery still forces a second full-screen block.');
 
 file_contains($theme . '/assets/css/main.css', '.light-panel:not(.nav-open) .brand-link img', 'Light-panel logo invert is missing.');
@@ -109,7 +119,7 @@ file_contains($theme . '/front-page.php', 'careers-job-list', 'Careers job list 
 file_contains($theme . '/front-page.php', 'careers-roles-badge', 'Careers roles badge is missing.');
 file_contains($theme . '/front-page.php', 'careers-rule', 'Careers vertical rule is missing.');
 file_does_not_contain($theme . '/front-page.php', 'careers-art', 'Careers panel still renders bottom decorative artwork.');
-file_contains($theme . '/front-page.php', 'JOIN THE TEAM', 'Careers title does not match the Figma copy.');
+file_contains($theme . '/front-page.php', "<span>JOIN</span><br><span class=\"careers-team-line\">THE TEAM</span>", 'Careers title is not split onto JOIN / THE TEAM.');
 file_contains($theme . '/front-page.php', 'View & apply', 'Careers apply CTA is missing.');
 file_does_not_contain($theme . '/front-page.php', "echo esc_html(\$careers['title']);", 'Careers still prints unsanitized page titles.');
 file_contains($theme . '/single-job_listing.php', 'job-application.php', 'Single job template does not load WP Job Manager apply UI.');
@@ -129,7 +139,7 @@ file_contains($theme . '/front-page.php', 'tora_tora_maps_embed_url', 'Contact m
 file_contains($theme . '/front-page.php', 'tora_tora_maps_url', 'Contact map does not use the Google Maps place URL helper.');
 file_contains($theme . '/inc/customizer.php', 'tora_maps_url', 'Google Maps URL Customizer setting is missing.');
 file_does_not_contain($theme . '/front-page.php', 'contact-dubai-map.png', 'Contact panel still uses the sample Dubai map artwork.');
-file_contains($theme . '/front-page.php', 'contact-tiger', 'Contact panel is missing the Figma tiger mark.');
+file_contains($theme . '/front-page.php', 'contact-logo', 'Contact panel is missing the Figma wordmark.');
 file_contains($theme . '/front-page.php', 'Get in touch', 'Contact panel is missing the Figma Get in touch block.');
 file_contains($theme . '/front-page.php', 'Opening hours', 'Contact panel is missing the Figma opening hours block.');
 file_contains($theme . '/front-page.php', 'Follow us', 'Contact panel is missing the Figma Follow us block.');
@@ -159,7 +169,14 @@ file_contains($theme . '/inc/setup.php', 'function tora_tora_platform_logo', 'De
 file_contains($theme . '/front-page.php', 'class="delivery-logo"', 'Delivery cards do not render real logo images.');
 
 file_contains($theme . '/front-page.php', 'menu-tabs', 'Tabbed menu navigation is missing.');
-file_contains($theme . '/front-page.php', 'menu-tab-panels', 'Tabbed menu panels are missing.');
+file_contains($theme . '/front-page.php', 'menu-items--columns', 'Draft Food Menu is missing the Figma two-column ramen layout.');
+file_contains($theme . '/front-page.php', 'menu-item-note', 'Menu item notes are not rendered inline with Figma italic emphasis.');
+file_contains($theme . '/front-page.php', 'menu-item--plain', 'Beverage plain sections are missing the no-bullet treatment.');
+file_contains($theme . '/assets/css/main.css', '.menu-items--columns', 'Menu two-column CSS is missing.');
+file_contains($theme . '/inc/default-content.php', "['SIGNATURE', 'COLOR CHANGING CREAM SODA'", 'Signature cream soda is missing Figma title/note split.');
+file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_menu_signature_1_3_8', 'Signature cream soda upgrade is missing.');
+file_contains($theme . '/inc/default-content.php', 'tora_tora_menu_title_candidates', 'Menu seeding must tolerate WordPress encoding & as &amp; in titles.');
+file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_menu_dedupe_1_3_10', 'Menu dedupe upgrade is missing.');
 file_contains($theme . '/front-page.php', 'menu-tiger-mark', 'Menu tiger mark is missing.');
 file_contains($theme . '/front-page.php', 'menu-heading', 'Menu heading layout wrapper is missing.');
 file_does_not_contain($theme . '/front-page.php', 'id="menu-modal"', 'The old menu modal should be removed.');
@@ -175,10 +192,26 @@ file_contains($theme . '/inc/menu-items.php', "'beverages'", 'Beverage category 
 
 file_contains($theme . '/front-page.php', 'id="about"', 'About panel is missing.');
 file_does_not_contain($theme . '/front-page.php', 'story-figure-gold', 'Gold medallion should not appear on primary About surfaces.');
-file_contains($theme . '/front-page.php', 'gallery-blog', 'Gallery is missing the Figma /Blog label.');
-file_contains($theme . '/front-page.php', 'gallery-mark', 'Gallery is missing the Figma image numbers.');
-file_contains($theme . '/front-page.php', 'gallery-ticker', 'Gallery is missing the repeating Tora Tora footer line.');
-file_contains($theme . '/front-page.php', "esc_html_e('Gallery', 'tora-tora')", 'Gallery heading does not use the Figma title.');
+file_contains($theme . '/front-page.php', 'gallery-blog', 'Gallery is missing the Figma /BLOG label.');
+file_contains($theme . '/front-page.php', 'gallery-label', 'Gallery is missing the Figma section labels.');
+file_contains($theme . '/front-page.php', "'slug' => '01'", 'Gallery is missing the Figma 01 FOOD label.');
+file_contains($theme . '/front-page.php', "'slug' => '02'", 'Gallery is missing the Figma 02 INTERIOR label.');
+file_contains($theme . '/front-page.php', "'slug' => '03'", 'Gallery is missing the Figma 03 FOOD label.');
+file_contains($theme . '/front-page.php', 'gallery-ticker-track', 'Gallery ticker is missing the scrolling marquee track.');
+file_contains($theme . '/assets/css/main.css', '@keyframes gallery-ticker-scroll', 'Gallery ticker marquee animation is missing.');
+file_contains($theme . '/assets/css/main.css', 'overflow-y: auto;', 'Gallery panel scroll is missing.');
+file_contains($theme . '/front-page.php', "'cell' => 6", 'Gallery is missing the wide geometric tile.');
+file_contains($theme . '/assets/css/main.css', 'grid-template-areas:', 'Gallery mosaic is missing the Figma grid-template-areas pattern.');
+file_contains($theme . '/assets/css/main.css', '"c1 c2 l1 c3"', 'Gallery row 1 pattern is missing.');
+file_contains($theme . '/assets/css/main.css', '"l2 l2 c4 c5"', 'Gallery row 2 pattern is missing.');
+file_contains($theme . '/assets/css/main.css', '"c6 c6 c7 l3"', 'Gallery row 3 wide interior pattern is missing.');
+file_contains($theme . '/assets/css/main.css', '.gallery-cell-4 { grid-area: c4; }', 'Gallery row-2 tile is not assigned to area c4.');
+file_contains($theme . '/assets/css/main.css', '.gallery-cell-6 { grid-area: c6; }', 'Gallery wide interior tile is not assigned to area c6.');
+file_contains($theme . '/assets/css/main.css', 'container-type: inline-size;', 'Gallery mosaic is missing container-query row sizing.');
+file_contains($theme . '/assets/css/main.css', '--gallery-col:', 'Gallery mosaic is missing proportional tile sizing.');
+file_does_not_contain($theme . '/front-page.php', 'gallery-pattern-tile', 'Gallery still uses collage-style pattern tiles instead of empty geometric cells.');
+file_contains($theme . '/front-page.php', "esc_html_e('GALLERY', 'tora-tora')", 'Gallery heading does not use the Figma title.');
+file_does_not_contain($theme . '/front-page.php', 'gallery-mark', 'Gallery still overlays numbers on photo tiles instead of Figma gap labels.');
 file_does_not_contain($theme . '/front-page.php', 'gallery-count', 'Gallery still renders the image count chrome.');
 file_contains($theme . '/assets/js/site.js', 'gallery-view', 'Gallery chrome body class toggle is missing.');
 file_contains($theme . '/assets/css/main.css', '.gallery-link:focus-visible', 'Gallery tiles are missing a dedicated keyboard focus treatment.');
@@ -191,20 +224,71 @@ file_contains($theme . '/inc/compatibility.php', 'wght@200;400;500;600;700;800',
 file_contains($theme . '/front-page.php', 'story-scroll-inner', 'About is missing the Figma poster wrapper.');
 file_contains($theme . '/front-page.php', 'story-pattern-disc', 'About is missing the Figma speckle disc.');
 file_contains($theme . '/front-page.php', 'story-tiger-disc', 'About is missing the overlapping tiger badge.');
-file_contains($theme . '/front-page.php', 'story-band', 'About is missing the Figma pattern foot band.');
+file_contains($theme . '/front-page.php', 'story-footer-pattern', 'About is missing the Figma speckle footer bar.');
+file_does_not_contain($theme . '/front-page.php', 'story-ticker', 'About still renders the off-Figma TORA TORA ticker instead of the speckle footer.');
+file_contains($theme . '/front-page.php', 'story-accent-arc', 'About is missing the top-right blue accent arc.');
+file_contains($theme . '/front-page.php', 'about-brand-line', 'About title does not lock TORA TORA onto the second line.');
 file_does_not_contain($theme . '/front-page.php', 'story-screen-secondary', 'About still has a second empty scroll screen.');
 file_does_not_contain($theme . '/assets/css/main.css', 'height: 200%', 'About is still locked to a two-viewport scroller.');
 file_contains($theme . '/assets/js/site.js', 'about-panel', 'About panel body class toggle is missing.');
-file_contains($theme . '/inc/default-content.php', 'courage, strength and indomitable spirit', 'Figma About copy is missing from defaults.');
-file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_about_copy_1_3_4', 'About Figma emphasis upgrade is missing.');
+file_contains($theme . '/inc/default-content.php', '<em>courage, strength and indomitable spirit</em>. The tiger has a storied presence', 'Figma About copy is missing the italic spirit line and sentence break.');
+file_contains($theme . '/inc/default-content.php', '<em>tradition with contemporary flair</em>', 'Figma About copy is missing the italic closing phrase.');
+file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_about_copy_1_3_15', 'About Figma poster copy upgrade is missing.');
+file_contains($theme . '/inc/default-content.php', '<em>', 'About default copy is missing Figma italic emphasis.');
+file_does_not_contain($theme . '/front-page.php', "word for <em>", 'About fallback copy still italicizes tiger beyond the Figma poster.');
+file_contains($theme . '/front-page.php', "'em' => []", 'About fallback sanitization does not allow italic emphasis.');
+file_contains($theme . '/assets/css/main.css', '.story-copy .entry-content em', 'About italic emphasis styling is missing.');
 file_contains($theme . '/assets/css/main.css', '.story-art {', 'About art positioning block is missing.');
 file_contains($theme . '/front-page.php', 'story-copy-body', 'About copy is missing the Figma rule wrapper.');
+file_contains($theme . '/assets/css/main.css', ".story-copy .entry-content {\n  position: relative;\n  max-width: 36rem;\n  margin-top: 1.55rem;\n  font-family: var(--font-main);\n  letter-spacing: .02em;\n  text-transform: uppercase;", 'About story copy is not rendered in Figma all-caps.');
 file_contains($theme . '/assets/css/main.css', '.story-copy .entry-content p {
-  font-size: clamp(1rem, 1.25vw, 1.125rem);', 'About body type is below the Figma/Raleway readable size.');
+  font-size: clamp(1.02rem, 1.38vw, 1.22rem);
+  font-weight: 500;
+  letter-spacing: .045em;
+  line-height: 1.58;', 'About body type does not match the Figma poster measure.');
+file_contains($theme . '/assets/css/main.css', '.story-footer-pattern {', 'About speckle footer styling is missing.');
 file_contains($theme . '/assets/css/main.css', '.story-panel #about-title', 'About title is missing its Avant Garde display size.');
 file_contains($theme . '/front-page.php', 'home-split', 'Home is missing the Figma split layout wrapper.');
 file_contains($theme . '/assets/css/main.css', ".home-panel {\n  padding: 0;", 'Home panel still has inset padding instead of a full-bleed Figma split.');
 file_contains($theme . '/assets/css/main.css', 'grid-template-columns: minmax(0, 58%) minmax(0, 42%)', 'Home split columns do not match the Figma 58/42 proportion.');
+file_contains($theme . '/assets/css/main.css', ".home-content h1 {\n  max-width: 11ch;\n  white-space: normal;", 'Home headline still clips as a forced single line.');
+file_contains($theme . '/assets/css/main.css', '.menu-rail {', 'Menu full-height rail styling is missing.');
+file_contains($theme . '/assets/css/main.css', 'align-self: stretch;', 'Menu rail is not explicitly stretched to panel height.');
+file_contains($theme . '/assets/css/main.css', '.delivery-zones li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-column: span 4;
+  min-height: 2.95rem;', 'Delivery zone chips are not on the aligned Figma grid.');
+file_contains($theme . '/assets/css/main.css', '.gallery-cell-1 { grid-area: c1; }', 'Gallery geometric placement is missing.');
+file_contains($theme . '/assets/css/main.css', 'position: absolute;', 'Menu rail is not pinned to the full viewport edge.');
+file_contains($theme . '/assets/css/main.css', '.menu-rail-right::after', 'Menu rail is missing the solid blue hamburger gutter.');
+file_contains($theme . '/assets/css/main.css', ".menu-rail-right::after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 50%;\n  background: var(--tora-blue);\n}", 'Menu solid blue gutter does not match the Figma half-rail edge.');
+file_contains($theme . '/assets/js/site.js', 'menu-view', 'Menu chrome body class toggle is missing.');
+file_contains($theme . '/front-page.php', 'careers-job-bullet', 'Careers job meta is missing a visible bullet separator.');
+file_contains($theme . '/front-page.php', 'class="careers-job-bullet" aria-hidden="true">•</span>', 'Careers job meta does not render a bullet character in place of the em dash.');
+file_contains($theme . '/front-page.php', 'careers-team-line', 'Careers title does not lock THE TEAM onto the second line.');
+file_contains($theme . '/assets/css/main.css', '.careers-job-bullet', 'Careers bullet styling is missing.');
+file_contains($theme . '/assets/css/main.css', ".careers-team-line {\n  display: block;\n  white-space: nowrap;", 'Careers THE TEAM line is not locked onto one line.');
+file_contains($theme . '/assets/css/main.css', 'grid-template-areas:', 'Gallery mobile mosaic is missing a structured grid pattern.');
+file_does_not_contain($theme . '/assets/css/main.css', 'grid-auto-flow: row dense;', 'Gallery mobile mosaic should not use dense packing that collapses the Figma pattern.');
+file_contains($theme . '/assets/css/main.css', ".careers-panel #careers-title {\n  max-width: none;", 'Careers title still has a forced narrow measure.');
+file_contains($theme . '/inc/jobs.php', 'tora_tora_normalize_job_meta_separator', 'Careers metadata does not normalize dash separators into bullets.');
+file_contains($theme . '/inc/jobs.php', ' • ', 'Careers metadata does not use the Figma bullet separator.');
+file_does_not_contain($theme . '/inc/jobs.php', ' — ', 'Careers metadata still uses an em dash separator.');
+file_contains($theme . '/assets/css/main.css', '.delivery-order {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  margin-top: auto;', 'Delivery card CTA is not pinned to the bottom of each card.');
+file_contains($theme . '/assets/css/main.css', '.contact-logo {
+  flex: 0 0 auto;
+  width: clamp(5.5rem, 9vw, 7.25rem);', 'Contact wordmark is not sized to the right column.');
+file_contains($theme . '/inc/setup.php', 'tora_tora_format_address_lines', 'Contact address line formatting helper is missing.');
+file_contains($theme . '/front-page.php', 'contact-location-line', 'Contact address is not rendered as two lines.');
+file_contains($theme . '/assets/css/main.css', 'overflow-wrap: anywhere;', 'Long custom Contact addresses can overflow on mobile.');
+file_contains($theme . '/front-page.php', 'tora_tora_logo_url()', 'Contact does not use the full Tora Tora wordmark.');
+file_does_not_contain($theme . '/inc/default-content.php', 'wp_delete_post($item->ID, true);', 'The 1.3.5 migration can delete editor-created menu items.');
 file_does_not_contain($theme . '/assets/css/main.css', 'outline: 3px solid var(--tora-tiger)', 'Home hamburger still uses the off-Figma yellow ring.');
 file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_home_intro_1_2_1', 'Home intro restoration upgrade is missing.');
 file_contains($theme . '/inc/default-content.php', 'JOIN THE TEAM', 'Careers default content does not match the Figma copy.');
@@ -218,6 +302,19 @@ file_contains($theme . '/assets/css/main.css', 'tora-tora-pattern.png', 'The pat
 file_contains($theme . '/assets/css/main.css', '.delivery-logo', 'Delivery logo sizing styles are missing.');
 file_contains($theme . '/inc/setup.php', "'standard-page-context'", 'Standard WordPress pages are missing their dedicated light-surface body class.');
 file_contains($theme . '/inc/setup.php', "\$classes[] = 'light-panel';", 'Standard WordPress pages do not switch fixed chrome to the accessible blue-on-white treatment.');
+
+file_contains($theme . '/functions.php', '/inc/editor.php', 'Panel editor helpers are not bootstrapped.');
+file_contains($theme . '/inc/editor.php', 'function tora_tora_panel_edit_targets', 'Panel edit-target map is missing.');
+file_contains($theme . '/inc/editor.php', "'about' => 'story'", 'About panel is not mapped to the Story page editors actually need.');
+file_contains($theme . '/inc/editor.php', 'tora_tora_admin_bar_panel_edits', 'Admin bar does not expose per-panel edit links.');
+file_contains($theme . '/inc/editor.php', "parent' => 'edit'", 'Admin bar Edit Page is missing a dropdown of homepage panels.');
+file_contains($theme . '/inc/editor.php', 'display_post_states', 'Pages list does not label Home/About panel sources.');
+file_contains($theme . '/inc/editor.php', 'tora_tora_panel_editor_notice', 'Block editor is missing a notice that Home is not the About panel.');
+file_contains($theme . '/inc/editor.php', 'Edit About', 'Homepage editor does not send editors to the About page.');
+file_contains($theme . '/footer.php', 'tora-tora-panel-edits', 'Logged-in front page does not expose panel edit URLs to JavaScript.');
+file_contains($theme . '/assets/js/site.js', 'updateAdminBarEdit', 'Admin bar Edit Page link is not updated for the active panel.');
+file_contains($theme . '/assets/js/site.js', 'wp-admin-bar-edit', 'Admin bar Edit Page node is not retargeted when switching panels.');
+file_contains($theme . '/inc/setup.php', 'tora_tora_find_panel_page', 'Panel page lookup helper is missing.');
 
 $pattern_dimensions = is_file($theme . '/assets/images/tora-tora-pattern.png')
     ? getimagesize($theme . '/assets/images/tora-tora-pattern.png')

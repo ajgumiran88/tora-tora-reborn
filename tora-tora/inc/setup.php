@@ -89,6 +89,38 @@ function tora_tora_asset(string $relative_path): string
 }
 
 /**
+ * Locate a homepage panel page, accepting the About aliases story / about.
+ */
+function tora_tora_find_panel_page(string $slug): ?WP_Post
+{
+    $candidates = [$slug];
+    if ($slug === 'story') {
+        $candidates[] = 'about';
+    } elseif ($slug === 'about') {
+        $candidates[] = 'story';
+    }
+
+    foreach (array_unique($candidates) as $candidate) {
+        $page = get_page_by_path($candidate, OBJECT, 'page');
+        if ($page instanceof WP_Post) {
+            return $page;
+        }
+    }
+
+    if ($slug === 'home') {
+        $front_id = (int) get_option('page_on_front');
+        if ($front_id > 0) {
+            $front = get_post($front_id);
+            if ($front instanceof WP_Post && $front->post_type === 'page') {
+                return $front;
+            }
+        }
+    }
+
+    return null;
+}
+
+/**
  * Return page content with a safe seeded fallback.
  * Does not run `the_content` filters before `wp_head` ( Rank Math / optimizers / TEC ).
  *
@@ -96,7 +128,7 @@ function tora_tora_asset(string $relative_path): string
  */
 function tora_tora_panel_page(string $slug, string $title, string $content, string $fallback_image = ''): array
 {
-    $page = get_page_by_path($slug, OBJECT, 'page');
+    $page = tora_tora_find_panel_page($slug);
     $image = $fallback_image ? tora_tora_asset('images/' . $fallback_image) : '';
 
     if (!$page instanceof WP_Post) {
@@ -130,6 +162,33 @@ function tora_tora_logo_url(): string
     $custom_logo_id = (int) get_theme_mod('custom_logo', 0);
     $custom_logo = $custom_logo_id ? wp_get_attachment_image_url($custom_logo_id, 'full') : false;
     return $custom_logo ?: tora_tora_asset('images/tora-tora-logo.png');
+}
+
+/**
+ * Split a postal address into one or two display lines without changing its content.
+ *
+ * The final half of a comma-separated address is kept together so common city and
+ * country suffixes read naturally. Addresses without commas remain on one line.
+ *
+ * @return array<int,string>
+ */
+function tora_tora_format_address_lines(string $address): array
+{
+    $address = trim($address);
+    if ($address === '') {
+        return [];
+    }
+
+    $parts = preg_split('/\s*,\s*/', $address, -1, PREG_SPLIT_NO_EMPTY);
+    if (!is_array($parts) || count($parts) < 2) {
+        return [$address];
+    }
+
+    $split_at = (int) ceil(count($parts) / 2);
+    $first_line = implode(', ', array_slice($parts, 0, $split_at)) . ',';
+    $second_line = implode(', ', array_slice($parts, $split_at));
+
+    return array_values(array_filter([$first_line, $second_line], static fn(string $line): bool => $line !== ''));
 }
 
 /**
