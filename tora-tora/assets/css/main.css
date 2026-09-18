@@ -234,6 +234,12 @@ h1, h2, h3, h4 {
   filter: brightness(0) saturate(100%) invert(13%) sepia(98%) saturate(7492%) hue-rotate(247deg) brightness(88%) contrast(145%);
 }
 
+.blue-panel:not(.nav-open) .brand-link img,
+.gallery-view:not(.nav-open) .brand-link img,
+.contact-view:not(.nav-open) .brand-link img {
+  filter: brightness(0) invert(1);
+}
+
 .nav-toggle {
   position: relative;
   width: 52px;

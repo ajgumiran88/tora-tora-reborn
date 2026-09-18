@@ -115,6 +115,7 @@ file_contains($theme . '/assets/css/main.css', '.delivery-view:not(.nav-open) .f
 file_does_not_contain($theme . '/assets/css/main.css', 'min-height: calc(100svh - var(--header) - var(--staging) - 1.15rem)', 'Delivery still forces a second full-screen block.');
 
 file_contains($theme . '/assets/css/main.css', '.light-panel:not(.nav-open) .brand-link img', 'Light-panel logo invert is missing.');
+file_contains($theme . '/assets/css/main.css', ".blue-panel:not(.nav-open) .brand-link img,\n.gallery-view:not(.nav-open) .brand-link img,\n.contact-view:not(.nav-open) .brand-link img {\n  filter: brightness(0) invert(1);\n}", 'Gallery/Contact brand logo is not forced white on the blue background.');
 file_does_not_contain($theme . '/assets/css/main.css', '.about-panel:not(.nav-open) .brand-link { visibility: hidden; }', 'About still hides the home branding logo.');
 file_does_not_contain($theme . '/assets/css/main.css', '.menu-view:not(.nav-open) .brand-link { visibility: hidden; }', 'Menu still hides the home branding logo.');
 file_does_not_contain($theme . '/assets/css/main.css', '.careers-view:not(.nav-open) .brand-link { visibility: hidden; }', 'Careers still hides the home branding logo.');
