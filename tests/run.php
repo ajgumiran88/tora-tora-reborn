@@ -119,7 +119,7 @@ file_contains($theme . '/front-page.php', 'careers-job-list', 'Careers job list 
 file_contains($theme . '/front-page.php', 'careers-roles-badge', 'Careers roles badge is missing.');
 file_contains($theme . '/front-page.php', 'careers-rule', 'Careers vertical rule is missing.');
 file_does_not_contain($theme . '/front-page.php', 'careers-art', 'Careers panel still renders bottom decorative artwork.');
-file_contains($theme . '/front-page.php', "<span>JOIN</span><br><span class=\"careers-team-line\">THE TEAM</span>", 'Careers title is not split onto JOIN / THE TEAM.');
+file_contains($theme . '/front-page.php', '<h2 id="careers-title">JOIN THE TEAM</h2>', 'Careers title is not a single JOIN THE TEAM line.');
 file_contains($theme . '/front-page.php', 'View & apply', 'Careers apply CTA is missing.');
 file_does_not_contain($theme . '/front-page.php', "echo esc_html(\$careers['title']);", 'Careers still prints unsanitized page titles.');
 file_contains($theme . '/single-job_listing.php', 'job-application.php', 'Single job template does not load WP Job Manager apply UI.');
@@ -267,12 +267,16 @@ file_contains($theme . '/assets/css/main.css', ".menu-rail-right::after {\n  con
 file_contains($theme . '/assets/js/site.js', 'menu-view', 'Menu chrome body class toggle is missing.');
 file_contains($theme . '/front-page.php', 'careers-job-bullet', 'Careers job meta is missing a visible bullet separator.');
 file_contains($theme . '/front-page.php', 'class="careers-job-bullet" aria-hidden="true">•</span>', 'Careers job meta does not render a bullet character in place of the em dash.');
-file_contains($theme . '/front-page.php', 'careers-team-line', 'Careers title does not lock THE TEAM onto the second line.');
 file_contains($theme . '/assets/css/main.css', '.careers-job-bullet', 'Careers bullet styling is missing.');
-file_contains($theme . '/assets/css/main.css', ".careers-team-line {\n  display: block;\n  white-space: nowrap;", 'Careers THE TEAM line is not locked onto one line.');
+file_contains($theme . '/assets/css/main.css', "--panel-left: clamp(4.5rem, 12.5vw, 10.25rem);", 'Shared About/Careers/Menu left inset token is missing.');
+file_contains($theme . '/assets/css/main.css', 'left: var(--panel-left);', 'About copy does not use the shared left inset.');
+file_contains($theme . '/assets/css/main.css', 'padding-left: var(--panel-left);', 'Careers does not share the About left inset.');
+file_contains($theme . '/assets/css/main.css', ".menu-layout {\n  display: flex;\n  flex-direction: column;\n  width: 100%;\n  max-width: none;\n  margin: 0;", 'Menu layout is still centered instead of sharing the About left inset.');
+file_contains($theme . '/assets/css/main.css', "padding-bottom: clamp(3rem, 5vh, 4.5rem);\n  padding-left: var(--panel-left);", 'Menu does not share the About left inset.');
+file_contains($theme . '/assets/css/main.css', ".careers-panel #careers-title {\n  max-width: none;\n  width: max-content;\n  font-family: var(--font-display);\n  font-size: clamp(1.7rem, 3.6vw, 3.2rem);\n  font-weight: 700;\n  letter-spacing: -.04em;\n  line-height: .9;\n  text-transform: uppercase;\n  white-space: nowrap;", 'Careers JOIN THE TEAM is not a single non-wrapping line.');
+file_does_not_contain($theme . '/front-page.php', 'careers-team-line', 'Careers title is still split across two lines.');
 file_contains($theme . '/assets/css/main.css', 'grid-template-areas:', 'Gallery mobile mosaic is missing a structured grid pattern.');
 file_does_not_contain($theme . '/assets/css/main.css', 'grid-auto-flow: row dense;', 'Gallery mobile mosaic should not use dense packing that collapses the Figma pattern.');
-file_contains($theme . '/assets/css/main.css', ".careers-panel #careers-title {\n  max-width: none;", 'Careers title still has a forced narrow measure.');
 file_contains($theme . '/inc/jobs.php', 'tora_tora_normalize_job_meta_separator', 'Careers metadata does not normalize dash separators into bullets.');
 file_contains($theme . '/inc/jobs.php', ' • ', 'Careers metadata does not use the Figma bullet separator.');
 file_does_not_contain($theme . '/inc/jobs.php', ' — ', 'Careers metadata still uses an em dash separator.');

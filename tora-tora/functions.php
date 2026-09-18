@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('TORA_TORA_VERSION', '1.3.21');
+define('TORA_TORA_VERSION', '1.3.23');
 
 /**
  * Theme directory (resolved at call time so WP Pusher / switched themes stay correct).

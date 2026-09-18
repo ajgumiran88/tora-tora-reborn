@@ -42,6 +42,7 @@
   --font-display: "ITC Avant Garde Gothic", "Raleway", Arial, sans-serif;
   --ease: cubic-bezier(.22, 1, .36, 1);
   --side: clamp(1.25rem, 5vw, 5rem);
+  --panel-left: clamp(4.5rem, 12.5vw, 10.25rem);
   --header: clamp(4.5rem, 8vw, 6.5rem);
   --staging: 0px;
   --pattern: url("../images/tora-tora-pattern.png");
@@ -582,14 +583,17 @@ h1, h2, h3, h4 {
 }
 
 .careers-scroll {
-  padding: calc(var(--header) * .35 + var(--staging)) clamp(1.5rem, 5vw, 4.5rem) clamp(2rem, 4vh, 3rem);
+  padding-top: calc(var(--header) * .35 + var(--staging));
+  padding-right: clamp(4.5rem, 8vw, 7rem);
+  padding-bottom: clamp(2rem, 4vh, 3rem);
+  padding-left: var(--panel-left);
 }
 
 .careers-layout {
   position: relative;
   z-index: 2;
-  max-width: min(90rem, calc(100% - clamp(1.25rem, 4vw, 3rem)));
-  margin: 0 auto 0 clamp(2.5rem, 7vw, 5.5rem);
+  max-width: none;
+  margin: 0;
   padding-bottom: clamp(1rem, 3vh, 2rem);
 }
 
@@ -605,16 +609,11 @@ h1, h2, h3, h4 {
   max-width: none;
   width: max-content;
   font-family: var(--font-display);
-  font-size: clamp(2rem, 5.4vw, 4.5rem);
+  font-size: clamp(1.7rem, 3.6vw, 3.2rem);
   font-weight: 700;
   letter-spacing: -.04em;
   line-height: .9;
   text-transform: uppercase;
-  white-space: normal;
-}
-
-.careers-team-line {
-  display: block;
   white-space: nowrap;
 }
 
@@ -828,7 +827,7 @@ h1, h2, h3, h4 {
 
 .story-copy {
   position: absolute;
-  left: clamp(4.5rem, 12.5vw, 10.25rem);
+  left: var(--panel-left);
   top: calc(var(--staging) + clamp(3.4rem, 7.5vh, 5.25rem));
   z-index: 2;
   width: min(34rem, 42vw);
@@ -1050,11 +1049,14 @@ h1, h2, h3, h4 {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 84rem;
-  margin-inline: auto;
+  max-width: none;
+  margin: 0;
   min-width: 0;
   height: 100%;
-  padding: calc(var(--header) + var(--staging) + .75rem) calc(min(14vw, 12.5rem) + 1.25rem) clamp(3rem, 5vh, 4.5rem) clamp(1.5rem, 4vw, 4.5rem);
+  padding-top: calc(var(--header) + var(--staging) + .75rem);
+  padding-right: calc(min(14vw, 12.5rem) + 1.25rem);
+  padding-bottom: clamp(3rem, 5vh, 4.5rem);
+  padding-left: var(--panel-left);
 }
 
 .menu-heading {
@@ -1073,6 +1075,14 @@ h1, h2, h3, h4 {
   width: clamp(3.5rem, 6vw, 6.5rem);
   height: auto;
   margin-top: clamp(.75rem, 2vh, 1.5rem);
+}
+
+.menu-panel .panel-back {
+  margin: 0 0 .55rem;
+}
+
+.menu-panel .panel-back-arrow {
+  width: 48px;
 }
 
 .menu-layout h2 {
@@ -1820,7 +1830,7 @@ h1, h2, h3, h4 {
 }
 
 .careers-panel .panel-back {
-  margin: 0 0 clamp(.75rem, 2vh, 1.25rem);
+  margin: 0 0 .55rem;
 }
 
 .careers-panel .panel-back-arrow {
@@ -1968,7 +1978,6 @@ h1, h2, h3, h4 {
   .contact-layout, .careers-layout { gap: 3rem; }
   .careers-header { grid-template-columns: 1fr; }
   .careers-roles-badge { justify-self: start; }
-  .careers-layout { margin-left: clamp(1.5rem, 4vw, 2.5rem); max-width: 100%; }
   .overlay-menu { grid-template-columns: min(34vw, 10rem) 1fr; }
   .delivery-panel { overflow: auto; }
   .delivery-layout {
@@ -1987,7 +1996,7 @@ h1, h2, h3, h4 {
 }
 
 @media (max-width: 700px) {
-  :root { --side: 1.15rem; --header: 5.2rem; }
+  :root { --side: 1.15rem; --panel-left: var(--side); --header: 5.2rem; }
   .tora-staging { --staging: 64px; }
   .admin-bar.tora-staging { --staging: calc(46px + 64px); }
   .site-shell { min-height: 30rem; }
@@ -2035,7 +2044,7 @@ h1, h2, h3, h4 {
     top: auto;
     width: auto;
     max-width: none;
-    padding: 1.6rem var(--side) 4.5rem;
+    padding: 1.6rem var(--side) 4.5rem var(--panel-left);
   }
   .story-rule { display: none; }
   .menu-rail {
@@ -2047,7 +2056,10 @@ h1, h2, h3, h4 {
   }
   .menu-layout {
     max-width: none;
-    padding: calc(var(--header) + var(--staging) + .75rem) calc(clamp(4.5rem, 18vw, 6.5rem) + .85rem) 3.25rem 1.15rem;
+    padding-top: calc(var(--header) + var(--staging) + .75rem);
+    padding-right: calc(clamp(4.5rem, 18vw, 6.5rem) + .85rem);
+    padding-bottom: 3.25rem;
+    padding-left: var(--panel-left);
   }
   .menu-heading { gap: .75rem; }
   .menu-tiger-mark {

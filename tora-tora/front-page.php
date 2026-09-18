@@ -358,11 +358,11 @@ $platforms = [
 
     <section class="panel careers-panel" id="careers" data-theme="light" aria-labelledby="careers-title" aria-hidden="true">
         <div class="panel-scroll careers-scroll">
-            <?php get_template_part('template-parts/panel', 'back'); ?>
             <div class="careers-layout">
+                <?php get_template_part('template-parts/panel', 'back'); ?>
                 <header class="careers-header">
                     <div class="careers-intro-block">
-                        <h2 id="careers-title"><span>JOIN</span><br><span class="careers-team-line">THE TEAM</span></h2>
+                        <h2 id="careers-title">JOIN THE TEAM</h2>
                         <p class="careers-intro"><?php esc_html_e('AT TORA TORA, WE MOVE FAST, COOK BOLD, AND CELEBRATE EVERYONE WHO BRINGS THE TIGER SPIRIT TO WORK. WE ARE BUILDING SOMETHING EXCEPTIONAL IN DUBAI AND WE WANT EXCEPTIONAL PEOPLE WITH US.', 'tora-tora'); ?></p>
                     </div>
                     <p class="careers-roles-badge"><?php echo esc_html($careers_roles_label); ?></p>
