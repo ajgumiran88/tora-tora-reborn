@@ -63,6 +63,14 @@
   --brand-mark: clamp(4.5rem, 8vw, 7rem);
   --panel-top-gap: clamp(2.15rem, 4vh, 2.75rem);
   --header: clamp(4.5rem, 8vw, 6.5rem);
+  --header-pad: .8rem;
+  --toggle-size: 52px;
+  /* The header row is as tall as the logo, so this is the menu icon's centre below the staging chrome. */
+  --toggle-dy: calc(var(--header-pad) + var(--brand-mark) / 2);
+  /* White strip on the right of Home that holds the menu icon. */
+  --home-gutter: calc(var(--side) + 5.25rem);
+  --story-footer: clamp(2.6rem, 5vh, 3.5rem);
+  --ticker-h: clamp(2.4rem, 5vh, 2.9rem);
   --staging: 0px;
   --pattern: url("../images/tora-tora-pattern.png");
   --pattern: image-set(
@@ -76,6 +84,13 @@
 /* Resolve under body so --staging from .tora-staging is included. */
 body {
   --panel-top: calc(var(--staging) + var(--brand-mark) + var(--panel-top-gap));
+}
+
+/* Bottom edge of the fixed logo row, plus a small cushion. Scroll areas start here, so nothing slides
+   under the logo or menu icon, and clipped text never touches the logo's tagline. */
+body {
+  --chrome-line: calc(var(--staging) + var(--header-pad) + var(--brand-mark) + .75rem);
+  --panel-gap: calc(var(--panel-top) - var(--chrome-line));
 }
 
 .tora-staging { --staging: 52px; }
@@ -212,7 +227,7 @@ h1, h2, h3, h4 {
   align-items: center;
   justify-content: space-between;
   min-height: var(--header);
-  padding: .8rem var(--side) 0;
+  padding: var(--header-pad) var(--side) 0;
   color: var(--tora-white);
   background: transparent;
   pointer-events: none;
@@ -238,10 +253,7 @@ h1, h2, h3, h4 {
   object-fit: contain;
 }
 
-.light-panel:not(.nav-open) .brand-link img {
-  filter: brightness(0) saturate(100%) invert(13%) sepia(98%) saturate(7492%) hue-rotate(247deg) brightness(88%) contrast(145%);
-}
-
+/* The logo PNG is already Tora Blue, so light panels show it unfiltered. A recolour filter drifted to purple on some displays. */
 .blue-panel:not(.nav-open) .brand-link img,
 .gallery-view:not(.nav-open) .brand-link img,
 .contact-view:not(.nav-open) .brand-link img {
@@ -250,8 +262,8 @@ h1, h2, h3, h4 {
 
 .nav-toggle {
   position: relative;
-  width: 52px;
-  height: 52px;
+  width: var(--toggle-size);
+  height: var(--toggle-size);
   padding: 0;
   color: currentColor;
   background: transparent;
@@ -273,7 +285,11 @@ h1, h2, h3, h4 {
 .nav-toggle span:nth-child(3) { top: 33px; }
 .nav-open .nav-toggle { visibility: hidden; }
 
-/* Figma Home: three blue bars sit on the white gutter on the right. */
+/* Figma Home: three blue bars sit centred on the white gutter on the right. */
+.pattern-panel:not(.nav-open) .site-header {
+  padding-right: calc((var(--home-gutter) - var(--toggle-size)) / 2);
+}
+
 .pattern-panel:not(.nav-open) .nav-toggle {
   color: var(--tora-blue);
   background: transparent;
@@ -300,9 +316,13 @@ h1, h2, h3, h4 {
   display: none;
 }
 
+/* Full-bleed past every edge. The staging chrome (z 1100) covers the top, so no strip of the page shows
+   when the chrome is shorter than --staging or a mobile toolbar retracts. */
 .overlay-menu {
   position: fixed;
-  inset: var(--staging) 0 0;
+  inset: -1px;
+  min-height: calc(100vh + 2px);
+  min-height: calc(100lvh + 2px);
   z-index: 250;
   display: grid;
   grid-template-columns: min(28vw, 22rem) minmax(0, 1fr);
@@ -315,16 +335,19 @@ h1, h2, h3, h4 {
 }
 
 .overlay-pattern {
+  min-height: 100%;
   background-color: var(--tora-blue);
   background-image: var(--pattern);
   background-position: center;
   background-size: cover;
+  background-repeat: no-repeat;
 }
 
+/* Sits where the menu icon was. */
 .overlay-close {
   position: absolute;
-  top: calc(var(--header) * .35);
-  right: var(--side);
+  top: calc(var(--staging) + 1px + var(--toggle-dy) - 24px);
+  right: calc(var(--side) + 3px);
   z-index: 2;
   width: 48px;
   height: 48px;
@@ -344,7 +367,7 @@ h1, h2, h3, h4 {
   align-content: center;
   gap: .15rem;
   margin: 0;
-  padding: 0 8vw 0 4vw;
+  padding: var(--staging) 8vw 0 4vw;
   list-style: none;
 }
 
@@ -482,8 +505,7 @@ h1, h2, h3, h4 {
 
 .button-inverse { color: var(--tora-blue); background: var(--tora-white); border-color: var(--tora-white); }
 
-.panel-back { position: relative; z-index: 8; margin-bottom: clamp(1rem, 3vh, 2.5rem); }
-
+/* Return link on single job pages, which live at their own URL. Homepage panels rely on the header menu. */
 .panel-back-link {
   display: inline-flex;
   align-items: center;
@@ -563,26 +585,6 @@ h1, h2, h3, h4 {
   line-height: 1.5;
 }
 
-.home-indicators {
-  display: flex;
-  align-items: center;
-  gap: .45rem;
-  margin-top: 1.6rem;
-}
-
-.home-indicators span {
-  display: block;
-  width: .5rem;
-  height: 2px;
-  background-color: rgba(5, 0, 245, .32);
-  border-radius: 1px;
-}
-
-.home-indicators .is-active {
-  width: 1.35rem;
-  background-color: var(--tora-blue);
-}
-
 .home-pattern {
   position: relative;
   height: 100%;
@@ -591,19 +593,27 @@ h1, h2, h3, h4 {
   background: var(--tora-white);
 }
 
-/* Speckle stops before the right edge so the hamburger sits on a white gutter. */
+/* Speckle fills the whole column. No fill colour sits behind it, because at a fractional
+   edge that colour bled through as a thin blue line against the white. */
 .home-pattern::before {
   content: "";
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: calc(var(--side) + 5.25rem);
-  background-color: var(--tora-blue);
+  inset: 0;
   background-image: var(--pattern);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+/* White gutter painted over the speckle, so its edge meets pattern, not a gap. The menu icon is centred on it. */
+.home-pattern::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--home-gutter);
+  background: var(--tora-white);
 }
 
 .story-panel,
@@ -626,17 +636,14 @@ h1, h2, h3, h4 {
 }
 
 .careers-panel {
-  padding: 0;
+  padding: var(--chrome-line) 0 0;
   overflow: hidden;
 }
 
-.careers-panel .panel-scroll {
-  min-height: calc(100svh - var(--header) - var(--staging));
-}
-
+/* Equal insets on both sides, so the column sits centred in the panel. */
 .careers-scroll {
-  padding-top: var(--panel-top);
-  padding-right: clamp(4.5rem, 8vw, 7rem);
+  padding-top: var(--panel-gap);
+  padding-right: var(--panel-left);
   padding-bottom: clamp(2rem, 4vh, 3rem);
   padding-left: var(--panel-left);
 }
@@ -644,17 +651,22 @@ h1, h2, h3, h4 {
 .careers-layout {
   position: relative;
   z-index: 2;
-  max-width: none;
-  margin: 0;
+  max-width: 72rem;
+  margin: 0 auto;
   padding-bottom: clamp(1rem, 3vh, 2rem);
 }
 
 .careers-header {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: start;
-  gap: clamp(1.25rem, 3vw, 2.5rem);
   margin-bottom: clamp(2rem, 5vh, 3.5rem);
+}
+
+/* The roles badge rides the title line and drops under it, left-aligned, when the row is too narrow. */
+.careers-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .85rem 1.5rem;
 }
 
 .careers-panel #careers-title {
@@ -678,7 +690,7 @@ h1, h2, h3, h4 {
 
 .careers-roles-badge {
   flex-shrink: 0;
-  margin: clamp(.35rem, 1vh, .75rem) 0 0;
+  margin: 0;
   padding: .42rem .72rem;
   border: 1px solid var(--tora-blue);
   font-size: .62rem;
@@ -840,9 +852,10 @@ h1, h2, h3, h4 {
 }
 .menu-view:not(.nav-open) .nav-toggle {
   position: absolute;
-  top: calc(var(--staging) + .55rem);
+  /* Same row as the logo, as on every other panel. The header box already starts below the staging chrome. */
+  top: calc(var(--toggle-dy) - var(--toggle-size) / 2);
   /* Center of the solid blue half = 25% of rail width from the right edge. */
-  right: calc(min(14vw, 12.5rem) * 0.25 - 26px);
+  right: calc(min(14vw, 12.5rem) * 0.25 - var(--toggle-size) / 2);
   color: var(--tora-white);
   background: transparent;
 }
@@ -867,6 +880,8 @@ h1, h2, h3, h4 {
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
+  /* Keyboard focus scrolls links into view below the chrome guard, and above the speckle footer. */
+  scroll-padding: var(--chrome-line) 0 var(--story-footer);
   background: #FFFFFF;
 }
 
@@ -878,15 +893,20 @@ h1, h2, h3, h4 {
   max-width: none;
   padding-top: var(--panel-top);
   padding-right: 2.5rem;
-  padding-bottom: calc(clamp(2.6rem, 5vh, 3.5rem) + .85rem);
+  padding-bottom: calc(var(--story-footer) + .85rem);
 }
 
-.story-panel .panel-back {
-  margin: 0 0 .55rem;
-}
-
-.story-panel .panel-back-arrow {
-  width: 48px;
+/* White band pinned under the logo row inside the scroller. At rest it covers nothing, because the copy starts
+   lower. Once scrolled, copy passes behind it instead of under the logo. The art stacks above it. */
+.story-chrome-guard {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: block;
+  height: var(--chrome-line);
+  margin-bottom: calc(var(--chrome-line) * -1);
+  background: var(--tora-white);
+  pointer-events: none;
 }
 
 .story-panel #about-title {
@@ -941,24 +961,58 @@ h1, h2, h3, h4 {
 
 .story-copy .entry-content > * + * { margin-top: 1rem; }
 
-/* Speckle disc + overlapping tiger badge sit in the top-right, matching Figma. */
+/* Chef Gouda and the kitchen: same uppercase measure as the tiger story, under a short rule. */
+.story-copy .story-kitchen {
+  margin-top: clamp(2.25rem, 5.5vh, 3.25rem);
+}
+
+.story-kitchen::before {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 2px;
+  margin-bottom: clamp(1.1rem, 2.6vh, 1.5rem);
+  background: var(--tora-blue);
+}
+
+.story-kitchen h2,
+.story-kitchen h3,
+.story-kitchen h4 {
+  max-width: none;
+  font-size: clamp(1.45rem, 2.3vw, 2rem);
+  letter-spacing: -.02em;
+  line-height: .95;
+}
+
+/* Quarter disc anchored to the top-right corner under the staging chrome. It lives outside the scroller,
+   so it stays behind the menu icon while the copy scrolls. Its radius comes from the icon's own position,
+   so the bars and focus ring always land inside it. */
 .story-accent-arc {
+  --arc-r: calc(max(var(--side) + var(--toggle-size) / 2, var(--toggle-dy)) * 1.415 + 2.25rem);
   position: absolute;
-  top: calc(var(--staging) - 9.25rem);
-  right: -8.5rem;
+  top: calc(var(--staging) - var(--arc-r));
+  right: calc(var(--arc-r) * -1);
   z-index: 4;
-  width: min(26vw, 18.5rem);
+  width: calc(var(--arc-r) * 2);
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--tora-blue);
   pointer-events: none;
 }
 
+@supports (width: hypot(3px, 4px)) {
+  .story-accent-arc {
+    --arc-r: calc(hypot(var(--side) + var(--toggle-size) / 2, var(--toggle-dy)) + 2.25rem);
+  }
+}
+
+/* Speckle disc + overlapping tiger badge sit in the top-right, matching Figma. They scroll with the copy
+   and stack above the chrome guard, so they stay whole until they pass under the staging chrome. */
 .story-art {
   position: absolute;
   top: calc(var(--staging) + clamp(.35rem, 1.8vh, 1.1rem));
   right: clamp(11rem, 20vw, 17rem);
-  z-index: 1;
+  z-index: 4;
   width: min(24vw, 19rem);
   height: min(22vw, 17.5rem);
   pointer-events: none;
@@ -1010,13 +1064,14 @@ h1, h2, h3, h4 {
   background: var(--tora-blue);
 }
 
+/* Flush to the panel's bottom edge (1px bleed), Tora Blue under the speckle. The copy's bottom padding matches its height. */
 .story-footer-pattern {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: -1px;
   z-index: 5;
-  height: clamp(2.6rem, 5vh, 3.5rem);
+  height: calc(var(--story-footer) + 1px);
   background-color: var(--tora-blue);
   background-image: var(--pattern);
   background-size: cover;
@@ -1062,7 +1117,7 @@ h1, h2, h3, h4 {
 
 .menu-panel {
   display: block;
-  padding: 0;
+  padding: var(--chrome-line) 0 0;
   overflow: hidden;
 }
 
@@ -1103,7 +1158,7 @@ h1, h2, h3, h4 {
   margin: 0;
   min-width: 0;
   height: 100%;
-  padding-top: var(--panel-top);
+  padding-top: var(--panel-gap);
   padding-right: calc(min(14vw, 12.5rem) + 1.25rem);
   padding-bottom: clamp(3rem, 5vh, 4.5rem);
   padding-left: var(--panel-left);
@@ -1127,16 +1182,19 @@ h1, h2, h3, h4 {
   margin-top: clamp(.75rem, 2vh, 1.5rem);
 }
 
-.menu-panel .panel-back {
-  margin: 0 0 .55rem;
-}
-
-.menu-panel .panel-back-arrow {
-  width: 48px;
-}
-
 .menu-layout h2 {
   margin-bottom: clamp(1rem, 2vh, 1.5rem);
+}
+
+/* Ties the dishes to the kitchen that makes them. Raleway label voice, like the careers intro. */
+.menu-intro {
+  max-width: 34rem;
+  margin: calc(clamp(1rem, 2vh, 1.5rem) * -.35) 0 clamp(1rem, 2vh, 1.5rem);
+  font-size: clamp(.78rem, 1vw, .92rem);
+  font-weight: 500;
+  letter-spacing: .08em;
+  line-height: 1.5;
+  text-transform: uppercase;
 }
 
 .menu-tabs {
@@ -1261,10 +1319,10 @@ h1, h2, h3, h4 {
   margin-top: 0;
 }
 
+/* Dish names are headings, so they take the display face. Notes and prices stay Raleway. */
 .menu-item h4 {
   margin: 0;
   color: var(--tora-blue);
-  font-family: var(--font-main);
   font-size: clamp(.82rem, 1.05vw, .98rem);
   font-weight: 400;
   letter-spacing: .04em;
@@ -1273,6 +1331,7 @@ h1, h2, h3, h4 {
 }
 
 .menu-item-note {
+  font-family: var(--font-main);
   font-style: italic;
   font-weight: 300;
   letter-spacing: .02em;
@@ -1296,7 +1355,7 @@ h1, h2, h3, h4 {
 .delivery-panel {
   display: flex;
   flex-direction: column;
-  padding: var(--panel-top) 0 0;
+  padding: var(--chrome-line) 0 0;
   overflow: hidden;
   color: var(--tora-blue);
   background: #FFFFFF;
@@ -1345,7 +1404,7 @@ h1, h2, h3, h4 {
   min-height: 0;
   height: auto;
   max-height: none;
-  padding-top: clamp(1.05rem, 3vh, 2.1rem);
+  padding-top: calc(var(--panel-gap) + clamp(1.05rem, 3vh, 2.1rem));
   padding-right: clamp(2.4rem, 4.2vw, 3.5rem);
   padding-bottom: clamp(1.25rem, 3vh, 2rem);
   padding-left: var(--panel-left);
@@ -1361,8 +1420,6 @@ h1, h2, h3, h4 {
   min-height: min-content;
   padding: 0;
 }
-.delivery-panel .panel-back { margin: 0 0 .55rem; }
-.delivery-panel .panel-back-arrow { width: 48px; }
 .delivery-copy .entry-content {
   max-width: 42rem;
   margin-top: clamp(.55rem, 1.4vh, .85rem);
@@ -1511,7 +1568,7 @@ h1, h2, h3, h4 {
 }
 
 .gallery-panel {
-  padding: 0;
+  padding: var(--chrome-line) 0 0;
   overflow: hidden;
 }
 
@@ -1523,9 +1580,9 @@ h1, h2, h3, h4 {
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding-top: var(--panel-top);
+  padding-top: var(--panel-gap);
   padding-right: var(--side);
-  padding-bottom: clamp(2rem, 5vh, 3.5rem);
+  padding-bottom: calc(var(--ticker-h) + clamp(1.35rem, 3vh, 2.25rem));
   padding-left: var(--panel-left);
   scrollbar-width: thin;
 }
@@ -1570,7 +1627,6 @@ h1, h2, h3, h4 {
     calc((var(--gallery-col) * 2 + var(--gallery-gap)) / 2)
     var(--gallery-col);
   min-height: 0;
-  margin-bottom: clamp(1.35rem, 3vh, 2.25rem);
 }
 
 .gallery-label {
@@ -1650,12 +1706,20 @@ h1, h2, h3, h4 {
 .gallery-link:focus-visible img { transform: scale(1.02); }
 .gallery-link:focus-visible { outline: 2px solid var(--tora-white); outline-offset: 4px; }
 
+/* Pinned to the panel's bottom edge, full width. Opaque (Tora Blue under the same dark tint),
+   so photos scroll behind it instead of showing through. */
 .gallery-ticker {
-  flex: 0 0 auto;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  height: var(--ticker-h);
   overflow: hidden;
-  margin: 0 calc(var(--side) * -1) 0;
-  padding: clamp(.85rem, 2vh, 1.1rem) 0;
-  background: rgba(0, 0, 80, .22);
+  background-color: var(--tora-blue);
+  background-image: linear-gradient(rgba(0, 0, 80, .22), rgba(0, 0, 80, .22));
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, .1),
     inset 0 -1px 0 rgba(0, 0, 40, .35);
@@ -1698,13 +1762,14 @@ h1, h2, h3, h4 {
 .gallery-view:not(.nav-open) .footer-strip { display: none; }
 
 .contact-panel {
-  padding: 0;
+  padding: var(--chrome-line) 0 0;
+  overflow: hidden;
 }
 
 .contact-scroll {
   height: 100%;
   min-height: 0;
-  padding-top: var(--panel-top);
+  padding-top: var(--panel-gap);
   padding-right: clamp(1.5rem, 5vw, 4.5rem);
   padding-bottom: clamp(1.25rem, 3vh, 2rem);
   padding-left: var(--panel-left);
@@ -1906,13 +1971,6 @@ h1, h2, h3, h4 {
   background: transparent;
 }
 
-.careers-panel .panel-back {
-  margin: 0 0 .55rem;
-}
-
-.careers-panel .panel-back-arrow {
-  width: 48px;
-}
 .job-type-badge {
   display: inline-flex;
   align-items: center;
@@ -2050,20 +2108,13 @@ h1, h2, h3, h4 {
 .standard-page h1 { margin-bottom: 2rem; font-size: clamp(2.8rem, 7vw, 6rem); }
 
 @media (max-width: 900px) {
+  :root { --home-gutter: calc(var(--side) + 3.4rem); }
   .home-split { grid-template-columns: minmax(0, 1.2fr) minmax(12rem, .8fr); }
-  .home-pattern::before { right: calc(var(--side) + 3.4rem); }
-  .contact-layout, .careers-layout { gap: 3rem; }
-  .careers-header { grid-template-columns: 1fr; }
-  .careers-roles-badge { justify-self: start; }
+  .contact-layout { gap: 3rem; }
   .overlay-menu { grid-template-columns: min(34vw, 10rem) 1fr; }
-  .delivery-panel { overflow: auto; }
   .delivery-layout {
-    flex: 0 0 auto;
     width: 100%;
-    height: auto;
-    max-height: none;
-    overflow: visible;
-    padding-top: 1.25rem;
+    padding-top: calc(var(--panel-gap) + 1.25rem);
     padding-right: var(--side);
     padding-bottom: 3.5rem;
     padding-left: var(--panel-left);
@@ -2076,21 +2127,25 @@ h1, h2, h3, h4 {
 }
 
 @media (max-width: 700px) {
-  :root { --side: 1.15rem; --panel-left: var(--side); --header: 5.2rem; }
+  :root {
+    --side: 1.15rem;
+    --panel-left: var(--side);
+    --header: 5.2rem;
+    --brand-mark: 4.6rem;
+    --home-gutter: calc(var(--side) + 3.15rem);
+  }
   .tora-staging { --staging: 64px; }
   .admin-bar.tora-staging { --staging: calc(46px + 64px); }
   .site-shell { min-height: 30rem; }
   .staging-only { font-size: .52rem; padding: .16rem .75rem; }
   .staging-notice { min-height: 42px; padding: .38rem 1rem; font-size: .62rem; }
-  .brand-link { width: 6.7rem; height: 4.6rem; }
-  .panel { padding-bottom: 3.5rem; overflow: auto; }
-  .panel-scroll { height: auto; min-height: 100%; overflow: visible; }
+  .brand-link { width: 6.7rem; height: var(--brand-mark); }
+  /* Each panel keeps its own inner scroller on phones too, so the fixed logo row never floats over moving content. */
   .overlay-menu { grid-template-columns: 4.5rem 1fr; }
-  .overlay-menu ul { padding: 0 1.2rem 0 1.4rem; }
+  .overlay-menu ul { padding: var(--staging) 1.2rem 0 1.4rem; }
   .overlay-menu li a { font-size: clamp(1.8rem, 9vw, 2.6rem); }
   .home-panel { padding: 0; }
   .home-split { grid-template-columns: minmax(0, 1.25fr) minmax(6.5rem, .55fr); }
-  .home-pattern::before { right: calc(var(--side) + 3.15rem); }
   .home-content { justify-content: flex-end; min-height: 0; padding: calc(var(--header) + var(--staging) + 1rem) 1.15rem 2rem; }
   .home-content .entry-content { max-width: 100%; }
   .home-content .entry-content p { max-width: none; }
@@ -2106,19 +2161,16 @@ h1, h2, h3, h4 {
     overflow-x: hidden;
     overflow-y: auto;
   }
-  .story-accent-arc {
-    top: calc(var(--staging) - 5.5rem);
-    right: -5.75rem;
-    width: min(42vw, 11.5rem);
-  }
+  /* The art starts under the logo row and slides behind the chrome guard with the copy. */
   .story-art {
     position: relative;
     top: auto;
     right: auto;
+    z-index: 1;
     width: min(78vw, 20rem);
     height: auto;
     aspect-ratio: 1.1 / 1;
-    margin: calc(var(--staging) + var(--header)) auto 0;
+    margin: var(--chrome-line) auto 0;
   }
   .story-copy {
     position: relative;
@@ -2126,7 +2178,7 @@ h1, h2, h3, h4 {
     top: auto;
     width: auto;
     max-width: none;
-    padding: 1.6rem var(--side) calc(clamp(2.6rem, 5vh, 3.5rem) + .85rem) var(--panel-left);
+    padding: 1.6rem var(--side) calc(var(--story-footer) + .85rem) var(--panel-left);
   }
   .story-rule { display: none; }
   .menu-rail {
@@ -2134,11 +2186,11 @@ h1, h2, h3, h4 {
   }
   .menu-rail-right::after { width: 50%; }
   .menu-view:not(.nav-open) .nav-toggle {
-    right: calc(clamp(4.5rem, 18vw, 6.5rem) * 0.25 - 26px);
+    right: calc(clamp(4.5rem, 18vw, 6.5rem) * 0.25 - var(--toggle-size) / 2);
   }
   .menu-layout {
     max-width: none;
-    padding-top: var(--panel-top);
+    padding-top: var(--panel-gap);
     padding-right: calc(clamp(4.5rem, 18vw, 6.5rem) + .85rem);
     padding-bottom: 3.25rem;
     padding-left: var(--panel-left);

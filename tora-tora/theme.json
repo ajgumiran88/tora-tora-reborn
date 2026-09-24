@@ -12,7 +12,26 @@
     },
     "typography": {
       "fontFamilies": [
-        { "slug": "raleway", "name": "Raleway", "fontFamily": "Raleway, sans-serif" }
+        {
+          "slug": "avant-garde",
+          "name": "ITC Avant Garde Gothic",
+          "fontFamily": "\"ITC Avant Garde Gothic\", Raleway, sans-serif",
+          "fontFace": [
+            { "fontFamily": "ITC Avant Garde Gothic", "fontWeight": "400", "fontStyle": "normal", "fontDisplay": "swap", "src": ["file:./assets/fonts/avantgarde-400.woff2"] },
+            { "fontFamily": "ITC Avant Garde Gothic", "fontWeight": "500", "fontStyle": "normal", "fontDisplay": "swap", "src": ["file:./assets/fonts/avantgarde-500.woff2"] },
+            { "fontFamily": "ITC Avant Garde Gothic", "fontWeight": "600", "fontStyle": "normal", "fontDisplay": "swap", "src": ["file:./assets/fonts/avantgarde-600.woff2"] },
+            { "fontFamily": "ITC Avant Garde Gothic", "fontWeight": "700", "fontStyle": "normal", "fontDisplay": "swap", "src": ["file:./assets/fonts/avantgarde-700.woff2"] }
+          ]
+        },
+        {
+          "slug": "raleway",
+          "name": "Raleway",
+          "fontFamily": "Raleway, sans-serif",
+          "fontFace": [
+            { "fontFamily": "Raleway", "fontWeight": "200 800", "fontStyle": "normal", "fontDisplay": "swap", "src": ["file:./assets/fonts/raleway-latin-wght-normal.woff2"] },
+            { "fontFamily": "Raleway", "fontWeight": "200 800", "fontStyle": "italic", "fontDisplay": "swap", "src": ["file:./assets/fonts/raleway-latin-wght-italic.woff2"] }
+          ]
+        }
       ],
       "fluid": true
     }
@@ -21,7 +40,7 @@
     "color": { "background": "#FFFFFF", "text": "#0500F5" },
     "typography": { "fontFamily": "var(--wp--preset--font-family--raleway)", "lineHeight": "1.55" },
     "elements": {
-      "heading": { "typography": { "fontWeight": "800", "lineHeight": "1" } },
+      "heading": { "typography": { "fontFamily": "var(--wp--preset--font-family--avant-garde)", "fontWeight": "700", "lineHeight": "1" } },
       "link": { "color": { "text": "#0500F5" } }
     }
   }

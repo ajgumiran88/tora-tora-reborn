@@ -10,6 +10,28 @@ if (!defined('ABSPATH')) {
 }
 
 /**
+ * Seed for the About kitchen section. It states only what the client has confirmed,
+ * so editors replace it with Chef Gouda's own story in WordPress.
+ */
+function tora_tora_default_kitchen_story(bool $blocks = false): string
+{
+    $heading = esc_html__('Chef Gouda\'s kitchen', 'tora-tora');
+    $copy = esc_html__('Chef Gouda leads the Tora Tora kitchen, and every dish on our menu is made in-house.', 'tora-tora');
+
+    if ($blocks) {
+        return '<!-- wp:heading {"level":3} --><h3 class="wp-block-heading">' . $heading . '</h3><!-- /wp:heading -->'
+            . '<!-- wp:paragraph --><p>' . $copy . '</p><!-- /wp:paragraph -->';
+    }
+
+    return '<h3>' . $heading . '</h3><p>' . $copy . '</p>';
+}
+
+function tora_tora_default_menu_intro(): string
+{
+    return __('Every dish is made in our own kitchen, led by Chef Gouda.', 'tora-tora');
+}
+
+/**
  * @return array<string,array{title:string,content:string}>
  */
 function tora_tora_default_pages(): array
@@ -21,7 +43,7 @@ function tora_tora_default_pages(): array
         ],
         'story' => [
             'title' => 'About Tora Tora',
-            'content' => '<p>Tora Tora, derived from the Japanese word for \'tiger\', captures the essence of the powerful and majestic animal revered in Japanese mythology.</p><p>A symbol of <strong>courage, strength and indomitable spirit</strong>. The tiger has a storied presence in folklore, often representing protection and good fortune. This name reflects our brand\'s commitment to bold flavours and vibrant dining experiences.</p><p>Tora Tora brings a slice of Japanese culture to Dubai, offering a dining experience that\'s as dynamic and powerful as the tiger itself, perfectly blending <strong>tradition with contemporary flair</strong>.</p>',
+            'content' => '<p>Tora Tora, derived from the Japanese word for \'tiger\', captures the essence of the powerful and majestic animal revered in Japanese mythology.</p><p>A symbol of <strong>courage, strength and indomitable spirit</strong>. The tiger has a storied presence in folklore, often representing protection and good fortune. This name reflects our brand\'s commitment to bold flavours and vibrant dining experiences.</p><p>Tora Tora brings a slice of Japanese culture to Dubai, offering a dining experience that\'s as dynamic and powerful as the tiger itself, perfectly blending <strong>tradition with contemporary flair</strong>.</p>' . tora_tora_default_kitchen_story(),
         ],
         'delivery' => [
             'title' => 'ORDER DELIVERY',
@@ -505,6 +527,18 @@ function tora_tora_maybe_upgrade_content(): void
         $current = '1.4.3';
         update_option('tora_tora_seeded_version', $current, false);
     }
+
+    if (version_compare($current, '1.4.4', '<')) {
+        tora_tora_upgrade_instagram_url_1_4_4();
+        $current = '1.4.4';
+        update_option('tora_tora_seeded_version', $current, false);
+    }
+
+    if (version_compare($current, '1.5.0', '<')) {
+        tora_tora_upgrade_about_kitchen_1_5_0();
+        $current = '1.5.0';
+        update_option('tora_tora_seeded_version', $current, false);
+    }
 }
 
 function tora_tora_upgrade_menu_1_3_5(): void
@@ -739,6 +773,33 @@ function tora_tora_upgrade_social_handles_1_4_3(): void
     set_theme_mod('tora_instagram_url', 'https://www.instagram.com/toratora.ae');
     set_theme_mod('tora_tiktok_handle', '@toratora.ae');
     set_theme_mod('tora_tiktok_url', 'https://www.tiktok.com/@toratora.ae');
+}
+
+function tora_tora_upgrade_instagram_url_1_4_4(): void
+{
+    set_theme_mod('tora_instagram_url', 'https://www.instagram.com/toratora.ae');
+}
+
+/**
+ * Give the existing About page its kitchen section once. A page that already has a
+ * heading is left alone, since that heading is where the kitchen section starts.
+ */
+function tora_tora_upgrade_about_kitchen_1_5_0(): void
+{
+    $page = get_page_by_path('story', OBJECT, 'page');
+    if (!$page instanceof WP_Post) {
+        return;
+    }
+
+    $current = (string) $page->post_content;
+    if (preg_match('/<h[2-4]\b/i', $current)) {
+        return;
+    }
+
+    wp_update_post([
+        'ID'           => (int) $page->ID,
+        'post_content' => rtrim($current) . tora_tora_default_kitchen_story(str_contains($current, '<!-- wp:')),
+    ]);
 }
 
 add_action('init', 'tora_tora_maybe_upgrade_content', 30);

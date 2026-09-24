@@ -56,6 +56,20 @@ function tora_tora_customize_register(WP_Customize_Manager $customize): void
         'tora_hours_sun_thu' => [__('Contact hours Sunday–Thursday', 'tora-tora'), '08:00 - 23:00'],
         'tora_hours_fri_sat' => [__('Contact hours Friday–Saturday', 'tora-tora'), '08:00 - 00:00'],
         'tora_featured_zone' => [__('Highlighted delivery zone', 'tora-tora'), 'Business Bay'],
+        'tora_menu_intro' => [__('Menu intro line', 'tora-tora'), tora_tora_default_menu_intro()],
+    ];
+
+    // Starter values nobody has confirmed yet. See the launch checklist in docs/design-guides.md.
+    $confirm_before_launch = [
+        'tora_phone',
+        'tora_email',
+        'tora_reservation_email',
+        'tora_careers_email',
+        'tora_hours_weekday',
+        'tora_hours_saturday',
+        'tora_hours_sunday',
+        'tora_hours_sun_thu',
+        'tora_hours_fri_sat',
     ];
 
     foreach ($text_settings as $id => [$label, $default]) {
@@ -63,7 +77,17 @@ function tora_tora_customize_register(WP_Customize_Manager $customize): void
             ? 'sanitize_email'
             : (str_contains($id, 'url') ? 'esc_url_raw' : 'sanitize_text_field');
         $customize->add_setting($id, ['default' => $default, 'sanitize_callback' => $sanitize]);
-        $customize->add_control($id, ['section' => 'tora_tora_details', 'label' => $label, 'type' => 'text']);
+        $customize->add_control(
+            $id,
+            [
+                'section'     => 'tora_tora_details',
+                'label'       => $label,
+                'type'        => 'text',
+                'description' => in_array($id, $confirm_before_launch, true)
+                    ? __('Placeholder. Confirm before launch.', 'tora-tora')
+                    : '',
+            ]
+        );
     }
 
     $customize->add_setting(
@@ -111,7 +135,7 @@ function tora_tora_customize_register(WP_Customize_Manager $customize): void
         [
             'section'     => 'tora_tora_details',
             'label'       => __('Enable staging preview notice and noindex', 'tora-tora'),
-            'description' => __('Turn this off only when the website is approved for launch.', 'tora-tora'),
+            'description' => __('Turn this off only when the website is approved for launch, and only after the real phone, emails, opening hours, social links and gallery photos are in place.', 'tora-tora'),
             'type'        => 'checkbox',
         ]
     );
@@ -129,6 +153,12 @@ function tora_tora_customize_register(WP_Customize_Manager $customize): void
     ];
 
     foreach ($image_settings as $id => [$label, $fallback]) {
+        $description = sprintf(__('Packaged fallback: %s', 'tora-tora'), $fallback);
+        // The packaged gallery shots are stand-ins, not photos of this restaurant.
+        if (str_starts_with($id, 'tora_gallery_')) {
+            $description .= ' ' . __('This is a placeholder photo. Replace it with Tora Tora photography before launch.', 'tora-tora');
+        }
+
         $customize->add_setting($id, ['default' => '', 'sanitize_callback' => 'esc_url_raw']);
         $customize->add_control(
             new WP_Customize_Image_Control(
@@ -137,7 +167,7 @@ function tora_tora_customize_register(WP_Customize_Manager $customize): void
                 [
                     'section'     => 'tora_tora_details',
                     'label'       => $label,
-                    'description' => sprintf(__('Packaged fallback: %s', 'tora-tora'), $fallback),
+                    'description' => $description,
                 ]
             )
         );

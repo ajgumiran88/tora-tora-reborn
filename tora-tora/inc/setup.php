@@ -151,6 +151,23 @@ function tora_tora_panel_page(string $slug, string $title, string $content, stri
 }
 
 /**
+ * The About page holds the tiger story, then the kitchen section from its first heading on.
+ * With no heading, the whole page is the tiger story.
+ *
+ * @return array{0:string,1:string}
+ */
+function tora_tora_split_story_sections(string $html): array
+{
+    // Take a block editor heading comment along with its heading.
+    if (!preg_match('/(?:<!--\s*wp:heading\b[^>]*-->\s*)?<h[2-4]\b/i', $html, $match, PREG_OFFSET_CAPTURE)) {
+        return [$html, ''];
+    }
+
+    $offset = (int) $match[0][1];
+    return [substr($html, 0, $offset), substr($html, $offset)];
+}
+
+/**
  * Menu and Delivery are staged behind switches so the client can launch without them
  * and turn each one on later. Neither panel's content is removed when it is off:
  * the menu items, the Delivery page and its Customizer settings all stay in place.

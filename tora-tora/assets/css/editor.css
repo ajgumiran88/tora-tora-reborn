@@ -1,5 +1,7 @@
 body { font-family: Raleway, sans-serif; color: #0500F5; }
 .editor-styles-wrapper { background: #FFFFFF; }
+/* Brand Book Typeface 01. Bold 700 is the heaviest cut supplied, so headings stop there. */
 .editor-styles-wrapper h1,
 .editor-styles-wrapper h2,
-.editor-styles-wrapper h3 { font-weight: 800; line-height: 1; }
+.editor-styles-wrapper h3,
+.editor-styles-wrapper h4 { font-family: "ITC Avant Garde Gothic", Raleway, sans-serif; font-weight: 700; line-height: 1; }

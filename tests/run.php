@@ -115,7 +115,8 @@ file_contains($theme . '/assets/js/site.js', 'delivery-view', 'Delivery view bod
 file_contains($theme . '/assets/css/main.css', '.delivery-view:not(.nav-open) .footer-strip', 'Delivery still shows the footer credit over the hours column.');
 file_does_not_contain($theme . '/assets/css/main.css', 'min-height: calc(100svh - var(--header) - var(--staging) - 1.15rem)', 'Delivery still forces a second full-screen block.');
 
-file_contains($theme . '/assets/css/main.css', '.light-panel:not(.nav-open) .brand-link img', 'Light-panel logo invert is missing.');
+file_does_not_contain($theme . '/assets/css/main.css', '.light-panel:not(.nav-open) .brand-link img', 'Light panels still recolour the Tora Blue logo, which shows purple on some displays.');
+file_does_not_contain($theme . '/assets/css/main.css', 'hue-rotate(', 'A hue-rotate filter still recolours brand artwork.');
 file_contains($theme . '/assets/css/main.css', ".blue-panel:not(.nav-open) .brand-link img,\n.gallery-view:not(.nav-open) .brand-link img,\n.contact-view:not(.nav-open) .brand-link img {\n  filter: brightness(0) invert(1);\n}", 'Gallery/Contact brand logo is not forced white on the blue background.');
 file_does_not_contain($theme . '/assets/css/main.css', '.about-panel:not(.nav-open) .brand-link { visibility: hidden; }', 'About still hides the home branding logo.');
 file_does_not_contain($theme . '/assets/css/main.css', '.menu-view:not(.nav-open) .brand-link { visibility: hidden; }', 'Menu still hides the home branding logo.');
@@ -200,6 +201,9 @@ file_contains($theme . '/assets/css/main.css', '.contact-social-handle {', 'Foll
 file_contains($theme . '/assets/css/main.css', "letter-spacing: .04em;\n  text-transform: none;", 'Social handles are still forced to @TORATORA.AE instead of the live @toratora.ae username.');
 file_contains($theme . '/inc/setup.php', "return '@toratora.ae';", 'Social handle helpers do not canonicalize to @toratora.ae.');
 file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_social_handles_1_4_3', 'Stale Instagram Customizer values will not be overwritten.');
+file_does_not_contain($theme . '/front-page.php', "get_theme_mod('tora_instagram_url'", 'Contact Instagram still reads a stale Customizer URL.');
+file_does_not_contain($theme . '/front-page.php', 'instagram.com/toratora.dxb', 'Contact still links to https://www.instagram.com/toratora.dxb.');
+file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_instagram_url_1_4_4', 'Saved Instagram Customizer values can stay on toratora.dxb after deploy.');
 
 file_contains($theme . '/header.php', 'About Tora Tora', 'Overlay is missing the About Tora Tora label.');
 file_contains($theme . '/header.php', 'data-target="delivery"', 'Overlay is missing Delivery navigation.');
@@ -278,7 +282,8 @@ file_contains($theme . '/front-page.php', 'story-scroll-inner', 'About is missin
 file_contains($theme . '/front-page.php', 'class="panel-scroll story-scroll-inner"', 'About scroller is not a panel-scroll, so cut copy cannot scroll.');
 file_contains($theme . '/assets/css/main.css', ".story-scroll-inner {\n  position: relative;\n  height: 100%;\n  min-height: 100%;\n  overflow-x: hidden;\n  overflow-y: auto;", 'About panel still clips the last copy instead of scrolling.');
 file_contains($theme . '/assets/css/main.css', "width: min(52rem, calc(100% - var(--panel-left) - 5.5rem));", 'About copy is still too narrow to fit the poster on one screen.');
-file_contains($theme . '/assets/css/main.css', "padding-bottom: calc(clamp(2.6rem, 5vh, 3.5rem) + .85rem);", 'About copy does not clear the speckle footer.');
+file_contains($theme . '/assets/css/main.css', '--story-footer: clamp(2.6rem, 5vh, 3.5rem);', 'About speckle footer height token is missing.');
+file_contains($theme . '/assets/css/main.css', "padding-bottom: calc(var(--story-footer) + .85rem);", 'About copy does not clear the speckle footer.');
 file_contains($theme . '/front-page.php', 'story-pattern-disc', 'About is missing the Figma speckle disc.');
 file_contains($theme . '/front-page.php', 'story-tiger-disc', 'About is missing the overlapping tiger badge.');
 file_contains($theme . '/front-page.php', 'story-footer-pattern', 'About is missing the Figma speckle footer bar.');
@@ -393,6 +398,71 @@ file_contains($theme . '/footer.php', 'tora-tora-panel-edits', 'Logged-in front 
 file_contains($theme . '/assets/js/site.js', 'updateAdminBarEdit', 'Admin bar Edit Page link is not updated for the active panel.');
 file_contains($theme . '/assets/js/site.js', 'wp-admin-bar-edit', 'Admin bar Edit Page node is not retargeted when switching panels.');
 file_contains($theme . '/inc/setup.php', 'tora_tora_find_panel_page', 'Panel page lookup helper is missing.');
+
+// Website comments PDF (1.5.0).
+file_does_not_contain($theme . '/front-page.php', 'home-indicators', 'Home still renders the fake carousel dots.');
+file_does_not_contain($theme . '/assets/css/main.css', '.home-indicators', 'Home still ships the fake carousel dot styles.');
+file_does_not_contain($theme . '/front-page.php', "get_template_part('template-parts/panel', 'back')", 'Homepage panels still render a back arrow next to the header menu.');
+expect_true(!is_file($theme . '/template-parts/panel-back.php'), 'The unused panel back-arrow template part is still shipped.');
+file_contains($theme . '/single-job_listing.php', 'Back to careers', 'Single job pages lost their return link to careers.');
+file_contains($theme . '/assets/css/main.css', '--home-gutter: calc(var(--side) + 5.25rem);', 'Home gutter width token is missing.');
+file_contains($theme . '/assets/css/main.css', ".home-pattern::after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: var(--home-gutter);\n  background: var(--tora-white);", 'Home white gutter is not painted over the speckle, so a blue sliver can show at the seam.');
+file_contains($theme . '/assets/css/main.css', ".home-pattern::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  background-image: var(--pattern);", 'Home speckle does not fill its column, or still has a fill colour that bleeds at the seam.');
+file_contains($theme . '/assets/css/main.css', 'padding-right: calc((var(--home-gutter) - var(--toggle-size)) / 2);', 'Home menu icon is not centred in the white gutter.');
+file_contains($theme . '/assets/css/main.css', ".overlay-menu {\n  position: fixed;\n  inset: -1px;", 'Nav overlay does not bleed past every edge, so the homepage can show through.');
+file_contains($theme . '/assets/css/main.css', 'min-height: calc(100lvh + 2px);', 'Nav overlay can end above the bottom of a mobile viewport.');
+file_does_not_contain($theme . '/assets/css/main.css', 'inset: var(--staging) 0 0;', 'Nav overlay still starts at --staging, which leaves a gap when the chrome is shorter.');
+file_contains($theme . '/assets/css/main.css', "--chrome-line: calc(var(--staging) + var(--header-pad) + var(--brand-mark) + .75rem);", 'Shared logo-row bottom edge token is missing.');
+file_contains($theme . '/assets/css/main.css', '--panel-gap: calc(var(--panel-top) - var(--chrome-line));', 'Scroll areas do not keep the original title position below the logo row.');
+foreach (['menu', 'delivery', 'gallery', 'careers', 'contact'] as $scroll_panel) {
+    file_contains($theme . '/assets/css/main.css', ".{$scroll_panel}-panel {\n", "The {$scroll_panel} panel block is missing.");
+}
+expect_true(
+    substr_count((string) file_get_contents($theme . '/assets/css/main.css'), 'padding: var(--chrome-line) 0 0;') >= 5,
+    'Menu, Delivery, Gallery, Careers and Contact scroll areas do not all start below the fixed logo row.'
+);
+file_does_not_contain($theme . '/assets/css/main.css', '.panel { padding-bottom: 3.5rem; overflow: auto; }', 'Phones still scroll the whole panel under the fixed logo and menu icon.');
+file_does_not_contain($theme . '/assets/css/main.css', '.panel-scroll { height: auto; min-height: 100%; overflow: visible; }', 'Phones still switch off the inner panel scroller.');
+file_contains($theme . '/front-page.php', 'story-chrome-guard', 'About copy can still scroll under the fixed logo.');
+file_contains($theme . '/assets/css/main.css', ".story-chrome-guard {\n  position: sticky;\n  top: 0;", 'About chrome guard is not pinned under the logo row.');
+file_contains($theme . '/front-page.php', "<span class=\"story-accent-arc\" aria-hidden=\"true\"></span>\n        <div class=\"panel-scroll story-scroll-inner\">", 'About corner disc still scrolls away from the menu icon.');
+file_contains($theme . '/assets/css/main.css', 'hypot(var(--side) + var(--toggle-size) / 2, var(--toggle-dy))', 'About corner disc is not sized from the menu icon position.');
+file_contains($theme . '/assets/css/main.css', 'top: calc(var(--toggle-dy) - var(--toggle-size) / 2);', 'Menu panel icon is not on the logo row.');
+file_does_not_contain($theme . '/assets/css/main.css', 'top: calc(var(--staging) + .55rem);', 'Menu panel icon still double-counts the staging chrome.');
+file_contains($theme . '/assets/css/main.css', "bottom: -1px;\n  z-index: 5;\n  height: calc(var(--story-footer) + 1px);", 'About speckle footer is not flush to the panel bottom.');
+file_contains($theme . '/front-page.php', "</div>\n        </div>\n        <div class=\"gallery-ticker\" aria-hidden=\"true\">", 'Gallery ticker still sits inside the padded scroller, so it stops short of the edges.');
+file_contains($theme . '/assets/css/main.css', ".gallery-ticker {\n  position: absolute;\n  right: 0;\n  bottom: 0;\n  left: 0;", 'Gallery ticker is not pinned full width to the bottom of the panel.');
+file_does_not_contain($theme . '/assets/css/main.css', 'margin: 0 calc(var(--side) * -1) 0;', 'Gallery ticker still only cancels the right padding.');
+file_contains($theme . '/front-page.php', 'careers-title-row', 'Careers roles badge is not on the title row.');
+file_contains($theme . '/assets/css/main.css', "padding-right: var(--panel-left);\n  padding-bottom: clamp(2rem, 4vh, 3rem);\n  padding-left: var(--panel-left);", 'Careers column still has unequal side insets.');
+file_does_not_contain($theme . '/assets/css/main.css', 'padding-right: clamp(4.5rem, 8vw, 7rem);', 'Careers still uses the tighter right inset that pushes the column left.');
+
+file_contains($theme . '/theme.json', '"slug": "avant-garde"', 'theme.json does not register ITC Avant Garde Gothic.');
+file_contains($theme . '/theme.json', 'file:./assets/fonts/avantgarde-700.woff2', 'theme.json does not self-host the Avant Garde files.');
+file_contains($theme . '/theme.json', '"heading": { "typography": { "fontFamily": "var(--wp--preset--font-family--avant-garde)", "fontWeight": "700"', 'Editor headings are not Avant Garde at 700.');
+file_does_not_contain($theme . '/theme.json', '"800"', 'theme.json still asks for an Avant Garde weight that was not supplied.');
+file_does_not_contain($theme . '/assets/css/editor.css', 'font-weight: 800', 'Editor headings still ask for weight 800.');
+file_contains($theme . '/assets/css/editor.css', '"ITC Avant Garde Gothic"', 'Editor headings do not use the display face.');
+file_contains($theme . '/assets/css/main.css', ".menu-item h4 {\n  margin: 0;\n  color: var(--tora-blue);\n  font-size:", 'Menu dish names still override the display face with Raleway.');
+file_contains($theme . '/assets/css/main.css', ".menu-item-note {\n  font-family: var(--font-main);", 'Menu notes are not kept on Raleway.');
+
+file_contains($theme . '/front-page.php', 'tora_tora_split_story_sections', 'About does not split the kitchen section from the tiger story.');
+file_contains($theme . '/front-page.php', 'class="story-kitchen entry-content"', 'About is missing the Chef Gouda kitchen block.');
+file_contains($theme . '/inc/setup.php', 'function tora_tora_split_story_sections', 'Story section split helper is missing.');
+file_contains($theme . '/inc/default-content.php', 'function tora_tora_default_kitchen_story', 'Kitchen seed copy helper is missing.');
+file_contains($theme . '/inc/default-content.php', 'Chef Gouda leads the Tora Tora kitchen, and every dish on our menu is made in-house.', 'Kitchen seed does not stick to the confirmed facts.');
+file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_about_kitchen_1_5_0', 'Existing About pages do not receive the kitchen section.');
+file_contains($theme . '/assets/css/main.css', '.story-kitchen h3', 'Kitchen heading has no display styling.');
+file_contains($theme . '/front-page.php', 'menu-intro', 'Menu is missing the line tying the dishes to the kitchen.');
+file_contains($theme . '/inc/customizer.php', 'tora_menu_intro', 'Menu intro line is not editable in the Customizer.');
+file_contains($theme . '/functions.php', "define('TORA_TORA_VERSION', '1.5.0');", 'Theme version was not bumped, so the kitchen upgrade will not run.');
+
+file_contains($theme . '/inc/customizer.php', 'Placeholder. Confirm before launch.', 'Placeholder contact details are not flagged in the Customizer.');
+file_contains($theme . '/inc/customizer.php', "'tora_phone',", 'Placeholder phone is not flagged for launch.');
+file_contains($theme . '/inc/customizer.php', 'Replace it with Tora Tora photography before launch.', 'Stand-in gallery photos are not flagged in the Customizer.');
+file_contains($theme . '/inc/customizer.php', "add_setting('tora_staging_mode', ['default' => true", 'Staging mode must stay on by default while placeholders remain.');
+file_contains($root . '/docs/design-guides.md', '## 4. Launch checklist', 'Design guide is missing the launch checklist.');
+file_contains($root . '/docs/design-guides.md', 'Gallery photos.', 'Launch checklist does not cover the gallery photos.');
 
 $pattern_dimensions = is_file($theme . '/assets/images/tora-tora-pattern.png')
     ? getimagesize($theme . '/assets/images/tora-tora-pattern.png')

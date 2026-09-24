@@ -15,9 +15,11 @@ $home = tora_tora_panel_page(
 $about = tora_tora_panel_page(
     'story',
     __('About Tora Tora', 'tora-tora'),
-    '<p>' . wp_kses(__('Tora Tora, derived from the Japanese word for \'tiger\', captures the essence of the powerful and majestic animal revered in Japanese mythology.', 'tora-tora'), []) . '</p><p>' . wp_kses(__('A symbol of <strong>courage, strength and indomitable spirit</strong>. The tiger has a storied presence in folklore, often representing protection and good fortune. This name reflects our brand\'s commitment to bold flavours and vibrant dining experiences.', 'tora-tora'), ['strong' => []]) . '</p><p>' . wp_kses(__('Tora Tora brings a slice of Japanese culture to Dubai, offering a dining experience that\'s as dynamic and powerful as the tiger itself, perfectly blending <strong>tradition with contemporary flair</strong>.', 'tora-tora'), ['strong' => []]) . '</p>',
+    '<p>' . wp_kses(__('Tora Tora, derived from the Japanese word for \'tiger\', captures the essence of the powerful and majestic animal revered in Japanese mythology.', 'tora-tora'), []) . '</p><p>' . wp_kses(__('A symbol of <strong>courage, strength and indomitable spirit</strong>. The tiger has a storied presence in folklore, often representing protection and good fortune. This name reflects our brand\'s commitment to bold flavours and vibrant dining experiences.', 'tora-tora'), ['strong' => []]) . '</p><p>' . wp_kses(__('Tora Tora brings a slice of Japanese culture to Dubai, offering a dining experience that\'s as dynamic and powerful as the tiger itself, perfectly blending <strong>tradition with contemporary flair</strong>.', 'tora-tora'), ['strong' => []]) . '</p>' . tora_tora_default_kitchen_story(),
     'tiger-mark.png'
 );
+[$about_story, $about_kitchen] = tora_tora_split_story_sections((string) $about['content']);
+$menu_intro = trim((string) get_theme_mod('tora_menu_intro', tora_tora_default_menu_intro()));
 $delivery = tora_tora_panel_page(
     'delivery',
     __('ORDER DELIVERY', 'tora-tora'),
@@ -127,19 +129,15 @@ $platforms = [
                 <?php if (trim((string) $home['content']) !== '') : ?>
                     <div class="entry-content"><?php echo wp_kses_post($home['content']); ?></div>
                 <?php endif; ?>
-                <div class="home-indicators" aria-hidden="true">
-                    <span class="is-active"></span>
-                    <span></span>
-                    <span></span>
-                </div>
             </div>
             <div class="home-pattern" aria-hidden="true"></div>
         </div>
     </section>
 
     <section class="panel story-panel" id="about" data-theme="light" aria-labelledby="about-title" aria-hidden="true">
+        <span class="story-accent-arc" aria-hidden="true"></span>
         <div class="panel-scroll story-scroll-inner">
-            <span class="story-accent-arc" aria-hidden="true"></span>
+            <span class="story-chrome-guard" aria-hidden="true"></span>
             <div class="story-art" aria-hidden="true">
                 <span class="story-pattern-disc"></span>
                 <figure class="story-tiger-disc">
@@ -147,12 +145,14 @@ $platforms = [
                 </figure>
             </div>
             <div class="story-copy panel-copy">
-                <?php get_template_part('template-parts/panel', 'back'); ?>
                 <h2 id="about-title"><span>ABOUT</span><br><span class="about-brand-line">TORA TORA</span></h2>
                 <div class="story-copy-body">
-                    <div class="entry-content"><?php echo wp_kses_post($about['content']); ?></div>
+                    <div class="entry-content"><?php echo wp_kses_post($about_story); ?></div>
                     <span class="story-rule" aria-hidden="true"></span>
                 </div>
+                <?php if (trim(wp_strip_all_tags($about_kitchen)) !== '') : ?>
+                    <div class="story-kitchen entry-content"><?php echo wp_kses_post($about_kitchen); ?></div>
+                <?php endif; ?>
             </div>
         </div>
         <div class="story-footer-pattern" aria-hidden="true"></div>
@@ -162,8 +162,10 @@ $platforms = [
         <div class="panel-scroll menu-layout">
             <div class="menu-heading">
                 <div class="menu-heading-copy">
-                    <?php get_template_part('template-parts/panel', 'back'); ?>
                     <h2 id="menu-title"><?php esc_html_e('MENU', 'tora-tora'); ?></h2>
+                    <?php if ($menu_intro !== '') : ?>
+                        <p class="menu-intro"><?php echo esc_html($menu_intro); ?></p>
+                    <?php endif; ?>
                 </div>
                 <img class="menu-tiger-mark" src="<?php echo esc_url(tora_tora_asset('images/tiger-mark.png')); ?>" alt="" width="512" height="512" loading="lazy" decoding="async">
             </div>
@@ -259,7 +261,6 @@ $platforms = [
     <section class="panel delivery-panel" id="delivery" data-theme="light" aria-labelledby="delivery-title" aria-hidden="true">
         <div class="panel-scroll delivery-layout">
             <div class="delivery-primary">
-                <?php get_template_part('template-parts/panel', 'back'); ?>
                 <div class="delivery-copy panel-copy">
                     <h2 id="delivery-title"><?php esc_html_e('ORDER DELIVERY', 'tora-tora'); ?></h2>
                     <div class="entry-content"><?php echo wp_kses_post($delivery['content']); ?></div>
@@ -321,7 +322,6 @@ $platforms = [
 
     <section class="panel gallery-panel" id="gallery" data-theme="blue" aria-labelledby="gallery-title" aria-hidden="true">
         <div class="panel-scroll gallery-scroll">
-            <?php get_template_part('template-parts/panel', 'back'); ?>
             <header class="gallery-heading">
                 <h2 id="gallery-title"><?php esc_html_e('GALLERY', 'tora-tora'); ?></h2>
                 <p class="gallery-blog"><?php esc_html_e('/BLOG', 'tora-tora'); ?></p>
@@ -343,16 +343,16 @@ $platforms = [
                     </button>
                 <?php endforeach; ?>
             </div>
-            <div class="gallery-ticker" aria-hidden="true">
-                <div class="gallery-ticker-track">
-                    <?php for ($gallery_ticker_repeat = 0; $gallery_ticker_repeat < 2; $gallery_ticker_repeat++) : ?>
-                        <span class="gallery-ticker-group">
-                            <?php for ($gallery_ticker_item = 0; $gallery_ticker_item < 8; $gallery_ticker_item++) : ?>
-                                <span class="gallery-ticker-word"><?php esc_html_e('TORA TORA', 'tora-tora'); ?></span><span class="gallery-ticker-dot" aria-hidden="true">.</span>
-                            <?php endfor; ?>
-                        </span>
-                    <?php endfor; ?>
-                </div>
+        </div>
+        <div class="gallery-ticker" aria-hidden="true">
+            <div class="gallery-ticker-track">
+                <?php for ($gallery_ticker_repeat = 0; $gallery_ticker_repeat < 2; $gallery_ticker_repeat++) : ?>
+                    <span class="gallery-ticker-group">
+                        <?php for ($gallery_ticker_item = 0; $gallery_ticker_item < 8; $gallery_ticker_item++) : ?>
+                            <span class="gallery-ticker-word"><?php esc_html_e('TORA TORA', 'tora-tora'); ?></span><span class="gallery-ticker-dot" aria-hidden="true">.</span>
+                        <?php endfor; ?>
+                    </span>
+                <?php endfor; ?>
             </div>
         </div>
     </section>
@@ -360,13 +360,12 @@ $platforms = [
     <section class="panel careers-panel" id="careers" data-theme="light" aria-labelledby="careers-title" aria-hidden="true">
         <div class="panel-scroll careers-scroll">
             <div class="careers-layout">
-                <?php get_template_part('template-parts/panel', 'back'); ?>
                 <header class="careers-header">
-                    <div class="careers-intro-block">
+                    <div class="careers-title-row">
                         <h2 id="careers-title">JOIN THE TEAM</h2>
-                        <p class="careers-intro"><?php esc_html_e('AT TORA TORA, WE MOVE FAST, COOK BOLD, AND CELEBRATE EVERYONE WHO BRINGS THE TIGER SPIRIT TO WORK. WE ARE BUILDING SOMETHING EXCEPTIONAL IN DUBAI AND WE WANT EXCEPTIONAL PEOPLE WITH US.', 'tora-tora'); ?></p>
+                        <p class="careers-roles-badge"><?php echo esc_html($careers_roles_label); ?></p>
                     </div>
-                    <p class="careers-roles-badge"><?php echo esc_html($careers_roles_label); ?></p>
+                    <p class="careers-intro"><?php esc_html_e('AT TORA TORA, WE MOVE FAST, COOK BOLD, AND CELEBRATE EVERYONE WHO BRINGS THE TIGER SPIRIT TO WORK. WE ARE BUILDING SOMETHING EXCEPTIONAL IN DUBAI AND WE WANT EXCEPTIONAL PEOPLE WITH US.', 'tora-tora'); ?></p>
                 </header>
                 <div class="careers-list-wrap">
                     <ul class="careers-job-list">
@@ -423,7 +422,6 @@ $platforms = [
 
     <section class="panel contact-panel" id="contact" data-theme="blue" aria-labelledby="contact-title" aria-hidden="true">
         <div class="panel-scroll contact-scroll">
-            <?php get_template_part('template-parts/panel', 'back'); ?>
             <header class="contact-heading">
                 <h2 id="contact-title"><?php esc_html_e('Contact', 'tora-tora'); ?></h2>
                 <figure class="contact-logo" aria-hidden="true">
