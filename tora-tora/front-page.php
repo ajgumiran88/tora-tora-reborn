@@ -33,8 +33,7 @@ $gallery = tora_tora_panel_page(
 $contact = tora_tora_panel_page(
     'contact',
     __('Reach Us At', 'tora-tora'),
-    __('Find us at First Avenue Mall, Jumeira, Dubai.', 'tora-tora'),
-    'gallery-1.jpg'
+    __('Find us at First Avenue Mall, Jumeira, Dubai.', 'tora-tora')
 );
 $careers_jobs = tora_tora_careers_jobs_for_display();
 $careers_roles_label = sprintf(
@@ -43,28 +42,13 @@ $careers_roles_label = sprintf(
     count($careers_jobs)
 );
 $menu_groups = tora_get_menu_groups();
-$gallery_images = [];
-for ($gallery_index = 1; $gallery_index <= 5; $gallery_index++) {
-    $gallery_images[] = tora_tora_image_setting('tora_gallery_' . $gallery_index, 'gallery-' . $gallery_index . '.jpg');
-}
-$gallery_cells = [
-    ['cell' => 1],
-    ['cell' => 2],
-    ['cell' => 3],
-    ['cell' => 4],
-    ['cell' => 5],
-    ['cell' => 6],
-    ['cell' => 7],
-    ['cell' => 8],
-    ['cell' => 9],
-    ['cell' => 10],
-    ['cell' => 11],
-];
+$kitchen_image = tora_tora_responsive_image('tora_kitchen_image', 'story-kitchen-ramen', 1020, 1275);
+$gallery_cells = tora_tora_gallery_items();
 $gallery_labels = [
     [
         'slug' => '01',
         'number' => '01',
-        'text' => __('FOOD', 'tora-tora'),
+        'text' => __('RAMEN', 'tora-tora'),
     ],
     [
         'slug' => '02',
@@ -74,10 +58,13 @@ $gallery_labels = [
     [
         'slug' => '03',
         'number' => '03',
-        'text' => __('FOOD', 'tora-tora'),
+        'text' => __('BRAND', 'tora-tora'),
     ],
 ];
 $gallery_image_total = count($gallery_cells);
+$gallery_ticker_words = [__('TORA TORA', 'tora-tora'), __('ROAR RAMEN JOINT', 'tora-tora')];
+// Homepage panels are numbered like Brand Book chapters. Delivery can be switched off, so count as we go.
+$panel_number = 0;
 $delivery_zones = tora_tora_delivery_zones();
 $address = (string) get_theme_mod('tora_address', 'First Avenue Mall, Jumeira, Dubai, UAE');
 $address_lines = tora_tora_format_address_lines($address);
@@ -145,13 +132,29 @@ $platforms = [
                 </figure>
             </div>
             <div class="story-copy panel-copy">
+                <?php tora_tora_panel_kicker(++$panel_number, __('Our story', 'tora-tora')); ?>
                 <h2 id="about-title"><span>ABOUT</span><br><span class="about-brand-line">TORA TORA</span></h2>
+                <?php /* Chapter title from the Brand Book introduction spread. */ ?>
+                <h3 class="story-chapter"><?php esc_html_e('The myth of the Japanese tiger', 'tora-tora'); ?></h3>
                 <div class="story-copy-body">
                     <div class="entry-content"><?php echo wp_kses_post($about_story); ?></div>
                     <span class="story-rule" aria-hidden="true"></span>
                 </div>
                 <?php if (trim(wp_strip_all_tags($about_kitchen)) !== '') : ?>
-                    <div class="story-kitchen entry-content"><?php echo wp_kses_post($about_kitchen); ?></div>
+                    <section class="story-kitchen">
+                        <div class="story-kitchen-copy entry-content"><?php echo wp_kses_post($about_kitchen); ?></div>
+                        <figure class="story-kitchen-figure">
+                            <img
+                                src="<?php echo esc_url($kitchen_image['src']); ?>"
+                                <?php if ($kitchen_image['srcset'] !== '') : ?>srcset="<?php echo esc_attr($kitchen_image['srcset']); ?>" sizes="(max-width: 900px) 20rem, 16rem"<?php endif; ?>
+                                alt="<?php esc_attr_e('A bowl of Tora Tora ramen, noodles lifted with red chopsticks', 'tora-tora'); ?>"
+                                width="<?php echo esc_attr((string) $kitchen_image['width']); ?>"
+                                height="<?php echo esc_attr((string) $kitchen_image['height']); ?>"
+                                loading="lazy"
+                                decoding="async"
+                            >
+                        </figure>
+                    </section>
                 <?php endif; ?>
             </div>
         </div>
@@ -162,6 +165,7 @@ $platforms = [
         <div class="panel-scroll menu-layout">
             <div class="menu-heading">
                 <div class="menu-heading-copy">
+                    <?php tora_tora_panel_kicker(++$panel_number, __('Food & drink', 'tora-tora')); ?>
                     <h2 id="menu-title"><?php esc_html_e('MENU', 'tora-tora'); ?></h2>
                     <?php if ($menu_intro !== '') : ?>
                         <p class="menu-intro"><?php echo esc_html($menu_intro); ?></p>
@@ -262,6 +266,7 @@ $platforms = [
         <div class="panel-scroll delivery-layout">
             <div class="delivery-primary">
                 <div class="delivery-copy panel-copy">
+                    <?php tora_tora_panel_kicker(++$panel_number, __('Order in', 'tora-tora')); ?>
                     <h2 id="delivery-title"><?php esc_html_e('ORDER DELIVERY', 'tora-tora'); ?></h2>
                     <div class="entry-content"><?php echo wp_kses_post($delivery['content']); ?></div>
                 </div>
@@ -322,6 +327,7 @@ $platforms = [
 
     <section class="panel gallery-panel" id="gallery" data-theme="blue" aria-labelledby="gallery-title" aria-hidden="true">
         <div class="panel-scroll gallery-scroll">
+            <?php tora_tora_panel_kicker(++$panel_number, __('The Tora Tora experience', 'tora-tora')); ?>
             <header class="gallery-heading">
                 <h2 id="gallery-title"><?php esc_html_e('GALLERY', 'tora-tora'); ?></h2>
                 <p class="gallery-blog"><?php esc_html_e('/BLOG', 'tora-tora'); ?></p>
@@ -334,12 +340,17 @@ $platforms = [
                     </div>
                 <?php endforeach; ?>
                 <?php foreach ($gallery_cells as $gallery_photo_index => $cell) : ?>
-                    <?php
-                    $gallery_image = $gallery_images[$gallery_photo_index % count($gallery_images)];
-                    $tile_alt = sprintf(__('Tora Tora gallery image %d', 'tora-tora'), $gallery_photo_index + 1);
-                    ?>
-                    <button class="gallery-link gallery-cell-<?php echo esc_attr((string) $cell['cell']); ?>" type="button" data-image="<?php echo esc_url($gallery_image); ?>" aria-controls="gallery-modal" aria-haspopup="dialog" aria-label="<?php echo esc_attr(sprintf(__('Open gallery image %1$d of %2$d', 'tora-tora'), $gallery_photo_index + 1, $gallery_image_total)); ?>">
-                        <img src="<?php echo esc_url($gallery_image); ?>" alt="<?php echo esc_attr($tile_alt); ?>" width="736" height="736" loading="lazy">
+                    <?php $gallery_image = tora_tora_responsive_image($cell['setting'], $cell['stem'], $cell['width'], $cell['height']); ?>
+                    <button class="gallery-link gallery-cell-<?php echo esc_attr((string) $cell['cell']); ?>" type="button" data-image="<?php echo esc_url($gallery_image['full']); ?>" aria-controls="gallery-modal" aria-haspopup="dialog" aria-label="<?php echo esc_attr(sprintf(__('Open gallery image %1$d of %2$d: %3$s', 'tora-tora'), $gallery_photo_index + 1, $gallery_image_total, $cell['alt'])); ?>">
+                        <img
+                            src="<?php echo esc_url($gallery_image['src']); ?>"
+                            <?php if ($gallery_image['srcset'] !== '') : ?>srcset="<?php echo esc_attr($gallery_image['srcset']); ?>" sizes="<?php echo esc_attr($cell['sizes']); ?>"<?php endif; ?>
+                            alt="<?php echo esc_attr($cell['alt']); ?>"
+                            width="<?php echo esc_attr((string) $gallery_image['width']); ?>"
+                            height="<?php echo esc_attr((string) $gallery_image['height']); ?>"
+                            loading="lazy"
+                            decoding="async"
+                        >
                     </button>
                 <?php endforeach; ?>
             </div>
@@ -349,7 +360,7 @@ $platforms = [
                 <?php for ($gallery_ticker_repeat = 0; $gallery_ticker_repeat < 2; $gallery_ticker_repeat++) : ?>
                     <span class="gallery-ticker-group">
                         <?php for ($gallery_ticker_item = 0; $gallery_ticker_item < 8; $gallery_ticker_item++) : ?>
-                            <span class="gallery-ticker-word"><?php esc_html_e('TORA TORA', 'tora-tora'); ?></span><span class="gallery-ticker-dot" aria-hidden="true">.</span>
+                            <span class="gallery-ticker-word"><?php echo esc_html($gallery_ticker_words[$gallery_ticker_item % 2]); ?></span><span class="gallery-ticker-dot" aria-hidden="true">.</span>
                         <?php endfor; ?>
                     </span>
                 <?php endfor; ?>
@@ -361,6 +372,7 @@ $platforms = [
         <div class="panel-scroll careers-scroll">
             <div class="careers-layout">
                 <header class="careers-header">
+                    <?php tora_tora_panel_kicker(++$panel_number, __('Careers', 'tora-tora')); ?>
                     <div class="careers-title-row">
                         <h2 id="careers-title">JOIN THE TEAM</h2>
                         <p class="careers-roles-badge"><?php echo esc_html($careers_roles_label); ?></p>
@@ -422,6 +434,7 @@ $platforms = [
 
     <section class="panel contact-panel" id="contact" data-theme="blue" aria-labelledby="contact-title" aria-hidden="true">
         <div class="panel-scroll contact-scroll">
+            <?php tora_tora_panel_kicker(++$panel_number, __('Visit us', 'tora-tora')); ?>
             <header class="contact-heading">
                 <h2 id="contact-title"><?php esc_html_e('Contact', 'tora-tora'); ?></h2>
                 <figure class="contact-logo" aria-hidden="true">

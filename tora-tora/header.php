@@ -10,6 +10,7 @@
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#0500F5">
+    <link rel="preload" href="<?php echo esc_url(tora_tora_asset('fonts/itc-avant-garde-pro-bold.woff2')); ?>" as="font" type="font/woff2" crossorigin>
     <?php tora_tora_render_document_head(); ?>
     <!-- tora-tora:<?php echo esc_html(TORA_TORA_VERSION); ?> safe-head=<?php echo tora_tora_use_safe_head() ? '1' : '0'; ?> -->
 </head>

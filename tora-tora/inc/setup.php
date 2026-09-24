@@ -286,6 +286,71 @@ function tora_tora_image_setting(string $setting, string $fallback): string
     return $value ? esc_url_raw($value) : tora_tora_asset('images/' . $fallback);
 }
 
+/**
+ * A packaged image built as {stem}-sm.jpg and {stem}-lg.jpg, unless the Customizer setting
+ * points at an uploaded replacement (which then carries no srcset).
+ *
+ * @return array{src:string,srcset:string,full:string,width:int,height:int}
+ */
+function tora_tora_responsive_image(string $setting, string $stem, int $width, int $height): array
+{
+    $custom = (string) get_theme_mod($setting, '');
+    if ($custom !== '') {
+        $url = esc_url_raw($custom);
+        return ['src' => $url, 'srcset' => '', 'full' => $url, 'width' => $width, 'height' => $height];
+    }
+
+    $small_width = $width > $height ? 800 : 600;
+    $small = tora_tora_asset('images/' . $stem . '-sm.jpg');
+    $large = tora_tora_asset('images/' . $stem . '-lg.jpg');
+    return [
+        'src'    => $small,
+        'srcset' => $small . ' ' . $small_width . 'w, ' . $large . ' ' . $width . 'w',
+        'full'   => $large,
+        'width'  => $width,
+        'height' => $height,
+    ];
+}
+
+/**
+ * Gallery tiles, in mosaic order: 01 ramen, 02 interior, 03 brand. Every default comes from the
+ * client's Brand Guideline folder (Brand Book collateral and the mckimm interior concept).
+ *
+ * @return array<int,array{cell:int,setting:string,stem:string,width:int,height:int,alt:string,sizes:string}>
+ */
+function tora_tora_gallery_items(): array
+{
+    $tile = '(max-width: 700px) 50vw, 25vw';
+    $wide_on_phones = '(max-width: 700px) 100vw, 25vw';
+
+    return [
+        ['cell' => 1, 'setting' => 'tora_gallery_1', 'stem' => 'gallery-ramen-noodles', 'width' => 996, 'height' => 996, 'alt' => __('Fresh ramen noodles lifted from a floured board', 'tora-tora'), 'sizes' => $tile],
+        ['cell' => 2, 'setting' => 'tora_gallery_2', 'stem' => 'gallery-ramen-tableware', 'width' => 1200, 'height' => 1200, 'alt' => __('Tiger plate and chopsticks in a Tora Tora pattern sleeve', 'tora-tora'), 'sizes' => $tile],
+        ['cell' => 3, 'setting' => 'tora_gallery_3', 'stem' => 'gallery-ramen-to-go', 'width' => 1200, 'height' => 1200, 'alt' => __('Tora Tora ramen takeaway cups', 'tora-tora'), 'sizes' => $wide_on_phones],
+        ['cell' => 4, 'setting' => 'tora_gallery_4', 'stem' => 'gallery-interior-counter', 'width' => 960, 'height' => 960, 'alt' => __('Interior concept: counter seating by the welcome banner', 'tora-tora'), 'sizes' => $tile],
+        ['cell' => 5, 'setting' => 'tora_gallery_5', 'stem' => 'gallery-interior-booths', 'width' => 900, 'height' => 900, 'alt' => __('Interior concept: curved booths beneath the tiger artwork', 'tora-tora'), 'sizes' => $tile],
+        ['cell' => 6, 'setting' => 'tora_gallery_6', 'stem' => 'gallery-interior-shibori', 'width' => 1600, 'height' => 800, 'alt' => __('Interior concept: shibori-dyed fabric hanging over the dining room', 'tora-tora'), 'sizes' => '(max-width: 700px) 100vw, 50vw'],
+        ['cell' => 7, 'setting' => 'tora_gallery_7', 'stem' => 'gallery-interior-bar', 'width' => 907, 'height' => 907, 'alt' => __('Interior concept: the blue mosaic bar and patterned stools', 'tora-tora'), 'sizes' => $wide_on_phones],
+        ['cell' => 8, 'setting' => 'tora_gallery_8', 'stem' => 'gallery-brand-cups', 'width' => 1200, 'height' => 1200, 'alt' => __('Tora Tora cups in the brand pattern', 'tora-tora'), 'sizes' => $tile],
+        ['cell' => 9, 'setting' => 'tora_gallery_9', 'stem' => 'gallery-brand-sign', 'width' => 1200, 'height' => 1200, 'alt' => __('Tora Tora sign reading Roar Ramen Joint, Dubai DBX 2024', 'tora-tora'), 'sizes' => $tile],
+        ['cell' => 10, 'setting' => 'tora_gallery_10', 'stem' => 'gallery-brand-bag', 'width' => 1200, 'height' => 1200, 'alt' => __('Tora Tora paper bag printed ROARRRR', 'tora-tora'), 'sizes' => $tile],
+        ['cell' => 11, 'setting' => 'tora_gallery_11', 'stem' => 'gallery-brand-hoarding', 'width' => 1200, 'height' => 1200, 'alt' => __('Roar Ramen Joint hoarding on a Dubai street', 'tora-tora'), 'sizes' => $tile],
+    ];
+}
+
+/**
+ * Brand Book chapter marker above a panel title: hairline, number, short label.
+ * Decorative, because the title that follows already names the panel.
+ */
+function tora_tora_panel_kicker(int $number, string $label): void
+{
+    printf(
+        '<p class="panel-kicker" aria-hidden="true"><span class="panel-kicker-num">%1$s</span><span class="panel-kicker-label">%2$s</span></p>',
+        esc_html(sprintf('%02d', $number)),
+        esc_html($label)
+    );
+}
+
 function tora_tora_platform_logo(string $slug, string $fallback): string
 {
     return tora_tora_image_setting('tora_' . sanitize_key($slug) . '_logo', $fallback);

@@ -17,10 +17,7 @@
           "name": "ITC Avant Garde Gothic",
           "fontFamily": "\"ITC Avant Garde Gothic\", Raleway, sans-serif",
           "fontFace": [
-            { "fontFamily": "ITC Avant Garde Gothic", "fontWeight": "400", "fontStyle": "normal", "fontDisplay": "swap", "src": ["file:./assets/fonts/avantgarde-400.woff2"] },
-            { "fontFamily": "ITC Avant Garde Gothic", "fontWeight": "500", "fontStyle": "normal", "fontDisplay": "swap", "src": ["file:./assets/fonts/avantgarde-500.woff2"] },
-            { "fontFamily": "ITC Avant Garde Gothic", "fontWeight": "600", "fontStyle": "normal", "fontDisplay": "swap", "src": ["file:./assets/fonts/avantgarde-600.woff2"] },
-            { "fontFamily": "ITC Avant Garde Gothic", "fontWeight": "700", "fontStyle": "normal", "fontDisplay": "swap", "src": ["file:./assets/fonts/avantgarde-700.woff2"] }
+            { "fontFamily": "ITC Avant Garde Gothic", "fontWeight": "700", "fontStyle": "normal", "fontDisplay": "swap", "src": ["file:./assets/fonts/itc-avant-garde-pro-bold.woff2"] }
           ]
         },
         {

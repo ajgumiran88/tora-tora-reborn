@@ -144,19 +144,21 @@ function tora_tora_customize_register(WP_Customize_Manager $customize): void
         'tora_talabat_logo' => [__('Talabat logo', 'tora-tora'), 'delivery-talabat.svg'],
         'tora_noon_logo' => [__('Noon Food logo', 'tora-tora'), 'delivery-noon.png'],
         'tora_deliveroo_logo' => [__('Deliveroo logo', 'tora-tora'), 'delivery-deliveroo.svg'],
-        'tora_gallery_1' => [__('Gallery image 1', 'tora-tora'), 'gallery-1.jpg'],
-        'tora_gallery_2' => [__('Gallery image 2', 'tora-tora'), 'gallery-2.jpg'],
-        'tora_gallery_3' => [__('Gallery image 3', 'tora-tora'), 'gallery-3.jpg'],
-        'tora_gallery_4' => [__('Gallery image 4', 'tora-tora'), 'gallery-4.jpg'],
-        'tora_gallery_5' => [__('Gallery image 5', 'tora-tora'), 'gallery-5.jpg'],
+        'tora_kitchen_image' => [__('About kitchen image', 'tora-tora'), 'story-kitchen-ramen-lg.jpg'],
         'tora_contact_map' => [__('Contact Dubai map', 'tora-tora'), 'contact-dubai-map.png'],
     ];
+    foreach (tora_tora_gallery_items() as $gallery_item) {
+        $image_settings[$gallery_item['setting']] = [
+            sprintf(__('Gallery image %d', 'tora-tora'), $gallery_item['cell']),
+            $gallery_item['stem'] . '-lg.jpg',
+        ];
+    }
 
     foreach ($image_settings as $id => [$label, $fallback]) {
         $description = sprintf(__('Packaged fallback: %s', 'tora-tora'), $fallback);
-        // The packaged gallery shots are stand-ins, not photos of this restaurant.
+        // Packaged gallery images come from the Brand Book and the interior concept renders, not the finished restaurant.
         if (str_starts_with($id, 'tora_gallery_')) {
-            $description .= ' ' . __('This is a placeholder photo. Replace it with Tora Tora photography before launch.', 'tora-tora');
+            $description .= ' ' . __('Brand Book image or interior concept render. Replace it with photography of the restaurant when available.', 'tora-tora');
         }
 
         $customize->add_setting($id, ['default' => '', 'sanitize_callback' => 'esc_url_raw']);

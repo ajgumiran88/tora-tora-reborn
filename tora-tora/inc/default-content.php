@@ -10,20 +10,37 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Seed for the About kitchen section. It states only what the client has confirmed,
- * so editors replace it with Chef Gouda's own story in WordPress.
+ * Seed for the About kitchen section. It adds no biography: every line comes from the client's
+ * own material. "Leads the kitchen" and "every dish made in-house" are from the client. The open kitchen
+ * with seats around it is from the mckimm interior concept. Authenticity, aesthetic and
+ * engagement are the Brand Book's brand essentials, and "tradition with contemporary flair"
+ * is Brand Book copy. Editors can change all of it in WordPress.
  */
 function tora_tora_default_kitchen_story(bool $blocks = false): string
 {
     $heading = esc_html__('Chef Gouda\'s kitchen', 'tora-tora');
-    $copy = esc_html__('Chef Gouda leads the Tora Tora kitchen, and every dish on our menu is made in-house.', 'tora-tora');
+    $copy = esc_html__('Chef Gouda leads the Tora Tora kitchen, where every dish on our menu is made from start to finish. It sits at the heart of the restaurant with seats gathered around it, so you can watch the craft that goes into every bowl.', 'tora-tora');
+    $beats = [
+        [esc_html__('Authenticity', 'tora-tora'), esc_html__('Traditional Japanese cuisine, made from scratch.', 'tora-tora')],
+        [esc_html__('Aesthetic', 'tora-tora'), esc_html__('Bold flavours, served with contemporary flair.', 'tora-tora')],
+        [esc_html__('Engagement', 'tora-tora'), esc_html__('An open kitchen that brings you closer to the food.', 'tora-tora')],
+    ];
+
+    $items = '';
+    $block_items = '';
+    foreach ($beats as [$label, $text]) {
+        $item = '<li><strong>' . $label . '</strong> ' . $text . '</li>';
+        $items .= $item;
+        $block_items .= '<!-- wp:list-item -->' . $item . '<!-- /wp:list-item -->';
+    }
 
     if ($blocks) {
         return '<!-- wp:heading {"level":3} --><h3 class="wp-block-heading">' . $heading . '</h3><!-- /wp:heading -->'
-            . '<!-- wp:paragraph --><p>' . $copy . '</p><!-- /wp:paragraph -->';
+            . '<!-- wp:paragraph --><p>' . $copy . '</p><!-- /wp:paragraph -->'
+            . '<!-- wp:list {"ordered":true} --><ol class="wp-block-list">' . $block_items . '</ol><!-- /wp:list -->';
     }
 
-    return '<h3>' . $heading . '</h3><p>' . $copy . '</p>';
+    return '<h3>' . $heading . '</h3><p>' . $copy . '</p><ol>' . $items . '</ol>';
 }
 
 function tora_tora_default_menu_intro(): string
@@ -539,6 +556,12 @@ function tora_tora_maybe_upgrade_content(): void
         $current = '1.5.0';
         update_option('tora_tora_seeded_version', $current, false);
     }
+
+    if (version_compare($current, '1.5.1', '<')) {
+        tora_tora_upgrade_about_kitchen_1_5_1();
+        $current = '1.5.1';
+        update_option('tora_tora_seeded_version', $current, false);
+    }
 }
 
 function tora_tora_upgrade_menu_1_3_5(): void
@@ -800,6 +823,36 @@ function tora_tora_upgrade_about_kitchen_1_5_0(): void
         'ID'           => (int) $page->ID,
         'post_content' => rtrim($current) . tora_tora_default_kitchen_story(str_contains($current, '<!-- wp:')),
     ]);
+}
+
+/**
+ * 1.5.0 seeded a one-line kitchen section. Swap it for the fuller story, but only while it is still
+ * exactly the seed, so an editor's own Chef Gouda copy is never overwritten.
+ */
+function tora_tora_upgrade_about_kitchen_1_5_1(): void
+{
+    $page = get_page_by_path('story', OBJECT, 'page');
+    if (!$page instanceof WP_Post) {
+        return;
+    }
+
+    $heading = 'Chef Gouda&#039;s kitchen';
+    $copy = 'Chef Gouda leads the Tora Tora kitchen, and every dish on our menu is made in-house.';
+    $seeds = [
+        '<!-- wp:heading {"level":3} --><h3 class="wp-block-heading">' . $heading . '</h3><!-- /wp:heading --><!-- wp:paragraph --><p>' . $copy . '</p><!-- /wp:paragraph -->' => true,
+        '<h3>' . $heading . '</h3><p>' . $copy . '</p>' => false,
+    ];
+
+    $current = (string) $page->post_content;
+    foreach ($seeds as $seed => $blocks) {
+        if (str_contains($current, $seed)) {
+            wp_update_post([
+                'ID'           => (int) $page->ID,
+                'post_content' => str_replace($seed, tora_tora_default_kitchen_story($blocks), $current),
+            ]);
+            return;
+        }
+    }
 }
 
 add_action('init', 'tora_tora_maybe_upgrade_content', 30);
