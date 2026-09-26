@@ -643,6 +643,88 @@ h1, h2, h3, h4 {
   background: var(--tora-white);
 }
 
+/* Each headline word is a mask the word slides up through. The padding keeps tall glyphs clear of the mask
+   at a .92 line height, and the equal negative margin takes it back, so words sit exactly where plain text did. */
+.home-title-word {
+  display: inline-block;
+  padding: .12em .06em;
+  margin: -.12em -.06em;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.home-title-word-inner { display: inline-block; }
+
+/* Home motion. The first visit plays the entrance, a return plays a short speckle settle, and at rest the
+   speckle drifts. site.js moves #home between the states. Only transforms and clips move, and the headline
+   is never faded, so it paints as soon as the first word starts to rise. */
+@media (prefers-reduced-motion: no-preference) {
+  .home-panel[data-home-motion="intro"] .home-content {
+    animation: home-content-in .7s var(--ease) both;
+  }
+
+  .home-panel[data-home-motion="intro"] .home-title-word-inner {
+    animation: home-word-in .7s var(--ease) both;
+    animation-delay: calc(var(--word-index, 0) * 70ms);
+  }
+
+  .home-panel[data-home-motion="intro"] .home-content .entry-content {
+    animation: home-body-in .6s var(--ease) .5s both;
+  }
+
+  /* The speckle opens from the seam outwards. The white gutter stays put. */
+  .home-panel[data-home-motion="intro"] .home-pattern::before {
+    animation: home-pattern-in .8s var(--ease) both;
+  }
+
+  .home-panel[data-home-motion="reenter"] .home-pattern::before {
+    animation: home-pattern-settle .35s var(--ease) both;
+  }
+
+  .home-panel[data-home-motion="idle"] .home-pattern::before {
+    animation: home-pattern-drift 32s ease-in-out infinite alternate;
+  }
+}
+
+/* On phones the body copy is the largest thing on screen, so fading it in would hold back the largest
+   paint by a second. It rises into place without fading instead. */
+@media (prefers-reduced-motion: no-preference) and (max-width: 600px) {
+  .home-panel[data-home-motion="intro"] .home-content .entry-content {
+    animation: home-body-rise .9s var(--ease) both;
+  }
+}
+
+/* Phones get a shorter slide, so the copy never starts outside the screen's side padding. */
+@keyframes home-content-in {
+  from { transform: translateX(calc(-1 * min(1.25rem, 3vw))); }
+}
+
+@keyframes home-word-in {
+  from { transform: translateY(calc(100% + .24em)); }
+}
+
+@keyframes home-body-in {
+  from { opacity: 0; transform: translateY(.75rem); }
+}
+
+@keyframes home-body-rise {
+  from { transform: translateY(.75rem); }
+}
+
+/* Both ends are insets: clip-path cannot interpolate to `none`, and would jump open halfway through. */
+@keyframes home-pattern-in {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0); }
+}
+
+@keyframes home-pattern-settle {
+  from { transform: scale(1.04); }
+}
+
+@keyframes home-pattern-drift {
+  to { transform: scale(1.03); }
+}
+
 .story-panel,
 .menu-panel,
 .careers-panel {

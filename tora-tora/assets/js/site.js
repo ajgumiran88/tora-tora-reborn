@@ -12,6 +12,12 @@
   var activeModal = null;
   var modalTrigger = null;
   var activeMenuSlug = "";
+  var homePanel = document.getElementById("home");
+  var homeMotionTimer = 0;
+  var homeHasPlayedIntro = false;
+  // How long the entrance (last word plus body settle) and the return settle run in main.css.
+  var HOME_INTRO_MS = 1200;
+  var HOME_REENTER_MS = 400;
 
   function validPanel(id) {
     return panels.some(function (panel) { return panel.id === id; });
@@ -112,10 +118,33 @@
     document.body.classList.toggle("header-stuck", !!(scroller && scroller.scrollTop > 8));
   }
 
+  // Home plays its entrance once per page view, a short settle on each return, then drifts while shown.
+  // An empty state stops all of it: Home is hidden, or the visitor prefers reduced motion.
+  function setHomeMotion(state) {
+    if (!homePanel) return;
+    window.clearTimeout(homeMotionTimer);
+    if (!state || prefersReducedMotion) {
+      homePanel.removeAttribute("data-home-motion");
+      return;
+    }
+    homePanel.setAttribute("data-home-motion", state);
+    if (state === "idle") return;
+    homeMotionTimer = window.setTimeout(function () {
+      homePanel.setAttribute("data-home-motion", "idle");
+    }, state === "intro" ? HOME_INTRO_MS : HOME_REENTER_MS);
+  }
+
   function showPanel(id, menuSlug, updateHistory, moveFocus) {
     if (!validPanel(id)) id = "home";
     var next = document.getElementById(id);
     if (!next) return;
+
+    if (next !== homePanel) {
+      setHomeMotion("");
+    } else if (activePanel !== homePanel) {
+      setHomeMotion(homeHasPlayedIntro ? "reenter" : "intro");
+      homeHasPlayedIntro = true;
+    }
 
     if (id === "menu") showMenuTab(menuSlug || firstMenuSlug());
 

@@ -351,6 +351,27 @@ function tora_tora_panel_kicker(int $number, string $label): void
     );
 }
 
+/**
+ * Home headline as one masked span per word, so the entrance can slide each word up in turn.
+ * Words stay separated by plain spaces, so the headline wraps exactly as the unwrapped text did.
+ * The spans are hidden from screen readers, which would otherwise read one word per swipe; the h1
+ * carries the whole title as its label instead.
+ */
+function tora_tora_home_title_words(string $title): string
+{
+    $words = preg_split('/\s+/u', trim($title), -1, PREG_SPLIT_NO_EMPTY) ?: [];
+    $spans = [];
+    foreach ($words as $index => $word) {
+        $spans[] = sprintf(
+            '<span class="home-title-word" aria-hidden="true" style="--word-index: %1$d"><span class="home-title-word-inner">%2$s</span></span>',
+            $index,
+            esc_html($word)
+        );
+    }
+
+    return implode(' ', $spans);
+}
+
 function tora_tora_platform_logo(string $slug, string $fallback): string
 {
     return tora_tora_image_setting('tora_' . sanitize_key($slug) . '_logo', $fallback);

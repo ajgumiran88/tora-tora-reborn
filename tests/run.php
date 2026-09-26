@@ -520,6 +520,20 @@ file_does_not_contain($theme . '/assets/css/main.css', '.menu-item::before', 'Me
 file_contains($theme . '/assets/css/main.css', 'font-variant-numeric: tabular-nums;', 'Menu prices do not line up.');
 file_contains($theme . '/assets/css/main.css', '.overlay-menu li { transition-delay: 0s !important; }', 'Menu link stagger ignores reduced motion.');
 
+// Home motion: entrance on first visit, short settle on return, slow speckle drift at rest.
+file_contains($theme . '/front-page.php', 'data-home-motion="intro"', 'Home does not start its entrance from first paint.');
+file_contains($theme . '/front-page.php', 'tora_tora_home_title_words($home[\'title\'])', 'Home headline words are not wrapped for the cascade.');
+file_contains($theme . '/inc/setup.php', 'function tora_tora_home_title_words', 'Home headline word wrapper is missing.');
+file_contains($theme . '/inc/setup.php', 'home-title-word-inner', 'Home headline words have no inner span to slide.');
+file_contains($theme . '/front-page.php', '<h1 id="home-title" aria-label="<?php echo esc_attr($home[\'title\']); ?>">', 'Screen readers can read the split Home headline one word at a time.');
+file_contains($theme . '/inc/setup.php', '<span class="home-title-word" aria-hidden="true"', 'Home headline word spans are exposed to screen readers alongside the heading label.');
+file_contains($theme . '/assets/css/main.css', '@media (prefers-reduced-motion: no-preference)', 'Home motion is not gated on reduced-motion preference.');
+file_contains($theme . '/assets/css/main.css', '@keyframes home-pattern-drift', 'Home speckle has no idle drift.');
+file_contains($theme . '/assets/css/main.css', '.home-panel[data-home-motion="idle"] .home-pattern::before', 'Home drift is not limited to the idle state.');
+file_does_not_contain($theme . '/assets/css/main.css', '@keyframes home-title-in', 'Home headline fades from invisible, which delays the largest paint.');
+file_contains($theme . '/assets/js/site.js', 'function setHomeMotion', 'site.js does not move Home between motion states.');
+file_contains($theme . '/assets/js/site.js', 'homeHasPlayedIntro', 'Returning to Home would replay the full entrance.');
+
 $pattern_dimensions = is_file($theme . '/assets/images/tora-tora-pattern.png')
     ? getimagesize($theme . '/assets/images/tora-tora-pattern.png')
     : false;

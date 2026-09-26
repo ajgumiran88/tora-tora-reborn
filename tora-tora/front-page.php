@@ -109,10 +109,11 @@ $platforms = [
 ];
 ?>
 <main id="main-content" tabindex="-1">
-    <section class="panel home-panel is-active" id="home" data-theme="pattern" aria-labelledby="home-title">
+    <?php /* The entrance starts from first paint; site.js moves Home on to idle, or clears it for reduced motion. */ ?>
+    <section class="panel home-panel is-active" id="home" data-theme="pattern" data-home-motion="intro" aria-labelledby="home-title">
         <div class="home-split">
             <div class="home-content panel-copy">
-                <h1 id="home-title"><?php echo esc_html($home['title']); ?></h1>
+                <h1 id="home-title" aria-label="<?php echo esc_attr($home['title']); ?>"><?php echo tora_tora_home_title_words($home['title']); ?></h1>
                 <?php if (trim((string) $home['content']) !== '') : ?>
                     <div class="entry-content"><?php echo wp_kses_post($home['content']); ?></div>
                 <?php endif; ?>
