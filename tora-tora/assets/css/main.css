@@ -2262,7 +2262,9 @@ h1, h2, h3, h4 {
   .overlay-menu li a { font-size: clamp(1.8rem, 9vw, 2.6rem); }
   .home-panel { padding: 0; }
   .home-split { grid-template-columns: minmax(0, 1.25fr) minmax(6.5rem, .55fr); }
-  .home-content { justify-content: flex-end; min-height: 0; padding: calc(var(--header) + var(--staging) + 1rem) 1.15rem 2rem; }
+  /* Copy starts below the logo row and sits a little above centre, instead of dropping to the bottom
+     edge and leaving a tall blank band under the logo on tall phones. */
+  .home-content { justify-content: center; min-height: 0; padding: var(--chrome-line) var(--side) clamp(2rem, 10svh, 5rem); }
   /* AUTHENTIC is the longest word, about 5.6em wide. 10vw keeps it inside the copy column down to 320px. */
   .home-panel h1,
   .home-content h1 { font-size: min(2.4rem, 10vw); }
@@ -2372,6 +2374,29 @@ h1, h2, h3, h4 {
     aspect-ratio: 250 / 128;
   }
   .contact-map { order: 0; }
+}
+
+/* Phones: the speckle column narrows to a ribbon flush with the right edge, so the copy gets over four
+   fifths of the width. The white gutter goes, and the menu icon moves into the header row beside the
+   ribbon, its bars lined up with the copy's right edge. */
+@media (max-width: 600px) {
+  :root { --home-strip: clamp(3.5rem, 16vw, 4.5rem); }
+  .brand-link { width: clamp(6.7rem, 30vw, 8rem); }
+  .home-split { grid-template-columns: minmax(0, 1fr) var(--home-strip); }
+  /* Cover-scaled blobs are wider than the ribbon and read as a torn edge, so phones repeat the speckle
+     at the finer grain of the Brand Book story templates. The artwork tiles without a visible seam. */
+  .home-pattern::before {
+    background-position: 0 0;
+    background-size: 25rem;
+    background-repeat: repeat;
+  }
+  .home-pattern::after { content: none; }
+  /* The bars sit 12px inside the icon's box. */
+  .pattern-panel:not(.nav-open) .site-header { padding-right: calc(var(--home-strip) + var(--side) - 12px); }
+  /* The headline fills the copy column: AUTHENTIC, the longest line, is 5.39em wide. */
+  .home-panel h1,
+  .home-content h1 { font-size: min(3.75rem, calc((100vw - var(--home-strip) - 2 * var(--side)) / 5.8)); }
+  .home-content .entry-content p { font-size: clamp(.9rem, 3.9vw, 1rem); }
 }
 
 /* Short screens (landscape phones, small laptop windows): Home's copy column scrolls below the logo row
