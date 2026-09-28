@@ -471,7 +471,7 @@ h1, h2, h3, h4 {
 }
 /* Brand Book chapter marker above each panel title: a hairline over a number and a short label. */
 .panel-kicker {
-  display: flex;
+  display: none;
   align-items: baseline;
   gap: .75rem;
   width: max-content;
@@ -1876,21 +1876,12 @@ h1, h2, h3, h4 {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: grayscale(1) contrast(1.22) brightness(.96);
-  transition: transform .55s var(--ease), filter .45s ease;
+  transition: transform .55s var(--ease);
 }
 
-/* Brand moodboard treatment: tiles rest in a Tora Blue duotone (blue shadows, white highlights) and
-   turn to full colour on hover, on keyboard focus and in the lightbox. */
+/* Brand moodboard treatment: blue duotone removed per client request. */
 .gallery-link::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: var(--tora-blue);
-  mix-blend-mode: screen;
-  pointer-events: none;
-  transition: opacity .45s ease;
+  display: none;
 }
 
 @media (hover: hover) {

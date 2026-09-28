@@ -372,7 +372,7 @@ file_contains($theme . '/assets/css/main.css', '.menu-coming-soon {', 'Menu comi
 file_contains($theme . '/inc/setup.php', 'tora_tora_format_address_lines', 'Contact address line formatting helper is missing.');
 file_contains($theme . '/front-page.php', 'contact-location-line', 'Contact address is not rendered as two lines.');
 file_contains($theme . '/assets/css/main.css', 'overflow-wrap: anywhere;', 'Long custom Contact addresses can overflow on mobile.');
-file_contains($theme . '/front-page.php', 'tora_tora_logo_url()', 'Contact does not use the full Tora Tora wordmark.');
+file_contains($theme . '/front-page.php', "tora_tora_asset('images/tora-tora-icon.png')", 'Contact does not use the Tora Tora icon.');
 file_contains($theme . '/inc/setup.php', "tora_tora_asset('images/tora-tora-logo.png')", 'Front-end brand mark does not use the packaged header logo.');
 file_contains($theme . '/inc/setup.php', "tora_tora_asset_version('assets/images/tora-tora-logo.png')", 'Packaged logo is not cache-busted, so staging can keep serving the old circular mark.');
 file_does_not_contain($theme . '/inc/setup.php', "get_theme_mod('custom_logo'", 'Site Identity custom logo still overrides the packaged header mark on staging.');
@@ -503,7 +503,7 @@ foreach (['ramen-noodles', 'ramen-tableware', 'ramen-to-go', 'interior-counter',
 expect_true(!is_file($theme . '/assets/images/gallery-1.jpg'), 'The generic stock gallery photos still ship.');
 file_contains($theme . '/front-page.php', 'srcset=', 'Gallery and kitchen images are not responsive.');
 file_does_not_contain($theme . '/front-page.php', 'Tora Tora gallery image %d', 'Gallery tiles still use numbered alt text instead of describing the image.');
-file_contains($theme . '/assets/css/main.css', "mix-blend-mode: screen;", 'Gallery tiles are missing the Tora Blue duotone.');
+file_does_not_contain($theme . '/assets/css/main.css', "mix-blend-mode: screen;", 'Gallery tiles still carry the Tora Blue duotone the client asked to remove.');
 file_contains($theme . '/assets/css/main.css', "@media (hover: hover) {\n  .gallery-link:hover img", 'Duotone lifts on touch taps instead of only on pointer hover.');
 file_contains($theme . '/assets/css/main.css', '.gallery-link:focus-visible img { filter: none;', 'Keyboard focus does not reveal the gallery photo in colour.');
 file_contains($theme . '/front-page.php', "__('ROAR RAMEN JOINT', 'tora-tora')", 'Gallery ticker does not carry the Roar Ramen Joint line.');

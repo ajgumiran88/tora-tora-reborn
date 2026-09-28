@@ -439,7 +439,7 @@ $platforms = [
             <header class="contact-heading">
                 <h2 id="contact-title"><?php esc_html_e('Contact', 'tora-tora'); ?></h2>
                 <figure class="contact-logo" aria-hidden="true">
-                    <img src="<?php echo esc_url(tora_tora_logo_url()); ?>" alt="" width="330" height="168" loading="lazy" decoding="async">
+                    <img src="<?php echo esc_url(tora_tora_asset('images/tora-tora-icon.png')); ?>" alt="" width="800" height="823" loading="lazy" decoding="async">
                 </figure>
             </header>
             <div class="contact-layout">
