@@ -322,7 +322,7 @@ file_contains($theme . '/assets/css/main.css', '.delivery-zones li {
   min-height: 2.95rem;', 'Delivery zone chips are not on the aligned Figma grid.');
 file_contains($theme . '/assets/css/main.css', '.gallery-cell-1 { grid-area: c1; }', 'Gallery geometric placement is missing.');
 file_contains($theme . '/assets/css/main.css', 'position: absolute;', 'Menu rail is not pinned to the full viewport edge.');
-file_does_not_contain($theme . '/assets/css/main.css', '.menu-rail-right::after', 'Menu rail still has the solid blue hamburger gutter.');
+file_contains($theme . '/assets/css/main.css', '.menu-rail-right::after', 'Menu rail is missing the solid blue hamburger gutter.');
 
 file_contains($theme . '/assets/css/main.css', '--menu-solid: max(calc(var(--menu-rail) / 2), calc(var(--toggle-size) + .5rem));', 'Menu solid gutter is not the Figma half rail, or can shrink below the menu icon.');
 file_contains($theme . '/assets/css/main.css', 'right: calc((var(--menu-solid) - var(--toggle-size)) / 2);', 'Menu icon is not centred in the solid blue gutter, so it can spill off the right edge on phones.');
@@ -538,9 +538,9 @@ expect_true(
 
 
 
-file_contains($theme . '/assets/css/main.css', '"c1 c2 . c3"', 'Gallery row 1 geometric pattern is missing.');
-file_contains($theme . '/assets/css/main.css', '". . c4 c5"', 'Gallery row 2 geometric pattern is missing.');
-file_contains($theme . '/assets/css/main.css', '"c6 c6 c7 ."', 'Gallery row 3 geometric pattern is missing.');
+file_contains($theme . '/assets/css/main.css', '"c1 c2 l1 c3"', 'Gallery row 1 geometric pattern is missing.');
+file_contains($theme . '/assets/css/main.css', '"l2 l2 c4 c5"', 'Gallery row 2 geometric pattern is missing.');
+file_contains($theme . '/assets/css/main.css', '"c6 c6 c7 l3"', 'Gallery row 3 geometric pattern is missing.');
 file_contains($theme . '/assets/css/main.css', '"c8 c9 c10 c11"', 'Gallery row 4 geometric pattern is missing.');
 file_contains($theme . '/inc/setup.php', 'array_slice($parts, 0, $split_at)', 'Contact location is not split correctly.');
 file_does_not_contain($theme . '/assets/css/main.css', ".story-copy .entry-content {\n  position: relative;\n  max-width: none;\n  margin-top: 1.55rem;\n  font-family: var(--font-main);\n  letter-spacing: .02em;\n  text-transform: uppercase;", 'About story copy should be natural sentence case, not uppercase.');
@@ -556,7 +556,7 @@ file_contains($theme . '/inc/default-content.php', "<strong>Tora Tora</strong> b
 file_contains($theme . '/inc/default-content.php', "<strong>dynamic and powerful as the tiger itself</strong>", 'About copy missing bold emphasis 4');
 
 // 3. Menu rail full coverage without solid overlay
-file_does_not_contain($theme . '/assets/css/main.css', '.menu-rail-right::after', 'Menu rail still has the solid blue hamburger gutter.');
+file_contains($theme . '/assets/css/main.css', '.menu-rail-right::after', 'Menu rail is missing the solid blue hamburger gutter.');
 
 // 4. Delivery card CTA spacing and zone boxes grid
 // Already added check for 3 columns:
@@ -564,9 +564,9 @@ file_does_not_contain($theme . '/assets/css/main.css', '.menu-rail-right::after'
 file_contains($theme . '/assets/css/main.css', 'padding-top: 3.5rem;', 'Delivery card CTA spacing not increased.');
 
 // 5. Gallery 4x4 geometric pattern tiles
-file_contains($theme . '/assets/css/main.css', '"c1 c2 . c3"', 'Gallery row 1 geometric pattern is missing.');
-file_contains($theme . '/assets/css/main.css', '". . c4 c5"', 'Gallery row 2 geometric pattern is missing.');
-file_contains($theme . '/assets/css/main.css', '"c6 c6 c7 ."', 'Gallery row 3 geometric pattern is missing.');
+file_contains($theme . '/assets/css/main.css', '"c1 c2 l1 c3"', 'Gallery row 1 geometric pattern is missing.');
+file_contains($theme . '/assets/css/main.css', '"l2 l2 c4 c5"', 'Gallery row 2 geometric pattern is missing.');
+file_contains($theme . '/assets/css/main.css', '"c6 c6 c7 l3"', 'Gallery row 3 geometric pattern is missing.');
 file_contains($theme . '/assets/css/main.css', '"c8 c9 c10 c11"', 'Gallery row 4 geometric pattern is missing.');
 
 // 6. Careers two-line title with "THE TEAM" locked and bullet separator

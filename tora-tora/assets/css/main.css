@@ -1332,7 +1332,15 @@ h1, h2, h3, h4 {
 }
 
 /* Solid blue far-right strip for the hamburger. Half the rail (Figma 1:1 with the pattern) where it fits. */
-
+.menu-rail-right::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--menu-solid);
+  background: var(--tora-blue);
+}
 
 .menu-layout {
   display: flex;
@@ -1778,9 +1786,9 @@ h1, h2, h3, h4 {
   flex: 0 0 auto;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-template-areas:
-    "c1 c2 . c3"
-    ". . c4 c5"
-    "c6 c6 c7 ."
+    "c1 c2 l1 c3"
+    "l2 l2 c4 c5"
+    "c6 c6 c7 l3"
     "c8 c9 c10 c11";
   gap: clamp(.45rem, 1.1vw, .85rem);
   --gallery-gap: clamp(.45rem, 1.1vw, .85rem);
