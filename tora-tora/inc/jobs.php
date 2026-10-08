@@ -172,10 +172,10 @@ function tora_tora_job_meta_line(int $post_id): string
 {
     $types = tora_tora_job_type_labels($post_id);
     $location = tora_tora_job_location($post_id);
-    if ($location === '') {
-        $location = 'Dubai Marina';
-    }
     $type_line = $types ? implode(' / ', array_map('strtoupper', $types)) : 'FULL TIME';
+    if ($location === '' || strcasecmp(trim($location), 'Dubai Marina') === 0) {
+        return $type_line;
+    }
     return tora_tora_normalize_job_meta_separator($type_line . ' <span class="careers-job-bullet">•</span> ' . strtoupper($location));
 }
 
@@ -187,11 +187,11 @@ function tora_tora_job_meta_line(int $post_id): string
 function tora_tora_default_careers_jobs(): array
 {
     $default = [
-        ['title' => 'Head Ramen Chef', 'meta' => 'FULL TIME • DUBAI MARINA', 'content' => '<p>Lead ramen line precision pace. You craft broths, manage prep, train team, keep every bowl consistent Tora Tora standards.</p>'],
-        ['title' => 'Line Cook', 'meta' => 'FULL-TIME / PART-TIME • DUBAI MARINA', 'content' => '<p>Support service on fast-moving line. Prep ingredients, cook spec, keep pass clean, calm, ready peak hours.</p>'],
-        ['title' => 'Floor Staff / Server', 'meta' => 'FULL TIME • DUBAI MARINA', 'content' => '<p>Bring energy dining room. Guide guests, take orders, deliver a warm, confident Tora Tora experience from first hello last bowl.</p>'],
-        ['title' => 'Cashier', 'meta' => 'FULL TIME • DUBAI MARINA', 'content' => '<p>Own front counter accuracy speed. Handle payments, manage takeout flow, keep guest handoff smooth friendly.</p>'],
-        ['title' => 'Kitchen Porter', 'meta' => 'FULL TIME • DUBAI MARINA', 'content' => '<p>Keep kitchen running clean stocked. Wash, organize, restock, support team service never slows down.</p>'],
+        ['title' => 'Head Ramen Chef', 'meta' => 'FULL TIME ', 'content' => '<p>Lead ramen line precision pace. You craft broths, manage prep, train team, keep every bowl consistent Tora Tora standards.</p>'],
+        ['title' => 'Line Cook', 'meta' => 'FULL-TIME / PART-TIME ', 'content' => '<p>Support service on fast-moving line. Prep ingredients, cook spec, keep pass clean, calm, ready peak hours.</p>'],
+        ['title' => 'Floor Staff / Server', 'meta' => 'FULL TIME ', 'content' => '<p>Bring energy dining room. Guide guests, take orders, deliver a warm, confident Tora Tora experience from first hello last bowl.</p>'],
+        ['title' => 'Cashier', 'meta' => 'FULL TIME ', 'content' => '<p>Own front counter accuracy speed. Handle payments, manage takeout flow, keep guest handoff smooth friendly.</p>'],
+        ['title' => 'Kitchen Porter', 'meta' => 'FULL TIME ', 'content' => '<p>Keep kitchen running clean stocked. Wash, organize, restock, support team service never slows down.</p>'],
     ];
 
     return array_map(static function (array $job): array {
