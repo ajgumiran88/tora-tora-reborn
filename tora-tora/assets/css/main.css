@@ -347,7 +347,7 @@ h1, h2, h3, h4 {
   z-index: 1;
   display: grid;
   align-content: center;
-  gap: .15rem;
+  gap: clamp(.9rem, 2.4vw, 1.6rem);
   margin: 0;
   padding: var(--staging) 8vw 0 4vw;
   list-style: none;
@@ -357,7 +357,7 @@ h1, h2, h3, h4 {
   position: relative;
   display: inline-block;
   color: var(--tora-white);
-  font-size: clamp(2rem, 5.6vw, 4.4rem);
+  font-size: clamp(1.6rem, 3.4vw, 2.8rem);
   font-weight: 200;
   letter-spacing: -.04em;
   line-height: 1.12;
@@ -1033,12 +1033,11 @@ h1, h2, h3, h4 {
   margin-top: 1.55rem;
   font-family: var(--font-main);
   letter-spacing: .02em;
-  text-transform: uppercase;
-}
+  }
 
 .story-copy .entry-content p {
   font-size: clamp(1.02rem, 1.38vw, 1.22rem);
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: .045em;
   line-height: 1.5;
 }
@@ -1333,15 +1332,7 @@ h1, h2, h3, h4 {
 }
 
 /* Solid blue far-right strip for the hamburger. Half the rail (Figma 1:1 with the pattern) where it fits. */
-.menu-rail-right::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: var(--menu-solid);
-  background: var(--tora-blue);
-}
+
 
 .menu-layout {
   display: flex;
@@ -1602,9 +1593,7 @@ h1, h2, h3, h4 {
   margin-top: clamp(.55rem, 1.4vh, .85rem);
   text-transform: uppercase;
   letter-spacing: .07em;
-  font-size: .72rem;
-  font-weight: 500;
-  line-height: 1.45;
+  font-size: .65rem; font-weight: 500; line-height: 1.35; letter-spacing: .04em;
 }
 .delivery-partners {
   margin-top: clamp(1.35rem, 3.6vh, 2.25rem);
@@ -1661,7 +1650,7 @@ h1, h2, h3, h4 {
   align-items: center;
   gap: .4rem;
   margin-top: auto;
-  padding-top: 2.35rem;
+  padding-top: 3.5rem;
   font-size: .7rem;
   font-weight: 800;
   letter-spacing: .12em;
@@ -1674,9 +1663,7 @@ h1, h2, h3, h4 {
   padding: 0;
   border-top: 0;
 }
-.delivery-boxes {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+.delivery-boxes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: start;
   gap: clamp(2rem, 5vw, 4.5rem);
   max-width: none;
@@ -1791,9 +1778,9 @@ h1, h2, h3, h4 {
   flex: 0 0 auto;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-template-areas:
-    "c1 c2 l1 c3"
-    "l2 l2 c4 c5"
-    "c6 c6 c7 l3"
+    "c1 c2 . c3"
+    ". . c4 c5"
+    "c6 c6 c7 ."
     "c8 c9 c10 c11";
   gap: clamp(.45rem, 1.1vw, .85rem);
   --gallery-gap: clamp(.45rem, 1.1vw, .85rem);
@@ -2331,8 +2318,8 @@ h1, h2, h3, h4 {
   .brand-link { width: 6.7rem; height: var(--brand-mark); }
   /* Each panel keeps its own inner scroller on phones too, so the fixed logo row never floats over moving content. */
   .overlay-menu { grid-template-columns: 4.5rem 1fr; }
-  .overlay-menu ul { padding: var(--staging) 1.2rem 0 1.4rem; }
-  .overlay-menu li a { font-size: clamp(1.8rem, 9vw, 2.6rem); }
+  .overlay-menu ul { gap: 1.1rem; padding: var(--staging) 1.2rem 0 1.4rem; }
+  .overlay-menu li a { font-size: clamp(1.5rem, 7vw, 2rem); }
   .home-panel { padding: 0; }
   .home-split { grid-template-columns: minmax(0, 1.25fr) minmax(6.5rem, .55fr); }
   /* Copy starts below the logo row and sits a little above centre, instead of dropping to the bottom
@@ -2490,16 +2477,21 @@ h1, h2, h3, h4 {
 
   .overlay-menu ul {
     align-content: start;
+    gap: .75rem;
     padding-top: calc(var(--staging) + 1.25rem);
     padding-bottom: 1.25rem;
     overflow-y: auto;
   }
 
-  .overlay-menu li a { font-size: clamp(1.35rem, 8vh, 2.4rem); line-height: 1.08; }
+  .overlay-menu li a { font-size: clamp(1.2rem, 6vh, 2rem); line-height: 1.08; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   .overlay-menu li { transition-delay: 0s !important; }
+}
+
+.careers-team-line {
+  white-space: nowrap;
 }

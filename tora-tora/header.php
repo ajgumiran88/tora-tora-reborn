@@ -38,7 +38,7 @@
         <button class="overlay-close" type="button" aria-label="<?php esc_attr_e('Close menu', 'tora-tora'); ?>">×</button>
         <ul>
             <li><a class="nav-link is-active" href="<?php echo esc_url(home_url('/#home')); ?>" data-target="home"><?php esc_html_e('Home', 'tora-tora'); ?></a></li>
-            <li><a class="nav-link" href="<?php echo esc_url(home_url('/#about')); ?>" data-target="about"><?php esc_html_e('About Tora Tora', 'tora-tora'); ?></a></li>
+            <li><a class="nav-link" href="<?php echo esc_url(home_url('/#about')); ?>" data-target="about"><?php esc_html_e('About', 'tora-tora'); ?></a></li>
             <li><a class="nav-link" href="<?php echo esc_url(home_url('/#menu')); ?>" data-target="menu"><?php esc_html_e('Menu', 'tora-tora'); ?></a></li>
             <?php if (tora_tora_delivery_enabled()) : ?>
                 <li><a class="nav-link" href="<?php echo esc_url(home_url('/#delivery')); ?>" data-target="delivery"><?php esc_html_e('Delivery', 'tora-tora'); ?></a></li>

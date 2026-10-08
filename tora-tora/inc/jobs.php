@@ -176,7 +176,7 @@ function tora_tora_job_meta_line(int $post_id): string
         $location = 'Dubai Marina';
     }
     $type_line = $types ? implode(' / ', array_map('strtoupper', $types)) : 'FULL TIME';
-    return tora_tora_normalize_job_meta_separator($type_line . ' • ' . strtoupper($location));
+    return tora_tora_normalize_job_meta_separator($type_line . ' <span class="careers-job-bullet">•</span> ' . strtoupper($location));
 }
 
 /**

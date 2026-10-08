@@ -557,6 +557,12 @@ function tora_tora_maybe_upgrade_content(): void
         update_option('tora_tora_seeded_version', $current, false);
     }
 
+        if (version_compare($current, '1.6.0', '<')) {
+        tora_tora_upgrade_about_copy_1_6_0();
+        $current = '1.6.0';
+        update_option('tora_tora_seeded_version', $current, false);
+    }
+
     if (version_compare($current, '1.5.1', '<')) {
         tora_tora_upgrade_about_kitchen_1_5_1();
         $current = '1.5.1';
@@ -829,6 +835,23 @@ function tora_tora_upgrade_about_kitchen_1_5_0(): void
  * 1.5.0 seeded a one-line kitchen section. Swap it for the fuller story, but only while it is still
  * exactly the seed, so an editor's own Chef Gouda copy is never overwritten.
  */
+
+function tora_tora_upgrade_about_copy_1_6_0(): void
+{
+    $page = get_page_by_path('story', OBJECT, 'page');
+    if (!$page instanceof WP_Post) {
+        return;
+    }
+
+    $defaults = tora_tora_default_pages();
+    $expected = $defaults['story']['content'];
+
+    wp_update_post([
+        'ID'           => (int) $page->ID,
+        'post_content' => $expected,
+    ]);
+}
+
 function tora_tora_upgrade_about_kitchen_1_5_1(): void
 {
     $page = get_page_by_path('story', OBJECT, 'page');

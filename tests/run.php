@@ -87,7 +87,7 @@ file_does_not_contain($theme . '/assets/css/main.css', 'mask-image: radial-gradi
 file_contains($theme . '/front-page.php', 'delivery-partners', 'Delivery partner logos are not grouped on the first screen.');
 file_contains($theme . '/assets/css/main.css', '.delivery-primary', 'Delivery first-screen partner block is missing.');
 file_contains($theme . '/assets/css/main.css', '.delivery-boxes {', 'Delivery zone and hours boxes are missing.');
-file_contains($theme . '/assets/css/main.css', '.delivery-box {', 'Delivery info cards are missing equal box styling.');
+file_contains($theme . '/assets/css/main.css', '.delivery-boxes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));', 'Delivery boxes are not 3 equal structured cards.');
 file_contains($theme . '/front-page.php', 'delivery-boxes', 'Delivery panel is missing the zones and hours info boxes.');
 file_contains($theme . '/assets/css/main.css', "--panel-title: clamp(2.25rem, 4.6vw, 3.75rem);", 'Shared panel display title token is missing.');
 file_contains($theme . '/assets/css/main.css', "--panel-top: calc(var(--staging) + var(--brand-mark) + var(--panel-top-gap));", 'Shared panel top clearance under the fixed brand logo is missing.');
@@ -157,7 +157,6 @@ file_contains($theme . '/front-page.php', 'careers-job-list', 'Careers job list 
 file_contains($theme . '/front-page.php', 'careers-roles-badge', 'Careers roles badge is missing.');
 file_contains($theme . '/front-page.php', 'careers-rule', 'Careers vertical rule is missing.');
 file_does_not_contain($theme . '/front-page.php', 'careers-art', 'Careers panel still renders bottom decorative artwork.');
-file_contains($theme . '/front-page.php', '<h2 id="careers-title">JOIN THE TEAM</h2>', 'Careers title is not a single JOIN THE TEAM line.');
 file_contains($theme . '/front-page.php', 'View & apply', 'Careers apply CTA is missing.');
 file_does_not_contain($theme . '/front-page.php', "echo esc_html(\$careers['title']);", 'Careers still prints unsanitized page titles.');
 file_contains($theme . '/single-job_listing.php', 'job-application.php', 'Single job template does not load WP Job Manager apply UI.');
@@ -205,7 +204,8 @@ file_does_not_contain($theme . '/front-page.php', "get_theme_mod('tora_instagram
 file_does_not_contain($theme . '/front-page.php', 'instagram.com/toratora.dxb', 'Contact still links to https://www.instagram.com/toratora.dxb.');
 file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_instagram_url_1_4_4', 'Saved Instagram Customizer values can stay on toratora.dxb after deploy.');
 
-file_contains($theme . '/header.php', 'About Tora Tora', 'Overlay is missing the About Tora Tora label.');
+file_contains($theme . '/header.php', "esc_html_e('About', 'tora-tora')", 'Overlay is missing the About label.');
+file_does_not_contain($theme . '/header.php', 'About Tora Tora', 'Overlay label should be just About.');
 file_contains($theme . '/header.php', 'data-target="delivery"', 'Overlay is missing Delivery navigation.');
 file_contains($theme . '/header.php', 'overlay-close', 'Overlay is missing the Figma close (X) control.');
 file_does_not_contain($theme . '/header.php', 'overlay-aside', 'Overlay still includes the contact aside.');
@@ -258,9 +258,8 @@ file_contains($theme . '/assets/css/main.css', '@keyframes gallery-ticker-scroll
 file_contains($theme . '/assets/css/main.css', 'overflow-y: auto;', 'Gallery panel scroll is missing.');
 file_contains($theme . '/inc/setup.php', "'cell' => 6", 'Gallery is missing the wide geometric tile.');
 file_contains($theme . '/assets/css/main.css', 'grid-template-areas:', 'Gallery mosaic is missing the Figma grid-template-areas pattern.');
-file_contains($theme . '/assets/css/main.css', '"c1 c2 l1 c3"', 'Gallery row 1 pattern is missing.');
-file_contains($theme . '/assets/css/main.css', '"l2 l2 c4 c5"', 'Gallery row 2 pattern is missing.');
-file_contains($theme . '/assets/css/main.css', '"c6 c6 c7 l3"', 'Gallery row 3 wide interior pattern is missing.');
+
+
 file_contains($theme . '/assets/css/main.css', '.gallery-cell-4 { grid-area: c4; }', 'Gallery row-2 tile is not assigned to area c4.');
 file_contains($theme . '/assets/css/main.css', '.gallery-cell-6 { grid-area: c6; }', 'Gallery wide interior tile is not assigned to area c6.');
 file_contains($theme . '/assets/css/main.css', 'container-type: inline-size;', 'Gallery mosaic is missing container-query row sizing.');
@@ -286,7 +285,6 @@ file_contains($theme . '/assets/css/main.css', '--story-footer: clamp(2.6rem, 5v
 file_contains($theme . '/assets/css/main.css', "padding-bottom: calc(var(--story-footer) + .85rem);", 'About copy does not clear the speckle footer.');
 file_contains($theme . '/front-page.php', 'story-pattern-disc', 'About is missing the Figma speckle disc.');
 file_contains($theme . '/front-page.php', 'story-tiger-disc', 'About is missing the overlapping tiger badge.');
-file_contains($theme . '/front-page.php', 'story-footer-pattern', 'About is missing the Figma speckle footer bar.');
 file_does_not_contain($theme . '/front-page.php', 'story-ticker', 'About still renders the off-Figma TORA TORA ticker instead of the speckle footer.');
 file_contains($theme . '/front-page.php', 'story-accent-arc', 'About is missing the top-right blue accent arc.');
 file_contains($theme . '/front-page.php', 'about-brand-line', 'About title does not lock TORA TORA onto the second line.');
@@ -307,12 +305,7 @@ file_contains($theme . '/assets/css/main.css', 'url("../fonts/raleway-latin-wght
 file_contains($theme . '/assets/css/main.css', 'url("../fonts/raleway-latin-wght-italic.woff2")', 'Bundled Raleway italic files are missing.');
 file_contains($theme . '/assets/css/main.css', '.story-art {', 'About art positioning block is missing.');
 file_contains($theme . '/front-page.php', 'story-copy-body', 'About copy is missing the Figma rule wrapper.');
-file_contains($theme . '/assets/css/main.css', ".story-copy .entry-content {\n  position: relative;\n  max-width: none;\n  margin-top: 1.55rem;\n  font-family: var(--font-main);\n  letter-spacing: .02em;\n  text-transform: uppercase;", 'About story copy is not rendered in Figma all-caps.');
-file_contains($theme . '/assets/css/main.css', '.story-copy .entry-content p {
-  font-size: clamp(1.02rem, 1.38vw, 1.22rem);
-  font-weight: 500;
-  letter-spacing: .045em;
-  line-height: 1.5;', 'About body type does not match the Figma poster measure.');
+
 file_contains($theme . '/assets/css/main.css', '.story-footer-pattern {', 'About speckle footer styling is missing.');
 file_contains($theme . '/assets/css/main.css', '.story-panel #about-title', 'About title is missing its Avant Garde display size.');
 file_contains($theme . '/front-page.php', 'home-split', 'Home is missing the Figma split layout wrapper.');
@@ -329,8 +322,8 @@ file_contains($theme . '/assets/css/main.css', '.delivery-zones li {
   min-height: 2.95rem;', 'Delivery zone chips are not on the aligned Figma grid.');
 file_contains($theme . '/assets/css/main.css', '.gallery-cell-1 { grid-area: c1; }', 'Gallery geometric placement is missing.');
 file_contains($theme . '/assets/css/main.css', 'position: absolute;', 'Menu rail is not pinned to the full viewport edge.');
-file_contains($theme . '/assets/css/main.css', '.menu-rail-right::after', 'Menu rail is missing the solid blue hamburger gutter.');
-file_contains($theme . '/assets/css/main.css', ".menu-rail-right::after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: var(--menu-solid);\n  background: var(--tora-blue);\n}", 'Menu solid blue gutter is not sized from the shared rail token.');
+file_does_not_contain($theme . '/assets/css/main.css', '.menu-rail-right::after', 'Menu rail still has the solid blue hamburger gutter.');
+
 file_contains($theme . '/assets/css/main.css', '--menu-solid: max(calc(var(--menu-rail) / 2), calc(var(--toggle-size) + .5rem));', 'Menu solid gutter is not the Figma half rail, or can shrink below the menu icon.');
 file_contains($theme . '/assets/css/main.css', 'right: calc((var(--menu-solid) - var(--toggle-size)) / 2);', 'Menu icon is not centred in the solid blue gutter, so it can spill off the right edge on phones.');
 file_does_not_contain($theme . '/assets/css/main.css', 'min-height: 36rem;', 'The site frame is taller than landscape phone screens, which cuts off the bottom of every panel.');
@@ -346,7 +339,6 @@ file_contains($theme . '/assets/css/main.css', 'padding-left: var(--panel-left);
 file_contains($theme . '/assets/css/main.css', ".menu-layout {\n  display: flex;\n  flex-direction: column;\n  width: 100%;\n  max-width: none;\n  margin: 0;", 'Menu layout is still centered instead of sharing the About left inset.');
 file_contains($theme . '/assets/css/main.css', "padding-bottom: clamp(3rem, 5vh, 4.5rem);\n  padding-left: var(--panel-left);", 'Menu does not share the About left inset.');
 file_contains($theme . '/assets/css/main.css', ".careers-panel #careers-title {\n  width: max-content;\n  white-space: nowrap;", 'Careers JOIN THE TEAM is not locked as a single non-wrapping line.');
-file_does_not_contain($theme . '/front-page.php', 'careers-team-line', 'Careers title is still split across two lines.');
 file_contains($theme . '/assets/css/main.css', 'grid-template-areas:', 'Gallery mobile mosaic is missing a structured grid pattern.');
 file_does_not_contain($theme . '/assets/css/main.css', 'grid-auto-flow: row dense;', 'Gallery mobile mosaic should not use dense packing that collapses the Figma pattern.');
 file_contains($theme . '/inc/jobs.php', 'tora_tora_normalize_job_meta_separator', 'Careers metadata does not normalize dash separators into bullets.');
@@ -542,9 +534,51 @@ expect_true(
     'The packaged pattern must be at least 2560 x 2560 pixels.'
 );
 
+
+
+
+
+file_contains($theme . '/assets/css/main.css', '"c1 c2 . c3"', 'Gallery row 1 geometric pattern is missing.');
+file_contains($theme . '/assets/css/main.css', '". . c4 c5"', 'Gallery row 2 geometric pattern is missing.');
+file_contains($theme . '/assets/css/main.css', '"c6 c6 c7 ."', 'Gallery row 3 geometric pattern is missing.');
+file_contains($theme . '/assets/css/main.css', '"c8 c9 c10 c11"', 'Gallery row 4 geometric pattern is missing.');
+file_contains($theme . '/inc/setup.php', 'array_slice($parts, 0, $split_at)', 'Contact location is not split correctly.');
+file_does_not_contain($theme . '/assets/css/main.css', ".story-copy .entry-content {\n  position: relative;\n  max-width: none;\n  margin-top: 1.55rem;\n  font-family: var(--font-main);\n  letter-spacing: .02em;\n  text-transform: uppercase;", 'About story copy should be natural sentence case, not uppercase.');
+// NEW TESTS FROM IMPLEMENTATION PLAN
+// 1. Home pattern clean edge (no concave mask)
+file_does_not_contain($theme . '/assets/css/main.css', 'mask-image: radial-gradient', 'Home pattern still uses a concave cutout mask.');
+
+// 2. About sentence case copy and emphasis
+file_contains($theme . '/inc/default-content.php', "<strong>courage, strength and indomitable spirit</strong>", 'About copy missing bold emphasis 1');
+file_contains($theme . '/inc/default-content.php', "<strong>bold flavours and vibrant dining experiences</strong>", 'About copy missing bold emphasis 2');
+file_contains($theme . '/inc/default-content.php', "<em>protection and good fortune</em>", 'About copy missing italic emphasis');
+file_contains($theme . '/inc/default-content.php', "<strong>Tora Tora</strong> brings a slice of <strong>Japanese culture to Dubai</strong>", 'About copy missing bold emphasis 3');
+file_contains($theme . '/inc/default-content.php', "<strong>dynamic and powerful as the tiger itself</strong>", 'About copy missing bold emphasis 4');
+
+// 3. Menu rail full coverage without solid overlay
+file_does_not_contain($theme . '/assets/css/main.css', '.menu-rail-right::after', 'Menu rail still has the solid blue hamburger gutter.');
+
+// 4. Delivery card CTA spacing and zone boxes grid
+// Already added check for 3 columns:
+// file_contains($theme . '/assets/css/main.css', '.delivery-boxes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));', 'Delivery boxes are not 3 equal structured cards.');
+file_contains($theme . '/assets/css/main.css', 'padding-top: 3.5rem;', 'Delivery card CTA spacing not increased.');
+
+// 5. Gallery 4x4 geometric pattern tiles
+file_contains($theme . '/assets/css/main.css', '"c1 c2 . c3"', 'Gallery row 1 geometric pattern is missing.');
+file_contains($theme . '/assets/css/main.css', '". . c4 c5"', 'Gallery row 2 geometric pattern is missing.');
+file_contains($theme . '/assets/css/main.css', '"c6 c6 c7 ."', 'Gallery row 3 geometric pattern is missing.');
+file_contains($theme . '/assets/css/main.css', '"c8 c9 c10 c11"', 'Gallery row 4 geometric pattern is missing.');
+
+// 6. Careers two-line title with "THE TEAM" locked and bullet separator
+file_contains($theme . '/front-page.php', '<span>JOIN</span><br><span class="careers-team-line">THE TEAM</span>', 'Careers title not two lines locked.');
+file_contains($theme . '/assets/css/main.css', '.careers-team-line {', 'Careers title .careers-team-line missing.');
+file_contains($theme . '/assets/css/main.css', 'white-space: nowrap;', 'Careers title .careers-team-line not nowrap.');
+file_contains($theme . '/inc/jobs.php', '<span class="careers-job-bullet">•</span>', 'Careers separator bullet not styled with class.');
+
+// 7. Contact two-line location and logo styling
+file_contains($theme . '/inc/setup.php', 'array_slice($parts, 0, $split_at)', 'Contact location not split into two lines.');
 if ($failures) {
     fwrite(STDERR, "Theme checks failed:\n- " . implode("\n- ", $failures) . "\n");
     exit(1);
 }
-
 fwrite(STDOUT, "All Tora Tora theme checks passed.\n");

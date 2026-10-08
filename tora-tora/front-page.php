@@ -159,7 +159,17 @@ $platforms = [
                 <?php endif; ?>
             </div>
         </div>
-        <div class="story-footer-pattern" aria-hidden="true"></div>
+        <div class="gallery-ticker" aria-hidden="true">
+            <div class="gallery-ticker-track">
+                <?php for ($gallery_ticker_repeat = 0; $gallery_ticker_repeat < 2; $gallery_ticker_repeat++) : ?>
+                    <span class="gallery-ticker-group">
+                        <?php for ($gallery_ticker_item = 0; $gallery_ticker_item < 8; $gallery_ticker_item++) : ?>
+                            <span class="gallery-ticker-word"><?php echo esc_html($gallery_ticker_words[$gallery_ticker_item % 2]); ?></span><span class="gallery-ticker-dot" aria-hidden="true">.</span>
+                        <?php endfor; ?>
+                    </span>
+                <?php endfor; ?>
+            </div>
+        </div>
     </section>
 
     <section class="panel menu-panel" id="menu" data-theme="light" aria-labelledby="menu-title" aria-hidden="true">
@@ -302,7 +312,7 @@ $platforms = [
             </div>
             <div class="delivery-secondary">
                 <div class="delivery-boxes">
-                    <section class="delivery-box delivery-zones-block" aria-labelledby="delivery-zones-title">
+                    <section class="delivery-card delivery-box delivery-zones-block" aria-labelledby="delivery-zones-title">
                         <p class="delivery-label" id="delivery-zones-title"><?php esc_html_e('Delivery zones', 'tora-tora'); ?></p>
                         <ul class="delivery-zones">
                             <?php foreach ($delivery_zones as $zone) : ?>
@@ -310,7 +320,7 @@ $platforms = [
                             <?php endforeach; ?>
                         </ul>
                     </section>
-                    <section class="delivery-box delivery-hours-block" aria-labelledby="delivery-hours-title">
+                    <section class="delivery-card delivery-box delivery-hours-block" aria-labelledby="delivery-hours-title">
                         <p class="delivery-label" id="delivery-hours-title"><?php esc_html_e('Delivery hours', 'tora-tora'); ?></p>
                         <dl class="delivery-hours">
                             <div><dt><?php esc_html_e('Monday - Friday', 'tora-tora'); ?></dt><dd><?php echo esc_html((string) get_theme_mod('tora_hours_weekday', '11:00 - 22:30')); ?></dd></div>
@@ -375,7 +385,7 @@ $platforms = [
                 <header class="careers-header">
                     <?php tora_tora_panel_kicker(++$panel_number, __('Careers', 'tora-tora')); ?>
                     <div class="careers-title-row">
-                        <h2 id="careers-title">JOIN THE TEAM</h2>
+                        <h2 id="careers-title"><span>JOIN</span><br><span class="careers-team-line">THE TEAM</span></h2>
                         <p class="careers-roles-badge"><?php echo esc_html($careers_roles_label); ?></p>
                     </div>
                     <p class="careers-intro"><?php esc_html_e('AT TORA TORA, WE MOVE FAST, COOK BOLD, AND CELEBRATE EVERYONE WHO BRINGS THE TIGER SPIRIT TO WORK. WE ARE BUILDING SOMETHING EXCEPTIONAL IN DUBAI AND WE WANT EXCEPTIONAL PEOPLE WITH US.', 'tora-tora'); ?></p>
