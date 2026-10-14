@@ -1789,15 +1789,17 @@ h1, h2, h3, h4 {
     "c1 c2 l1 c3"
     "l2 l2 c4 c5"
     "c6 c6 c7 l3"
-    "c8 c9 c10 c11";
+    "c8 c9 c10 c11"
+    "l4 c12 c13 c14";
   gap: clamp(.45rem, 1.1vw, .85rem);
   --gallery-gap: clamp(.45rem, 1.1vw, .85rem);
   --gallery-col: calc((100cqi - (3 * var(--gallery-gap))) / 4);
   grid-template-rows:
     var(--gallery-col)
+    calc(var(--gallery-col) * 9 / 16)
+    calc((var(--gallery-col) * 2 + var(--gallery-gap)) * 9 / 16)
     var(--gallery-col)
-    calc((var(--gallery-col) * 2 + var(--gallery-gap)) / 2)
-    var(--gallery-col);
+    calc(var(--gallery-col) * 3 / 4);
   min-height: 0;
 }
 
@@ -1837,6 +1839,7 @@ h1, h2, h3, h4 {
 .gallery-label-01 { grid-area: l1; align-self: end; }
 .gallery-label-02 { grid-area: l2; align-self: center; }
 .gallery-label-03 { grid-area: l3; align-self: center; }
+.gallery-label-04 { grid-area: l4; align-self: center; }
 
 .gallery-link {
   position: relative;
@@ -1864,6 +1867,9 @@ h1, h2, h3, h4 {
 .gallery-cell-9 { grid-area: c9; }
 .gallery-cell-10 { grid-area: c10; }
 .gallery-cell-11 { grid-area: c11; }
+.gallery-cell-12 { grid-area: c12; }
+.gallery-cell-13 { grid-area: c13; }
+.gallery-cell-14 { grid-area: c14; }
 
 .gallery-link img {
   display: block;
@@ -1873,6 +1879,8 @@ h1, h2, h3, h4 {
   object-position: center;
   transition: transform .55s var(--ease);
 }
+
+.gallery-cell-14 img { object-position: center 18%; }
 
 /* Brand moodboard treatment: blue duotone removed per client request. */
 .gallery-link::after {
@@ -2407,7 +2415,7 @@ h1, h2, h3, h4 {
   .gallery-mosaic {
     container-type: normal;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    /* Each section label leads its own images: 01 ramen, 02 interior, 03 brand. */
+    /* Each section label leads its own images: 01 ramen, 02 interior, 03 brand, 04 team. */
     grid-template-areas:
       "l1 l1"
       "c1 c2"
@@ -2418,7 +2426,10 @@ h1, h2, h3, h4 {
       "c7 c7"
       "l3 l3"
       "c8 c9"
-      "c10 c11";
+      "c10 c11"
+      "l4 l4"
+      "c12 c13"
+      "c14 c14";
     grid-template-rows: none;
     grid-auto-rows: auto;
     gap: clamp(.45rem, 2vw, .75rem);
@@ -2436,10 +2447,21 @@ h1, h2, h3, h4 {
     aspect-ratio: 119 / 127;
     height: auto;
   }
-  .gallery-cell-3,
+  .gallery-cell-3 {
+    aspect-ratio: 250 / 128;
+  }
+  .gallery-cell-4,
+  .gallery-cell-5,
   .gallery-cell-6,
   .gallery-cell-7 {
-    aspect-ratio: 250 / 128;
+    aspect-ratio: 16 / 9;
+  }
+  .gallery-cell-12,
+  .gallery-cell-13 {
+    aspect-ratio: 4 / 3;
+  }
+  .gallery-cell-14 {
+    aspect-ratio: 3 / 4;
   }
   .contact-map { order: 0; }
 }

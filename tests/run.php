@@ -253,6 +253,8 @@ file_contains($theme . '/front-page.php', 'gallery-label', 'Gallery is missing t
 file_contains($theme . '/front-page.php', "'slug' => '01'", 'Gallery is missing the Figma 01 FOOD label.');
 file_contains($theme . '/front-page.php', "'slug' => '02'", 'Gallery is missing the Figma 02 INTERIOR label.');
 file_contains($theme . '/front-page.php', "'slug' => '03'", 'Gallery is missing the Figma 03 FOOD label.');
+file_contains($theme . '/front-page.php', "'slug' => '04'", 'Gallery is missing the 04 TEAM label.');
+file_contains($theme . '/assets/css/main.css', '.gallery-cell-12 { grid-area: c12; }', 'Gallery team tile is not assigned to area c12.');
 file_contains($theme . '/front-page.php', 'gallery-ticker-track', 'Gallery ticker is missing the scrolling marquee track.');
 file_contains($theme . '/assets/css/main.css', '@keyframes gallery-ticker-scroll', 'Gallery ticker marquee animation is missing.');
 file_contains($theme . '/assets/css/main.css', 'overflow-y: auto;', 'Gallery panel scroll is missing.');
@@ -486,7 +488,7 @@ if (function_exists('imagecreatefromjpeg') && is_file($theme . '/assets/images/t
     }
     expect_true($off_brand_blue === 0, "The speckle pattern still uses the off-palette #002AF2 blue ({$off_brand_blue} sampled pixels).");
 }
-foreach (['ramen-noodles', 'ramen-tableware', 'ramen-to-go', 'interior-counter', 'interior-booths', 'interior-shibori', 'interior-bar', 'brand-cups', 'brand-sign', 'brand-bag', 'brand-hoarding'] as $gallery_stem) {
+foreach (['ramen-noodles', 'ramen-tableware', 'ramen-to-go', 'interior-counter', 'interior-booths', 'interior-shibori', 'interior-bar', 'brand-cups', 'brand-sign', 'brand-bag', 'brand-hoarding', 'team-hall', 'team-floor', 'team-kitchen'] as $gallery_stem) {
     foreach (['sm', 'lg'] as $gallery_size) {
         expect_true(is_file($theme . "/assets/images/gallery-{$gallery_stem}-{$gallery_size}.jpg"), "Brand gallery image gallery-{$gallery_stem}-{$gallery_size}.jpg is missing.");
     }

@@ -313,8 +313,9 @@ function tora_tora_responsive_image(string $setting, string $stem, int $width, i
 }
 
 /**
- * Gallery tiles, in mosaic order: 01 ramen, 02 interior, 03 brand. Every default comes from the
- * client's Brand Guideline folder (Brand Book collateral and the mckimm interior concept).
+ * Gallery tiles, in mosaic order: 01 ramen, 02 interior, 03 brand, 04 team.
+ * Ramen and brand defaults come from the Brand Guideline folder. Interior and team
+ * defaults are photography of the restaurant.
  *
  * @return array<int,array{cell:int,setting:string,stem:string,width:int,height:int,alt:string,sizes:string}>
  */
@@ -327,14 +328,17 @@ function tora_tora_gallery_items(): array
         ['cell' => 1, 'setting' => 'tora_gallery_1', 'stem' => 'gallery-ramen-noodles', 'width' => 996, 'height' => 996, 'alt' => __('Fresh ramen noodles lifted from a floured board', 'tora-tora'), 'sizes' => $tile],
         ['cell' => 2, 'setting' => 'tora_gallery_2', 'stem' => 'gallery-ramen-tableware', 'width' => 1200, 'height' => 1200, 'alt' => __('Tiger plate and chopsticks in a Tora Tora pattern sleeve', 'tora-tora'), 'sizes' => $tile],
         ['cell' => 3, 'setting' => 'tora_gallery_3', 'stem' => 'gallery-ramen-to-go', 'width' => 1200, 'height' => 1200, 'alt' => __('Tora Tora ramen takeaway cups', 'tora-tora'), 'sizes' => $wide_on_phones],
-        ['cell' => 4, 'setting' => 'tora_gallery_4', 'stem' => 'gallery-interior-counter', 'width' => 960, 'height' => 960, 'alt' => __('Interior concept: counter seating by the welcome banner', 'tora-tora'), 'sizes' => $tile],
-        ['cell' => 5, 'setting' => 'tora_gallery_5', 'stem' => 'gallery-interior-booths', 'width' => 900, 'height' => 900, 'alt' => __('Interior concept: curved booths beneath the tiger artwork', 'tora-tora'), 'sizes' => $tile],
-        ['cell' => 6, 'setting' => 'tora_gallery_6', 'stem' => 'gallery-interior-shibori', 'width' => 1600, 'height' => 800, 'alt' => __('Interior concept: shibori-dyed fabric hanging over the dining room', 'tora-tora'), 'sizes' => '(max-width: 700px) 100vw, 50vw'],
-        ['cell' => 7, 'setting' => 'tora_gallery_7', 'stem' => 'gallery-interior-bar', 'width' => 907, 'height' => 907, 'alt' => __('Interior concept: the blue mosaic bar and patterned stools', 'tora-tora'), 'sizes' => $wide_on_phones],
+        ['cell' => 4, 'setting' => 'tora_gallery_4', 'stem' => 'gallery-interior-counter', 'width' => 1600, 'height' => 900, 'alt' => __('Booth seating in the Tora Tora dining room', 'tora-tora'), 'sizes' => $tile],
+        ['cell' => 5, 'setting' => 'tora_gallery_5', 'stem' => 'gallery-interior-booths', 'width' => 1600, 'height' => 900, 'alt' => __('Table setting with a Tora Tora plate, spoon and chopsticks', 'tora-tora'), 'sizes' => $tile],
+        ['cell' => 6, 'setting' => 'tora_gallery_6', 'stem' => 'gallery-interior-shibori', 'width' => 1600, 'height' => 900, 'alt' => __('Tora Tora dining room with curved booths', 'tora-tora'), 'sizes' => '(max-width: 700px) 100vw, 50vw'],
+        ['cell' => 7, 'setting' => 'tora_gallery_7', 'stem' => 'gallery-interior-bar', 'width' => 1600, 'height' => 900, 'alt' => __('Blue banner hanging in the Tora Tora dining room', 'tora-tora'), 'sizes' => $wide_on_phones],
         ['cell' => 8, 'setting' => 'tora_gallery_8', 'stem' => 'gallery-brand-cups', 'width' => 1200, 'height' => 1200, 'alt' => __('Tora Tora cups in the brand pattern', 'tora-tora'), 'sizes' => $tile],
         ['cell' => 9, 'setting' => 'tora_gallery_9', 'stem' => 'gallery-brand-sign', 'width' => 1200, 'height' => 1200, 'alt' => __('Tora Tora sign reading Roar Ramen Joint, Dubai DBX 2024', 'tora-tora'), 'sizes' => $tile],
         ['cell' => 10, 'setting' => 'tora_gallery_10', 'stem' => 'gallery-brand-bag', 'width' => 1200, 'height' => 1200, 'alt' => __('Tora Tora paper bag printed ROARRRR', 'tora-tora'), 'sizes' => $tile],
         ['cell' => 11, 'setting' => 'tora_gallery_11', 'stem' => 'gallery-brand-hoarding', 'width' => 1200, 'height' => 1200, 'alt' => __('Roar Ramen Joint hoarding on a Dubai street', 'tora-tora'), 'sizes' => $tile],
+        ['cell' => 12, 'setting' => 'tora_gallery_12', 'stem' => 'gallery-team-hall', 'width' => 1600, 'height' => 1200, 'alt' => __('Tora Tora team and kitchen crew', 'tora-tora'), 'sizes' => $tile],
+        ['cell' => 13, 'setting' => 'tora_gallery_13', 'stem' => 'gallery-team-floor', 'width' => 1448, 'height' => 1086, 'alt' => __('Tora Tora team in front of the wordmark', 'tora-tora'), 'sizes' => $tile],
+        ['cell' => 14, 'setting' => 'tora_gallery_14', 'stem' => 'gallery-team-kitchen', 'width' => 1200, 'height' => 1600, 'alt' => __('Tora Tora kitchen crew', 'tora-tora'), 'sizes' => $wide_on_phones],
     ];
 }
 

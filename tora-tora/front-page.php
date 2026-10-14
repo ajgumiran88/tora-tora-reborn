@@ -60,6 +60,11 @@ $gallery_labels = [
         'number' => '03',
         'text' => __('BRAND', 'tora-tora'),
     ],
+    [
+        'slug' => '04',
+        'number' => '04',
+        'text' => __('TEAM', 'tora-tora'),
+    ],
 ];
 $gallery_image_total = count($gallery_cells);
 $gallery_ticker_words = [__('TORA TORA', 'tora-tora'), __('ROAR RAMEN JOINT', 'tora-tora')];
