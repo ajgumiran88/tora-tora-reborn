@@ -105,13 +105,13 @@ function tora_tora_customize_register(WP_Customize_Manager $customize): void
         ]
     );
 
-    $customize->add_setting('tora_menu_coming_soon', ['default' => true, 'sanitize_callback' => 'tora_tora_sanitize_checkbox']);
+    $customize->add_setting('tora_menu_coming_soon', ['default' => false, 'sanitize_callback' => 'tora_tora_sanitize_checkbox']);
     $customize->add_control(
         'tora_menu_coming_soon',
         [
             'section'     => 'tora_tora_details',
             'label'       => __('Menu: show "Coming soon" instead of the menu', 'tora-tora'),
-            'description' => __('Menu items stay saved in WordPress Admin. Turn this off to publish the full menu.', 'tora-tora'),
+            'description' => __('Check to temporarily hide the published menu. Menu items stay saved in WordPress Admin.', 'tora-tora'),
             'type'        => 'checkbox',
         ]
     );
