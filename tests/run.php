@@ -183,7 +183,8 @@ file_contains($theme . '/front-page.php', 'Follow us', 'Contact panel is missing
 file_does_not_contain($theme . '/front-page.php', 'contact-card media-reveal', 'Contact panel still uses the interior photo instead of a map.');
 file_contains($theme . '/assets/css/main.css', '.contact-map-art', 'Contact map artwork styling is missing.');
 file_contains($theme . '/assets/js/site.js', 'contact-view', 'Contact chrome body class toggle is missing.');
-file_contains($theme . '/inc/customizer.php', 'tora_reservation_email', 'Reservation email Customizer setting is missing.');
+file_does_not_contain($theme . '/front-page.php', 'Reservation', 'Contact still shows the Reservation row.');
+file_does_not_contain($theme . '/inc/customizer.php', 'tora_reservation_email', 'Reservation email Customizer setting should be removed.');
 file_contains($theme . '/inc/customizer.php', 'tora_instagram_url', 'Instagram URL Customizer setting is missing.');
 file_contains($theme . '/inc/customizer.php', "'https://www.instagram.com/toratora.ae'", 'Instagram URL default is not the live toratora.ae profile.');
 file_contains($theme . '/inc/customizer.php', "'https://www.tiktok.com/@toratora.ae'", 'TikTok URL default is not the live toratora.ae profile.');

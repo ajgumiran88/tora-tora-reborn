@@ -60,7 +60,7 @@ Cream (`#F4ECE7`) is retained only for the staging chrome strip. Figma light scr
 The client's comments asked that gallery photos and contact details be accurate before launch. None of the items below has been confirmed yet. Keep **Staging mode** on (Customizer → Tora Tora details) until every box is ticked. Staging mode shows the preview banner and sets noindex.
 
 - [ ] **Phone.** The Customizer default `+971 4 000 0000` is a placeholder.
-- [ ] **Emails.** `hello@toratora.ae` (contact and careers) and `reserve@toratora.ae` (reservations) are unverified. Confirm each inbox exists and is monitored.
+- [ ] **Emails.** `hello@toratora.ae` (contact and careers) is unverified. Confirm the inbox exists and is monitored.
 - [ ] **Opening hours.** Contact hours (`08:00 - 23:00`, `08:00 - 00:00`) and delivery hours are starter values.
 - [ ] **Instagram and TikTok.** Both point to `@toratora.ae`, which is hard-coded in `inc/setup.php`. Confirm both profiles belong to the restaurant.
 - [ ] **Gallery photos.** `gallery-1.jpg` to `gallery-5.jpg` are generic dining-room images, not Tora Tora photography, and the mosaic repeats them across 11 tiles. Upload the restaurant's own photos from the Brand Guideline **Interior** folder through Customizer → Tora Tora details → Gallery image 1–5. Tiles 6–11 reuse images 1–5, so five strong photos are enough.

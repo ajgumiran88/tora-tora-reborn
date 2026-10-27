@@ -75,7 +75,6 @@ $address = (string) get_theme_mod('tora_address', 'First Avenue Mall, Jumeira, D
 $address_lines = tora_tora_format_address_lines($address);
 $phone = (string) get_theme_mod('tora_phone', '+971 4 000 0000');
 $email = (string) get_theme_mod('tora_email', 'hello@toratora.ae');
-$reservation_email = (string) get_theme_mod('tora_reservation_email', 'reserve@toratora.ae');
 $careers_email = (string) get_theme_mod('tora_careers_email', 'hello@toratora.ae');
 $instagram_handle = tora_tora_instagram_handle();
 $instagram_url = tora_tora_instagram_url();
@@ -477,10 +476,6 @@ $platforms = [
                             <div>
                                 <dt><?php esc_html_e('Email', 'tora-tora'); ?></dt>
                                 <dd><a href="mailto:<?php echo esc_attr(antispambot($email)); ?>"><?php echo esc_html(antispambot($email)); ?></a></dd>
-                            </div>
-                            <div>
-                                <dt><?php esc_html_e('Reservation', 'tora-tora'); ?></dt>
-                                <dd><a href="mailto:<?php echo esc_attr(antispambot($reservation_email)); ?>"><?php echo esc_html(antispambot($reservation_email)); ?></a></dd>
                             </div>
                         </dl>
                     </section>

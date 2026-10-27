@@ -38,7 +38,6 @@ function tora_tora_customize_register(WP_Customize_Manager $customize): void
         'tora_address' => [__('Address', 'tora-tora'), 'First Avenue Mall, Jumeira, Dubai, UAE'],
         'tora_phone'   => [__('Phone', 'tora-tora'), '+971 4 000 0000'],
         'tora_email'   => [__('Contact email', 'tora-tora'), 'hello@toratora.ae'],
-        'tora_reservation_email' => [__('Reservation email', 'tora-tora'), 'reserve@toratora.ae'],
         'tora_careers_email' => [__('Careers email', 'tora-tora'), 'hello@toratora.ae'],
         'tora_instagram_handle' => [__('Instagram handle', 'tora-tora'), '@toratora.ae'],
         'tora_instagram_url' => [__('Instagram URL', 'tora-tora'), 'https://www.instagram.com/toratora.ae'],
@@ -63,7 +62,6 @@ function tora_tora_customize_register(WP_Customize_Manager $customize): void
     $confirm_before_launch = [
         'tora_phone',
         'tora_email',
-        'tora_reservation_email',
         'tora_careers_email',
         'tora_hours_weekday',
         'tora_hours_saturday',
