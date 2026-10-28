@@ -129,7 +129,6 @@ $platforms = [
     <section class="panel story-panel" id="about" data-theme="light" aria-labelledby="about-title" aria-hidden="true">
         <span class="story-accent-arc" aria-hidden="true"></span>
         <div class="panel-scroll story-scroll-inner">
-            <span class="story-chrome-guard" aria-hidden="true"></span>
             <div class="story-art" aria-hidden="true">
                 <span class="story-pattern-disc"></span>
                 <figure class="story-tiger-disc">

@@ -64,7 +64,7 @@
 
 /* Resolve under body so --staging from .tora-staging is included. */
 body {
-  --panel-top: calc(var(--staging) + var(--brand-mark) + var(--panel-top-gap));
+  --panel-top: calc(var(--staging) + var(--header-pad) + var(--brand-mark) + var(--panel-top-gap));
 }
 
 /* Bottom edge of the fixed logo row, plus a small cushion. Scroll areas start here, so nothing slides
@@ -976,7 +976,7 @@ h1, h2, h3, h4 {
 
 /* Figma About: poster chrome stays put; copy scrolls so the last lines stay readable. */
 .story-panel {
-  padding: 0;
+  padding: var(--chrome-line) 0 0;
   overflow: hidden;
   overflow-anchor: none;
   overscroll-behavior: none;
@@ -989,8 +989,8 @@ h1, h2, h3, h4 {
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
-  /* Keyboard focus scrolls links into view below the chrome guard, and above the speckle footer. */
-  scroll-padding: var(--chrome-line) 0 var(--story-footer);
+  /* Keyboard focus keeps links inside the content viewport and above the speckle footer. */
+  scroll-padding: var(--panel-gap) 0 var(--story-footer);
   background: #FFFFFF;
 }
 
@@ -1000,22 +1000,9 @@ h1, h2, h3, h4 {
   z-index: 2;
   width: min(52rem, calc(100% - var(--panel-left) - 5.5rem));
   max-width: none;
-  padding-top: var(--panel-top);
+  padding-top: var(--panel-gap);
   padding-right: 2.5rem;
   padding-bottom: calc(var(--story-footer) + .85rem);
-}
-
-/* White band pinned under the logo row inside the scroller. At rest it covers nothing, because the copy starts
-   lower. Once scrolled, copy passes behind it instead of under the logo. The art stacks above it. */
-.story-chrome-guard {
-  position: sticky;
-  top: 0;
-  z-index: 3;
-  display: block;
-  height: var(--chrome-line);
-  margin-bottom: calc(var(--chrome-line) * -1);
-  background: var(--tora-white);
-  pointer-events: none;
 }
 
 .story-panel #about-title {
@@ -1198,11 +1185,10 @@ h1, h2, h3, h4 {
   }
 }
 
-/* Speckle disc + overlapping tiger badge sit in the top-right, matching Figma. They scroll with the copy
-   and stack above the chrome guard, so they stay whole until they pass under the staging chrome. */
+/* Speckle disc + tiger badge scroll with the copy below the fixed logo row. */
 .story-art {
   position: absolute;
-  top: calc(var(--staging) + clamp(.35rem, 1.8vh, 1.1rem));
+  top: clamp(.35rem, 1.8vh, 1.1rem);
   right: clamp(11rem, 20vw, 17rem);
   z-index: 4;
   width: min(24vw, 19rem);
@@ -2359,7 +2345,7 @@ h1, h2, h3, h4 {
     overflow-x: hidden;
     overflow-y: auto;
   }
-  /* The art starts under the logo row and slides behind the chrome guard with the copy. */
+  /* Artwork and copy scroll together below the fixed logo row. */
   .story-art {
     position: relative;
     top: auto;
@@ -2368,7 +2354,7 @@ h1, h2, h3, h4 {
     width: min(78vw, 20rem);
     height: auto;
     aspect-ratio: 1.1 / 1;
-    margin: var(--chrome-line) auto 0;
+    margin: 0 auto;
   }
   .story-copy {
     position: relative;

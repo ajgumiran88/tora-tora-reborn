@@ -90,11 +90,11 @@ file_contains($theme . '/assets/css/main.css', '.delivery-boxes {', 'Delivery zo
 file_contains($theme . '/assets/css/main.css', '.delivery-boxes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));', 'Delivery boxes are not 3 equal structured cards.');
 file_contains($theme . '/front-page.php', 'delivery-boxes', 'Delivery panel is missing the zones and hours info boxes.');
 file_contains($theme . '/assets/css/main.css', "--panel-title: clamp(2.25rem, 4.6vw, 3.75rem);", 'Shared panel display title token is missing.');
-file_contains($theme . '/assets/css/main.css', "--panel-top: calc(var(--staging) + var(--brand-mark) + var(--panel-top-gap));", 'Shared panel top clearance under the fixed brand logo is missing.');
+file_contains($theme . '/assets/css/main.css', "--panel-top: calc(var(--staging) + var(--header-pad) + var(--brand-mark) + var(--panel-top-gap));", 'Panel titles must clear the complete fixed logo row, including its top padding.');
 file_contains($theme . '/assets/css/main.css', "--brand-mark: clamp(4.5rem, 8vw, 7rem);", 'Brand mark size token is missing.');
 file_contains($theme . '/assets/css/main.css', "--panel-top-gap: clamp(2.15rem, 4vh, 2.75rem);", 'Panel top gap token is missing.');
-file_contains($theme . '/assets/css/main.css', "body {\n  --panel-top: calc(var(--staging) + var(--brand-mark) + var(--panel-top-gap));\n}", 'Panel top clearance must resolve on body so staging chrome is included.');
-file_contains($theme . '/assets/css/main.css', 'padding-top: var(--panel-top);', 'Panel scroll areas do not clear the fixed brand logo.');
+file_contains($theme . '/assets/css/main.css', "body {\n  --panel-top: calc(var(--staging) + var(--header-pad) + var(--brand-mark) + var(--panel-top-gap));\n}", 'Panel top clearance must resolve on body so staging chrome and header padding are included.');
+file_contains($theme . '/assets/css/main.css', 'padding-top: var(--panel-gap);', 'Copy must keep its title gap inside the content viewport below the fixed logo row.');
 file_does_not_contain($theme . '/assets/css/main.css', 'padding-top: calc(var(--header) * .35 + var(--staging));', 'Gallery/Careers/Contact still use the pre-logo tight top inset.');
 file_does_not_contain($theme . '/assets/css/main.css', 'top: calc(var(--staging) + clamp(3.4rem, 7.5vh, 5.25rem));', 'About copy still starts under the fixed brand logo.');
 file_contains($theme . '/assets/css/main.css', ".gallery-heading {\n  display: flex;\n  align-items: baseline;\n  justify-content: space-between;\n  flex-shrink: 0;", 'Gallery heading can still be crushed by the mosaic grid.');
@@ -420,13 +420,12 @@ foreach (['menu', 'delivery', 'gallery', 'careers', 'contact'] as $scroll_panel)
     file_contains($theme . '/assets/css/main.css', ".{$scroll_panel}-panel {\n", "The {$scroll_panel} panel block is missing.");
 }
 expect_true(
-    substr_count((string) file_get_contents($theme . '/assets/css/main.css'), 'padding: var(--chrome-line) 0 0;') >= 5,
-    'Menu, Delivery, Gallery, Careers and Contact scroll areas do not all start below the fixed logo row.'
+    substr_count((string) file_get_contents($theme . '/assets/css/main.css'), 'padding: var(--chrome-line) 0 0;') >= 6,
+    'About, Menu, Delivery, Gallery, Careers and Contact scroll areas do not all start below the fixed logo row.'
 );
 file_does_not_contain($theme . '/assets/css/main.css', '.panel { padding-bottom: 3.5rem; overflow: auto; }', 'Phones still scroll the whole panel under the fixed logo and menu icon.');
 file_does_not_contain($theme . '/assets/css/main.css', '.panel-scroll { height: auto; min-height: 100%; overflow: visible; }', 'Phones still switch off the inner panel scroller.');
-file_contains($theme . '/front-page.php', 'story-chrome-guard', 'About copy can still scroll under the fixed logo.');
-file_contains($theme . '/assets/css/main.css', ".story-chrome-guard {\n  position: sticky;\n  top: 0;", 'About chrome guard is not pinned under the logo row.');
+file_contains($theme . '/assets/css/main.css', ".story-panel {\n  padding: var(--chrome-line) 0 0;", 'About scrolling content must start below the fixed logo row.');
 $front_page_source = (string) file_get_contents($theme . '/front-page.php');
 $about_arc_at = strpos($front_page_source, '<span class="story-accent-arc" aria-hidden="true"></span>');
 $about_scroller_at = strpos($front_page_source, '<div class="panel-scroll story-scroll-inner">');
@@ -460,10 +459,10 @@ file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_about_kitc
 file_contains($theme . '/assets/css/main.css', '.story-kitchen-copy h3', 'Kitchen heading has no display styling.');
 file_contains($theme . '/front-page.php', 'menu-intro', 'Menu is missing the line tying the dishes to the kitchen.');
 file_contains($theme . '/inc/customizer.php', 'tora_menu_intro', 'Menu intro line is not editable in the Customizer.');
-file_contains($theme . '/functions.php', "define('TORA_TORA_VERSION', '1.6.4');", 'Theme version must identify the 1.6.4 go-live compatibility fix.');
+file_contains($theme . '/functions.php', "define('TORA_TORA_VERSION', '1.6.6');", 'Theme version must identify the 1.6.6 layout restoration.');
 file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_menu_hold_1_6_2', 'Existing installs will not restore the temporary menu hold.');
 file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_go_live_1_6_3', 'Existing installs will keep the staging banner without the 1.6.3 go-live upgrade.');
-file_contains($theme . '/style.css', 'Version: 1.6.4', 'style.css must identify the 1.6.4 go-live compatibility fix.');
+file_contains($theme . '/style.css', 'Version: 1.6.6', 'style.css must identify the 1.6.6 layout restoration.');
 file_contains($theme . '/inc/staging.php', "get_theme_mod('tora_staging_mode', false)", 'Staging helper default must be off for the live site.');
 
 file_contains($theme . '/inc/customizer.php', 'Placeholder. Confirm before launch.', 'Placeholder contact details are not flagged in the Customizer.');
