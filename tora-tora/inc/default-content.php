@@ -586,6 +586,12 @@ function tora_tora_maybe_upgrade_content(): void
         $current = '1.6.3';
         update_option('tora_tora_seeded_version', $current, false);
     }
+
+    if (version_compare($current, '1.6.8', '<')) {
+        tora_tora_upgrade_careers_hold_1_6_8();
+        $current = '1.6.8';
+        update_option('tora_tora_seeded_version', $current, false);
+    }
 }
 
 function tora_tora_upgrade_menu_1_3_5(): void
@@ -917,6 +923,12 @@ function tora_tora_upgrade_menu_hold_1_6_2(): void
 function tora_tora_upgrade_go_live_1_6_3(): void
 {
     set_theme_mod('tora_staging_mode', false);
+}
+
+/** Hold Careers roles until the team confirms openings. */
+function tora_tora_upgrade_careers_hold_1_6_8(): void
+{
+    set_theme_mod('tora_careers_coming_soon', true);
 }
 
 add_action('init', 'tora_tora_maybe_upgrade_content', 30);

@@ -459,11 +459,16 @@ file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_about_kitc
 file_contains($theme . '/assets/css/main.css', '.story-kitchen-copy h3', 'Kitchen heading has no display styling.');
 file_contains($theme . '/front-page.php', 'menu-intro', 'Menu is missing the line tying the dishes to the kitchen.');
 file_contains($theme . '/inc/customizer.php', 'tora_menu_intro', 'Menu intro line is not editable in the Customizer.');
-file_contains($theme . '/functions.php', "define('TORA_TORA_VERSION', '1.6.7');", 'Theme version must identify the 1.6.7 kitchen image refresh.');
+file_contains($theme . '/functions.php', "define('TORA_TORA_VERSION', '1.6.8');", 'Theme version must identify the 1.6.8 careers hold.');
 file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_menu_hold_1_6_2', 'Existing installs will not restore the temporary menu hold.');
 file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_go_live_1_6_3', 'Existing installs will keep the staging banner without the 1.6.3 go-live upgrade.');
-file_contains($theme . '/style.css', 'Version: 1.6.7', 'style.css must identify the 1.6.7 kitchen image refresh.');
+file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_careers_hold_1_6_8', 'Existing installs will keep Careers roles visible without the 1.6.8 hold.');
+file_contains($theme . '/style.css', 'Version: 1.6.8', 'style.css must identify the 1.6.8 careers hold.');
 file_contains($theme . '/front-page.php', "tora_tora_responsive_image('tora_kitchen_image', 'story-kitchen-ramen', 819, 1024)", 'About kitchen image dimensions must match the high-res source.');
+file_contains($theme . '/inc/setup.php', 'function tora_tora_careers_is_coming_soon', 'Careers coming-soon helper is missing.');
+file_contains($theme . '/inc/setup.php', "get_theme_mod('tora_careers_coming_soon', true)", 'Careers coming-soon default must hide roles until confirmed.');
+file_contains($theme . '/inc/customizer.php', "add_setting('tora_careers_coming_soon', ['default' => true", 'Careers coming-soon Customizer setting is missing.');
+file_contains($theme . '/front-page.php', 'tora_tora_careers_is_coming_soon()', 'Careers panel does not honour the coming-soon switch.');
 file_contains($theme . '/inc/staging.php', "get_theme_mod('tora_staging_mode', false)", 'Staging helper default must be off for the live site.');
 
 file_contains($theme . '/inc/customizer.php', 'Placeholder. Confirm before launch.', 'Placeholder contact details are not flagged in the Customizer.');

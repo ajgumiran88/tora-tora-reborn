@@ -168,13 +168,17 @@ function tora_tora_split_story_sections(string $html): array
 }
 
 /**
- * Menu and Delivery are staged behind switches so the client can launch without them
- * and turn each one on later. Neither panel's content is removed when it is off:
- * the menu items, the Delivery page and its Customizer settings all stay in place.
+ * Menu, Careers and Delivery are staged behind switches so the client can launch
+ * without them and turn each one on later. Content stays saved when a panel is off.
  */
 function tora_tora_menu_is_coming_soon(): bool
 {
     return (bool) get_theme_mod('tora_menu_coming_soon', true);
+}
+
+function tora_tora_careers_is_coming_soon(): bool
+{
+    return (bool) get_theme_mod('tora_careers_coming_soon', true);
 }
 
 function tora_tora_delivery_enabled(): bool

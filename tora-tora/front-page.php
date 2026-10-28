@@ -389,10 +389,15 @@ $platforms = [
                     <?php tora_tora_panel_kicker(++$panel_number, __('Careers', 'tora-tora')); ?>
                     <div class="careers-title-row">
                         <h2 id="careers-title"><span>JOIN</span><br><span class="careers-team-line">THE TEAM</span></h2>
-                        <p class="careers-roles-badge"><?php echo esc_html($careers_roles_label); ?></p>
+                        <?php if (!tora_tora_careers_is_coming_soon()) : ?>
+                            <p class="careers-roles-badge"><?php echo esc_html($careers_roles_label); ?></p>
+                        <?php endif; ?>
                     </div>
                     <p class="careers-intro"><?php esc_html_e('AT TORA TORA, WE MOVE FAST, COOK BOLD, AND CELEBRATE EVERYONE WHO BRINGS THE TIGER SPIRIT TO WORK. WE ARE BUILDING SOMETHING EXCEPTIONAL IN DUBAI AND WE WANT EXCEPTIONAL PEOPLE WITH US.', 'tora-tora'); ?></p>
                 </header>
+                <?php if (tora_tora_careers_is_coming_soon()) : ?>
+                    <p class="menu-coming-soon"><?php esc_html_e('Coming soon…', 'tora-tora'); ?></p>
+                <?php else : ?>
                 <div class="careers-list-wrap">
                     <ul class="careers-job-list">
                         <?php foreach ($careers_jobs as $careers_job) : ?>
@@ -442,6 +447,7 @@ $platforms = [
                     </ul>
                     <span class="careers-rule" aria-hidden="true"></span>
                 </div>
+                <?php endif; ?>
             </div>
         </div>
     </section>

@@ -116,6 +116,17 @@ function tora_tora_customize_register(WP_Customize_Manager $customize): void
         ]
     );
 
+    $customize->add_setting('tora_careers_coming_soon', ['default' => true, 'sanitize_callback' => 'tora_tora_sanitize_checkbox']);
+    $customize->add_control(
+        'tora_careers_coming_soon',
+        [
+            'section'     => 'tora_tora_details',
+            'label'       => __('Careers: show "Coming soon" instead of open roles', 'tora-tora'),
+            'description' => __('Job listings stay saved. Turn this off when roles are confirmed.', 'tora-tora'),
+            'type'        => 'checkbox',
+        ]
+    );
+
     $customize->add_setting('tora_delivery_enabled', ['default' => false, 'sanitize_callback' => 'tora_tora_sanitize_checkbox']);
     $customize->add_control(
         'tora_delivery_enabled',
