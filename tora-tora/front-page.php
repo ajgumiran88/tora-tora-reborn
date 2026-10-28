@@ -42,7 +42,7 @@ $careers_roles_label = sprintf(
     count($careers_jobs)
 );
 $menu_groups = tora_get_menu_groups();
-$kitchen_image = tora_tora_responsive_image('tora_kitchen_image', 'story-kitchen-ramen', 1020, 1275);
+$kitchen_image = tora_tora_responsive_image('tora_kitchen_image', 'story-kitchen-ramen', 819, 1024);
 $gallery_cells = tora_tora_gallery_items();
 $gallery_labels = [
     [
