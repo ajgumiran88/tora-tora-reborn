@@ -57,7 +57,7 @@ Cream (`#F4ECE7`) is retained only for the staging chrome strip. Figma light scr
 
 ## 4. Launch checklist
 
-The client's comments asked that gallery photos and contact details be accurate before launch. None of the items below has been confirmed yet. Keep **Staging mode** on (Customizer → Tora Tora details) until every box is ticked. Staging mode shows the preview banner and sets noindex.
+The client's comments asked that gallery photos and contact details be accurate before launch. None of the items below has been confirmed yet. **Staging mode is off for go-live** (Customizer → Tora Tora details). Re-enable it only for a private review — it shows the preview banner and sets noindex.
 
 - [ ] **Phone.** The Customizer default `+971 52 913 6253` is temporary; confirm before launch.
 - [ ] **Emails.** `hello@toratora.ae` (contact and careers) is unverified. Confirm the inbox exists and is monitored.

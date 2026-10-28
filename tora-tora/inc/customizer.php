@@ -127,13 +127,13 @@ function tora_tora_customize_register(WP_Customize_Manager $customize): void
         ]
     );
 
-    $customize->add_setting('tora_staging_mode', ['default' => true, 'sanitize_callback' => 'tora_tora_sanitize_checkbox']);
+    $customize->add_setting('tora_staging_mode', ['default' => false, 'sanitize_callback' => 'tora_tora_sanitize_checkbox']);
     $customize->add_control(
         'tora_staging_mode',
         [
             'section'     => 'tora_tora_details',
             'label'       => __('Enable staging preview notice and noindex', 'tora-tora'),
-            'description' => __('Turn this off only when the website is approved for launch, and only after the real phone, emails, opening hours, social links and gallery photos are in place.', 'tora-tora'),
+            'description' => __('Off for the live site. Check only to bring back the staging banner and noindex for a private review.', 'tora-tora'),
             'type'        => 'checkbox',
         ]
     );

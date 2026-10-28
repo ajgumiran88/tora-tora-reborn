@@ -580,6 +580,12 @@ function tora_tora_maybe_upgrade_content(): void
         $current = '1.6.2';
         update_option('tora_tora_seeded_version', $current, false);
     }
+
+    if (version_compare($current, '1.6.3', '<')) {
+        tora_tora_upgrade_go_live_1_6_3();
+        $current = '1.6.3';
+        update_option('tora_tora_seeded_version', $current, false);
+    }
 }
 
 function tora_tora_upgrade_menu_1_3_5(): void
@@ -905,6 +911,12 @@ function tora_tora_upgrade_menu_hold_1_6_2(): void
     if ('' === $phone || '+971 4 000 0000' === $phone) {
         set_theme_mod('tora_phone', '+971 52 913 6253');
     }
+}
+
+/** Go live: hide the staging preview banner and allow search indexing. */
+function tora_tora_upgrade_go_live_1_6_3(): void
+{
+    set_theme_mod('tora_staging_mode', false);
 }
 
 add_action('init', 'tora_tora_maybe_upgrade_content', 30);

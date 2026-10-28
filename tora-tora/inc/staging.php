@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
 
 function tora_tora_staging_enabled(): bool
 {
-    return (bool) get_theme_mod('tora_staging_mode', true);
+    return (bool) get_theme_mod('tora_staging_mode', false);
 }
 
 /**
