@@ -174,7 +174,7 @@ function tora_tora_split_story_sections(string $html): array
  */
 function tora_tora_menu_is_coming_soon(): bool
 {
-    return (bool) get_theme_mod('tora_menu_coming_soon', false);
+    return (bool) get_theme_mod('tora_menu_coming_soon', true);
 }
 
 function tora_tora_delivery_enabled(): bool

@@ -59,7 +59,7 @@ Cream (`#F4ECE7`) is retained only for the staging chrome strip. Figma light scr
 
 The client's comments asked that gallery photos and contact details be accurate before launch. None of the items below has been confirmed yet. Keep **Staging mode** on (Customizer → Tora Tora details) until every box is ticked. Staging mode shows the preview banner and sets noindex.
 
-- [ ] **Phone.** The Customizer default `+971 4 000 0000` is a placeholder.
+- [ ] **Phone.** The Customizer default `+971 52 913 6253` is temporary; confirm before launch.
 - [ ] **Emails.** `hello@toratora.ae` (contact and careers) is unverified. Confirm the inbox exists and is monitored.
 - [ ] **Opening hours.** Contact hours (`08:00 - 23:00`, `08:00 - 00:00`) and delivery hours are starter values.
 - [ ] **Instagram and TikTok.** Both point to `@toratora.ae`, which is hard-coded in `inc/setup.php`. Confirm both profiles belong to the restaurant.

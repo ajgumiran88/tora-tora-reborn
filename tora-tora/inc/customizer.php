@@ -36,7 +36,7 @@ function tora_tora_customize_register(WP_Customize_Manager $customize): void
 
     $text_settings = [
         'tora_address' => [__('Address', 'tora-tora'), 'First Avenue Mall, Jumeira, Dubai, UAE'],
-        'tora_phone'   => [__('Phone', 'tora-tora'), '+971 4 000 0000'],
+        'tora_phone'   => [__('Phone', 'tora-tora'), '+971 52 913 6253'],
         'tora_email'   => [__('Contact email', 'tora-tora'), 'hello@toratora.ae'],
         'tora_careers_email' => [__('Careers email', 'tora-tora'), 'hello@toratora.ae'],
         'tora_instagram_handle' => [__('Instagram handle', 'tora-tora'), '@toratora.ae'],
@@ -105,13 +105,13 @@ function tora_tora_customize_register(WP_Customize_Manager $customize): void
         ]
     );
 
-    $customize->add_setting('tora_menu_coming_soon', ['default' => false, 'sanitize_callback' => 'tora_tora_sanitize_checkbox']);
+    $customize->add_setting('tora_menu_coming_soon', ['default' => true, 'sanitize_callback' => 'tora_tora_sanitize_checkbox']);
     $customize->add_control(
         'tora_menu_coming_soon',
         [
             'section'     => 'tora_tora_details',
             'label'       => __('Menu: show "Coming soon" instead of the menu', 'tora-tora'),
-            'description' => __('Check to temporarily hide the published menu. Menu items stay saved in WordPress Admin.', 'tora-tora'),
+            'description' => __('Menu items stay saved in WordPress Admin. Turn this off to publish the full menu.', 'tora-tora'),
             'type'        => 'checkbox',
         ]
     );

@@ -357,9 +357,9 @@ file_contains($theme . '/assets/css/main.css', '.contact-logo {
   width: clamp(6.75rem, 11vw, 9rem);', 'Contact wordmark is not sized to the right column.');
 file_contains($theme . '/inc/setup.php', 'function tora_tora_menu_is_coming_soon(): bool', 'Menu coming-soon switch helper is missing.');
 file_contains($theme . '/inc/setup.php', 'function tora_tora_delivery_enabled(): bool', 'Delivery visibility switch helper is missing.');
-file_contains($theme . '/inc/customizer.php', "add_setting('tora_menu_coming_soon', ['default' => false", 'Menu coming-soon Customizer default must be false so the full menu publishes.');
-file_contains($theme . '/inc/setup.php', "get_theme_mod('tora_menu_coming_soon', false)", 'Menu coming-soon helper default must be false so the full menu publishes.');
-file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_menu_publish_1_6_1', 'Existing installs will keep Coming Soon on without the 1.6.1 publish upgrade.');
+file_contains($theme . '/inc/customizer.php', "add_setting('tora_menu_coming_soon', ['default' => true", 'Menu coming-soon Customizer default must stay enabled until launch.');
+file_contains($theme . '/inc/setup.php', "get_theme_mod('tora_menu_coming_soon', true)", 'Menu coming-soon helper default must stay enabled until launch.');
+file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_menu_publish_1_6_1', 'Existing installs retain menu data through the 1.6.1 publish upgrade.');
 file_contains($theme . '/inc/customizer.php', "add_setting('tora_delivery_enabled'", 'Delivery visibility Customizer setting is missing.');
 file_contains($theme . '/front-page.php', 'tora_tora_menu_is_coming_soon()', 'Menu panel does not honour the coming-soon switch.');
 file_contains($theme . '/front-page.php', 'menu-coming-soon', 'Menu coming-soon notice is missing.');
@@ -460,11 +460,14 @@ file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_about_kitc
 file_contains($theme . '/assets/css/main.css', '.story-kitchen-copy h3', 'Kitchen heading has no display styling.');
 file_contains($theme . '/front-page.php', 'menu-intro', 'Menu is missing the line tying the dishes to the kitchen.');
 file_contains($theme . '/inc/customizer.php', 'tora_menu_intro', 'Menu intro line is not editable in the Customizer.');
-file_contains($theme . '/functions.php', "define('TORA_TORA_VERSION', '1.6.1');", 'Theme version was not bumped to 1.6.1, so the menu publish upgrade will not run.');
-file_contains($theme . '/style.css', 'Version: 1.6.1', 'style.css version was not bumped to 1.6.1.');
+file_contains($theme . '/functions.php', "define('TORA_TORA_VERSION', '1.6.2');", 'Theme version was not bumped to 1.6.2, so the menu hold upgrade will not run.');
+file_contains($theme . '/inc/default-content.php', 'tora_tora_upgrade_menu_hold_1_6_2', 'Existing installs will not restore the temporary menu hold.');
+file_contains($theme . '/style.css', 'Version: 1.6.2', 'style.css version was not bumped to 1.6.2.');
 
 file_contains($theme . '/inc/customizer.php', 'Placeholder. Confirm before launch.', 'Placeholder contact details are not flagged in the Customizer.');
 file_contains($theme . '/inc/customizer.php', "'tora_phone',", 'Placeholder phone is not flagged for launch.');
+file_contains($theme . '/inc/customizer.php', "'tora_phone'   => [__('Phone', 'tora-tora'), '+971 52 913 6253']", 'Phone default was not updated.');
+file_contains($theme . '/front-page.php', "get_theme_mod('tora_phone', '+971 52 913 6253')", 'Contact phone fallback was not updated.');
 file_contains($theme . '/inc/customizer.php', 'Replace it with photography of the restaurant when available.', 'Brand Book and concept-render gallery images are not flagged in the Customizer.');
 file_contains($theme . '/inc/customizer.php', "add_setting('tora_staging_mode', ['default' => true", 'Staging mode must stay on by default while placeholders remain.');
 file_contains($root . '/docs/design-guides.md', '## 4. Launch checklist', 'Design guide is missing the launch checklist.');

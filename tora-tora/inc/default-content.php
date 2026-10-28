@@ -574,6 +574,12 @@ function tora_tora_maybe_upgrade_content(): void
         $current = '1.6.1';
         update_option('tora_tora_seeded_version', $current, false);
     }
+
+    if (version_compare($current, '1.6.2', '<')) {
+        tora_tora_upgrade_menu_hold_1_6_2();
+        $current = '1.6.2';
+        update_option('tora_tora_seeded_version', $current, false);
+    }
 }
 
 function tora_tora_upgrade_menu_1_3_5(): void
@@ -888,6 +894,17 @@ function tora_tora_upgrade_menu_publish_1_6_1(): void
 {
     set_theme_mod('tora_menu_coming_soon', false);
     tora_tora_ensure_menu_terms_and_items();
+}
+
+/** Restore the temporary menu hold and replace only the known placeholder phone. */
+function tora_tora_upgrade_menu_hold_1_6_2(): void
+{
+    set_theme_mod('tora_menu_coming_soon', true);
+
+    $phone = trim((string) get_theme_mod('tora_phone', ''));
+    if ('' === $phone || '+971 4 000 0000' === $phone) {
+        set_theme_mod('tora_phone', '+971 52 913 6253');
+    }
 }
 
 add_action('init', 'tora_tora_maybe_upgrade_content', 30);
