@@ -44,10 +44,10 @@ Details: [`docs/design-guides.md`](docs/design-guides.md)
 
 ---
 
-## Staging (default on)
+## Staging and host compatibility
 
 - Review banner + `noindex`
-- **Safe head** bypasses `wp_head` fatals on SiteGround + Rank Math while staging is enabled
+- **Safe head** bypasses host/plugin asset failures in staging and live mode; `noindex` follows the staging toggle
 - Turn off in **Customizer → Tora Tora details** before launch
 
 ---

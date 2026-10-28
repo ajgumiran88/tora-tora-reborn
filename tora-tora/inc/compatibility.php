@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
 /**
  * Whether to bypass wp_head/wp_footer plugin output.
  *
- * Default: on while staging mode is enabled (review stacks often fatal inside wp_head).
+ * Default: on in staging and live mode; host asset failures are independent of the banner.
  */
 function tora_tora_use_safe_head(): bool
 {
@@ -21,8 +21,7 @@ function tora_tora_use_safe_head(): bool
         return (bool) apply_filters('tora_tora_use_safe_head', false);
     }
 
-    $default = function_exists('tora_tora_staging_enabled') && tora_tora_staging_enabled();
-    return (bool) apply_filters('tora_tora_use_safe_head', $default);
+    return (bool) apply_filters('tora_tora_use_safe_head', true);
 }
 
 function tora_tora_bootstrap_host_compatibility(): void
@@ -52,10 +51,12 @@ function tora_tora_render_document_head(): void
     $theme_uri = tora_tora_uri();
     $main_css = $theme_uri . '/assets/css/main.css?ver=' . rawurlencode(tora_tora_asset_version('assets/css/main.css'));
 
-    // Do not call WordPress's asset hooks in staging. The installed lte-ext
+    // Do not call WordPress's asset hooks here. The installed lte-ext
     // Fontello integration fatals while WordPress collects third-party assets.
     echo '<title>' . esc_html(get_bloginfo('name')) . '</title>' . PHP_EOL;
-    echo '<meta name="robots" content="noindex,nofollow" />' . PHP_EOL;
+    if (tora_tora_staging_enabled()) {
+        echo '<meta name="robots" content="noindex,nofollow" />' . PHP_EOL;
+    }
     echo '<link rel="stylesheet" href="' . esc_url($main_css) . '" />' . PHP_EOL;
     tora_tora_render_safe_admin_bar_assets();
 }
@@ -63,7 +64,7 @@ function tora_tora_render_document_head(): void
 /**
  * Render the core toolbar styles that wp_head() would normally print.
  *
- * Safe staging intentionally skips the global WordPress asset pipeline because
+ * Safe rendering intentionally skips the global WordPress asset pipeline because
  * the installed lte-ext Fontello integration fatals inside it. The WordPress
  * toolbar is still rendered through wp_body_open() for logged-in reviewers,
  * so its core-only styles must be emitted directly.
