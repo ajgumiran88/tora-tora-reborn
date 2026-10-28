@@ -40,7 +40,7 @@
   --brand-mark: clamp(4.5rem, 8vw, 7rem);
   --panel-top-gap: clamp(2.15rem, 4vh, 2.75rem);
   --header: clamp(4.5rem, 8vw, 6.5rem);
-  --header-pad: .8rem;
+  --header-pad: 1.8rem;
   --toggle-size: 52px;
   /* The header row is as tall as the logo, so this is the menu icon's centre below the staging chrome. */
   --toggle-dy: calc(var(--header-pad) + var(--brand-mark) / 2);
@@ -2323,6 +2323,7 @@ h1, h2, h3, h4 {
     --side: 1.15rem;
     --panel-left: var(--side);
     --header: 5.2rem;
+    --header-pad: 1.3rem;
     --brand-mark: 4.6rem;
     --home-gutter: calc(var(--side) + 3.15rem);
     --menu-rail: 5.75rem;
